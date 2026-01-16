@@ -10,6 +10,9 @@
     "test:load": "k6 run tests/load/wedding-site.js",
     "test:load:ci": "k6 run --out json=load-test-results.json tests/load/wedding-site.js"
   },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
+  },
   "dependencies": {
     "@auth/prisma-adapter": "^2.9.0",
     "@neondatabase/serverless": "^0.10.4",
