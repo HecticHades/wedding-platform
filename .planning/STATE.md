@@ -10,23 +10,24 @@ See: .planning/PROJECT.md
 ## Current Position
 
 Phase: 2 of 10 (Admin & Couple Authentication)
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-01-16 - Phase 1 verified and complete
+Plan: 1 of 4
+Status: In progress
+Last activity: 2026-01-17 - Completed 02-01-PLAN.md (Auth.js setup)
 
-Progress: █░░░░░░░░░ 10%
+Progress: █████░░░░░ 40%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 11 min
+- Total plans completed: 4
+- Average duration: 10 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 3/3 | 33 min | 11 min |
+| 02-admin-couple-auth | 1/4 | 8 min | 8 min |
 
 ## Accumulated Context
 
@@ -42,6 +43,9 @@ Progress: █░░░░░░░░░ 10%
 | Mobile-first Tailwind pattern | 01-03 | Unprefixed = mobile, prefixed = larger breakpoints |
 | Sticky header with backdrop blur | 01-03 | Modern mobile UX pattern |
 | k6 staged load testing | 01-03 | Gradual ramp-up (25->50->100) for stability verification |
+| JWT strategy over database sessions | 02-01 | Edge runtime compatibility required |
+| Separate PrismaClient for auth | 02-01 | Auth operations are platform-level, not tenant-scoped |
+| Edge-compatible auth.config.ts | 02-01 | Middleware needs config without Prisma imports |
 
 ### Pending Todos
 
@@ -53,6 +57,8 @@ Progress: █░░░░░░░░░ 10%
 - Local subdomain testing requires hosts file modification
 - `npx prisma migrate dev` required after DATABASE_URL configured
 - k6 load test needs to be run against deployed endpoint for full verification
+- AUTH_SECRET environment variable required for Auth.js
+- Run `npm install` to install new auth dependencies
 
 ## Phase 1 Completion Status
 
@@ -68,6 +74,6 @@ All success criteria verified:
 
 ## Session Continuity
 
-Last session: 2026-01-16T22:17:38Z
-Stopped at: Completed 01-03-PLAN.md (Phase 1 complete)
-Resume file: None - ready for Phase 2 planning
+Last session: 2026-01-17T15:38:00Z
+Stopped at: Completed 02-01-PLAN.md (Auth.js setup)
+Resume file: None - ready for 02-02-PLAN.md
