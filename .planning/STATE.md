@@ -10,24 +10,24 @@ See: .planning/PROJECT.md
 ## Current Position
 
 Phase: 2 of 10 (Admin & Couple Authentication)
-Plan: 1 of 4
+Plan: 2 of 4
 Status: In progress
-Last activity: 2026-01-17 - Completed 02-01-PLAN.md (Auth.js setup)
+Last activity: 2026-01-17 - Completed 02-02-PLAN.md (Admin dashboard)
 
-Progress: █████░░░░░ 40%
+Progress: ██████░░░░ 50%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 10 min
+- Total plans completed: 5
+- Average duration: 9 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 3/3 | 33 min | 11 min |
-| 02-admin-couple-auth | 1/4 | 8 min | 8 min |
+| 02-admin-couple-auth | 2/4 | 14 min | 7 min |
 
 ## Accumulated Context
 
@@ -46,6 +46,9 @@ Progress: █████░░░░░ 40%
 | JWT strategy over database sessions | 02-01 | Edge runtime compatibility required |
 | Separate PrismaClient for auth | 02-01 | Auth operations are platform-level, not tenant-scoped |
 | Edge-compatible auth.config.ts | 02-01 | Middleware needs config without Prisma imports |
+| Server actions over API routes | 02-02 | Better DX with type-safe form handling |
+| $transaction for atomic wedding creation | 02-02 | Ensure data consistency across tenant/wedding/user |
+| Defense-in-depth role checks | 02-02 | CVE-2025-29927 mitigation - check role in layouts beyond middleware |
 
 ### Pending Todos
 
@@ -59,6 +62,7 @@ Progress: █████░░░░░ 40%
 - k6 load test needs to be run against deployed endpoint for full verification
 - AUTH_SECRET environment variable required for Auth.js
 - Run `npm install` to install new auth dependencies
+- Run `npx prisma db seed` to create admin user after migrations
 
 ## Phase 1 Completion Status
 
@@ -74,6 +78,6 @@ All success criteria verified:
 
 ## Session Continuity
 
-Last session: 2026-01-17T15:38:00Z
-Stopped at: Completed 02-01-PLAN.md (Auth.js setup)
-Resume file: None - ready for 02-02-PLAN.md
+Last session: 2026-01-16T23:18:35Z
+Stopped at: Completed 02-02-PLAN.md (Admin dashboard)
+Resume file: None - ready for 02-03-PLAN.md
