@@ -37,7 +37,7 @@ Plans:
 
 **Goal:** Admins can manage the platform, couples can securely access their wedding sites.
 **Depends on:** Phase 1
-**Requirements:** ADMIN-01, ADMIN-02, ADMIN-03, ADMIN-04, COUPLE-01
+**Requirements:** ADMIN-01, ADMIN-02, ADMIN-04, COUPLE-01
 **Plans:** 3 plans
 
 Plans:
@@ -51,6 +51,8 @@ Plans:
 3. Admin can view and edit any couple's site content and settings
 4. Couple can log in and access only their own wedding site dashboard
 5. Couple cannot see or access any other couple's data
+
+**Note:** ADMIN-03 (view RSVP data across all weddings) deferred to Phase 5 when RSVP infrastructure exists.
 
 ---
 
@@ -91,7 +93,7 @@ Plans:
 
 **Goal:** Guests can RSVP to events with meal preferences, and couples can track responses.
 **Depends on:** Phase 4
-**Requirements:** COUPLE-05, COUPLE-07, COUPLE-08, RSVP-01, RSVP-02, RSVP-03, RSVP-04, RSVP-05, RSVP-06, RSVP-07
+**Requirements:** COUPLE-05, COUPLE-07, COUPLE-08, RSVP-01, RSVP-02, RSVP-03, RSVP-04, RSVP-05, RSVP-06, RSVP-07, ADMIN-03
 
 **Success Criteria:**
 1. Guest can access the wedding site using the couple's RSVP code
@@ -100,6 +102,7 @@ Plans:
 4. Couple can view RSVP dashboard showing who responded, attendance counts, and meal tallies
 5. Couple can export RSVP data as CSV with guest names, responses, meals, and dietary needs
 6. Couple can send reminder notification to guests who have not yet responded
+7. Admin can view RSVP data across all weddings (ADMIN-03)
 
 **Plans:** (created by /gsd:plan-phase)
 

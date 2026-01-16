@@ -116,61 +116,61 @@
 
 ## Traceability
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| TECH-01 | Phase 1 | Complete |
-| TECH-02 | Phase 1 | Complete |
-| TECH-03 | Phase 1 | Complete |
-| TECH-04 | Phase 1 | Complete |
-| TECH-06 | Phase 1 | Complete |
-| ADMIN-01 | Phase 2 | Pending |
-| ADMIN-02 | Phase 2 | Pending |
-| ADMIN-03 | Phase 2 | Pending |
-| ADMIN-04 | Phase 2 | Pending |
-| COUPLE-01 | Phase 2 | Pending |
-| COUPLE-02 | Phase 3 | Pending |
-| COUPLE-03 | Phase 3 | Pending |
-| COUPLE-04 | Phase 3 | Pending |
-| CONTENT-01 | Phase 3 | Pending |
-| CONTENT-02 | Phase 3 | Pending |
-| CONTENT-03 | Phase 3 | Pending |
-| CONTENT-04 | Phase 3 | Pending |
-| CONTENT-05 | Phase 3 | Pending |
-| CONTENT-06 | Phase 3 | Pending |
-| EVENT-01 | Phase 4 | Pending |
-| EVENT-02 | Phase 4 | Pending |
-| EVENT-03 | Phase 4 | Pending |
-| EVENT-04 | Phase 4 | Pending |
-| COUPLE-05 | Phase 5 | Pending |
-| COUPLE-07 | Phase 5 | Pending |
-| COUPLE-08 | Phase 5 | Pending |
-| RSVP-01 | Phase 5 | Pending |
-| RSVP-02 | Phase 5 | Pending |
-| RSVP-03 | Phase 5 | Pending |
-| RSVP-04 | Phase 5 | Pending |
-| RSVP-05 | Phase 5 | Pending |
-| RSVP-06 | Phase 5 | Pending |
-| RSVP-07 | Phase 5 | Pending |
-| GIFT-01 | Phase 6 | Pending |
-| GIFT-02 | Phase 6 | Pending |
-| GIFT-03 | Phase 6 | Pending |
-| GIFT-04 | Phase 6 | Pending |
-| GIFT-05 | Phase 6 | Pending |
-| GIFT-06 | Phase 6 | Pending |
-| PHOTO-01 | Phase 7 | Pending |
-| PHOTO-02 | Phase 7 | Pending |
-| PHOTO-03 | Phase 7 | Pending |
-| PHOTO-04 | Phase 7 | Pending |
-| PHOTO-05 | Phase 7 | Pending |
-| MSG-01 | Phase 8 | Pending |
-| MSG-02 | Phase 8 | Pending |
-| MSG-03 | Phase 8 | Pending |
-| SEAT-01 | Phase 9 | Pending |
-| SEAT-02 | Phase 9 | Pending |
-| SEAT-03 | Phase 9 | Pending |
-| SEAT-04 | Phase 9 | Pending |
-| COUPLE-06 | Phase 10 | Pending |
-| TECH-05 | Phase 10 | Pending |
+| Requirement | Phase | Status | Notes |
+|-------------|-------|--------|-------|
+| TECH-01 | Phase 1 | Complete | |
+| TECH-02 | Phase 1 | Complete | |
+| TECH-03 | Phase 1 | Complete | |
+| TECH-04 | Phase 1 | Complete | |
+| TECH-06 | Phase 1 | Complete | |
+| ADMIN-01 | Phase 2 | Pending | |
+| ADMIN-02 | Phase 2 | Pending | |
+| ADMIN-03 | Phase 5 | Pending | Requires RSVP infrastructure from Phase 5; admin role established in Phase 2 |
+| ADMIN-04 | Phase 2 | Pending | |
+| COUPLE-01 | Phase 2 | Pending | |
+| COUPLE-02 | Phase 3 | Pending | |
+| COUPLE-03 | Phase 3 | Pending | |
+| COUPLE-04 | Phase 3 | Pending | |
+| CONTENT-01 | Phase 3 | Pending | |
+| CONTENT-02 | Phase 3 | Pending | |
+| CONTENT-03 | Phase 3 | Pending | |
+| CONTENT-04 | Phase 3 | Pending | |
+| CONTENT-05 | Phase 3 | Pending | |
+| CONTENT-06 | Phase 3 | Pending | |
+| EVENT-01 | Phase 4 | Pending | |
+| EVENT-02 | Phase 4 | Pending | |
+| EVENT-03 | Phase 4 | Pending | |
+| EVENT-04 | Phase 4 | Pending | |
+| COUPLE-05 | Phase 5 | Pending | |
+| COUPLE-07 | Phase 5 | Pending | |
+| COUPLE-08 | Phase 5 | Pending | |
+| RSVP-01 | Phase 5 | Pending | |
+| RSVP-02 | Phase 5 | Pending | |
+| RSVP-03 | Phase 5 | Pending | |
+| RSVP-04 | Phase 5 | Pending | |
+| RSVP-05 | Phase 5 | Pending | |
+| RSVP-06 | Phase 5 | Pending | |
+| RSVP-07 | Phase 5 | Pending | |
+| GIFT-01 | Phase 6 | Pending | |
+| GIFT-02 | Phase 6 | Pending | |
+| GIFT-03 | Phase 6 | Pending | |
+| GIFT-04 | Phase 6 | Pending | |
+| GIFT-05 | Phase 6 | Pending | |
+| GIFT-06 | Phase 6 | Pending | |
+| PHOTO-01 | Phase 7 | Pending | |
+| PHOTO-02 | Phase 7 | Pending | |
+| PHOTO-03 | Phase 7 | Pending | |
+| PHOTO-04 | Phase 7 | Pending | |
+| PHOTO-05 | Phase 7 | Pending | |
+| MSG-01 | Phase 8 | Pending | |
+| MSG-02 | Phase 8 | Pending | |
+| MSG-03 | Phase 8 | Pending | |
+| SEAT-01 | Phase 9 | Pending | |
+| SEAT-02 | Phase 9 | Pending | |
+| SEAT-03 | Phase 9 | Pending | |
+| SEAT-04 | Phase 9 | Pending | |
+| COUPLE-06 | Phase 10 | Pending | |
+| TECH-05 | Phase 10 | Pending | |
 
 **Coverage:**
 - v1 requirements: 42 total
@@ -179,4 +179,4 @@
 
 ---
 *Requirements defined: 2026-01-16*
-*Last updated: 2026-01-16 after roadmap creation*
+*Last updated: 2026-01-16 - ADMIN-03 moved to Phase 5 (requires RSVP infrastructure)*
