@@ -38,6 +38,12 @@ Plans:
 **Goal:** Admins can manage the platform, couples can securely access their wedding sites.
 **Depends on:** Phase 1
 **Requirements:** ADMIN-01, ADMIN-02, ADMIN-03, ADMIN-04, COUPLE-01
+**Plans:** 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Auth.js v5 setup with Prisma adapter, credentials provider, JWT strategy
+- [ ] 02-02-PLAN.md — Admin authentication and dashboard (platform-level management)
+- [ ] 02-03-PLAN.md — Couple authentication integrated with tenant context
 
 **Success Criteria:**
 1. Admin can log in and see a list of all wedding sites on the platform
@@ -45,8 +51,6 @@ Plans:
 3. Admin can view and edit any couple's site content and settings
 4. Couple can log in and access only their own wedding site dashboard
 5. Couple cannot see or access any other couple's data
-
-**Plans:** (created by /gsd:plan-phase)
 
 ---
 
@@ -187,8 +191,8 @@ Plans:
 
 | Phase | Status | Completed |
 |-------|--------|-----------|
-| 1 - Foundation | ✓ Complete | 2026-01-16 |
-| 2 - Admin & Couple Auth | Not started | - |
+| 1 - Foundation | Complete | 2026-01-16 |
+| 2 - Admin & Couple Auth | Planned | - |
 | 3 - Content Builder | Not started | - |
 | 4 - Event & Guest Management | Not started | - |
 | 5 - RSVP System | Not started | - |
