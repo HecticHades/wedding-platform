@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** Phase 4 Complete - Ready for Phase 5 (RSVP System)
+**Current focus:** Phase 5 in progress - RSVP System
 
 ## Current Position
 
-Phase: 4 of 10 (Event Guest Management) - COMPLETE
-Plan: 4 of 4 complete (04-01, 04-02, 04-03, 04-04)
-Status: Phase complete
-Last activity: 2026-01-17 - Completed 04-04-PLAN.md (Event/Guest Assignment UI)
+Phase: 5 of 10 (RSVP System) - IN PROGRESS
+Plan: 1 of 6 complete (05-01)
+Status: In progress
+Last activity: 2026-01-17 - Completed 05-01-PLAN.md (RSVP Infrastructure)
 
-Progress: ████████████████████ 100% (16/16 plans through Phase 4)
+Progress: [][][][][][][][][][][][][][][][][][] 77% (17/22 plans through Phase 5)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16
+- Total plans completed: 17
 - Average duration: 9 min
 
 **By Phase:**
@@ -30,6 +30,7 @@ Progress: ████████████████████ 100% (16/
 | 02-admin-couple-auth | 3/3 | 29 min | 10 min |
 | 03-content-builder | 6/6 | 52 min | 9 min |
 | 04-event-guest-management | 4/4 | 30 min | 8 min |
+| 05-rsvp-system | 1/6 | 8 min | 8 min |
 
 ## Accumulated Context
 
@@ -76,6 +77,8 @@ Progress: ████████████████████ 100% (16/
 | Client-side search for event list | 04-02 | Added when > 3 events for quick filtering |
 | Bulk invitation update via transaction | 04-04 | Delete all + create new atomically; simpler than diff |
 | Separate Events section from content-builder | 04-04 | Database events with access control vs. manual JSON content |
+| MealOption as JSON array on Event | 05-01 | Per-event meal options allow flexibility; JSON simpler than separate table |
+| Resend client with console warning | 05-01 | Warning at import time allows dev without email key configured |
 
 ### Pending Todos
 
@@ -85,15 +88,18 @@ Progress: ████████████████████ 100% (16/
 
 - k6 load test needs to be run against deployed endpoint for full verification
 - Supabase pgbouncer connection on port 6543, direct on 5432
+- RESEND_API_KEY needs to be configured for email sending
 
-## Phase 4 Progress
+## Phase 5 Progress
 
 | Plan | Status | Description |
 |------|--------|-------------|
-| 04-01 | Complete | Event Guest Data Model |
-| 04-02 | Complete | Event Management UI |
-| 04-03 | Complete | Guest Management UI |
-| 04-04 | Complete | Event/Guest Assignment UI |
+| 05-01 | Complete | RSVP Infrastructure |
+| 05-02 | Pending | RSVP Data Model |
+| 05-03 | Pending | RSVP Form UI |
+| 05-04 | Pending | RSVP Dashboard |
+| 05-05 | Pending | Email Notifications |
+| 05-06 | Pending | Guest Export |
 
 ## Deployment
 
@@ -104,6 +110,6 @@ Progress: ████████████████████ 100% (16/
 
 ## Session Continuity
 
-Last session: 2026-01-17T11:50:58Z
-Stopped at: Completed 04-04-PLAN.md (Event/Guest Assignment UI)
-Resume file: None - Ready for Phase 5
+Last session: 2026-01-17T13:30:00Z
+Stopped at: Completed 05-01-PLAN.md (RSVP Infrastructure)
+Resume file: None - Continue with 05-02
