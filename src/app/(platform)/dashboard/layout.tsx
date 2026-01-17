@@ -11,7 +11,8 @@ import {
   Gift,
   Camera,
   Mail,
-  Grid3X3
+  Grid3X3,
+  Globe
 } from "lucide-react"
 
 const navItems = [
@@ -26,6 +27,7 @@ const navItems = [
   { href: "/dashboard/photos", label: "Photos", icon: Camera },
   { href: "/dashboard/messaging", label: "Messaging", icon: Mail },
   { href: "/dashboard/seating", label: "Seating", icon: Grid3X3 },
+  { href: "/dashboard/domain", label: "Domain", icon: Globe },
 ]
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
