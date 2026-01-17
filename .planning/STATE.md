@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** Phase 3 Complete - Ready for Phase 4 (RSVP Management)
+**Current focus:** Phase 4 In Progress - Event/Guest Data Model complete
 
 ## Current Position
 
-Phase: 3 of 10 (Content Builder) - COMPLETE
-Plan: 6 of 6 complete (03-01, 03-02, 03-03, 03-04, 03-05, 03-06)
-Status: Phase complete
-Last activity: 2026-01-17 - Completed 03-06-PLAN.md (Public Wedding Site)
+Phase: 4 of 10 (Event Guest Management)
+Plan: 1 of 4 complete (04-01)
+Status: In progress
+Last activity: 2026-01-17 - Completed 04-01-PLAN.md (Event Guest Data Model)
 
-Progress: ██████████ 100% (12/12 plans through Phase 3)
+Progress: █████████████░░░░░░░ 81% (13/16 plans through Phase 4)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
+- Total plans completed: 13
 - Average duration: 9 min
 
 **By Phase:**
@@ -29,6 +29,7 @@ Progress: ██████████ 100% (12/12 plans through Phase 3)
 | 01-foundation | 3/3 | 33 min | 11 min |
 | 02-admin-couple-auth | 3/3 | 29 min | 10 min |
 | 03-content-builder | 6/6 | 52 min | 9 min |
+| 04-event-guest-management | 1/4 | 12 min | 12 min |
 
 ## Accumulated Context
 
@@ -66,6 +67,8 @@ Progress: ██████████ 100% (12/12 plans through Phase 3)
 | Move buttons over drag for nested lists | 03-05 | Simpler than nested dnd-kit; section list already has drag-drop |
 | Component router pattern | 03-06 | ContentSection routes by type for clean separation |
 | Semantic section IDs | 03-06 | Enables anchor link navigation from header |
+| db push workflow over migrations | 04-01 | Existing project uses db push; no migrations directory |
+| EventGuest tenant isolation via event.wedding | 04-01 | EventGuest doesn't have direct wedding relation |
 
 ### Pending Todos
 
@@ -76,17 +79,14 @@ Progress: ██████████ 100% (12/12 plans through Phase 3)
 - k6 load test needs to be run against deployed endpoint for full verification
 - Supabase pgbouncer connection on port 6543, direct on 5432
 
-## Phase 3 Completion Status
+## Phase 4 Progress
 
-All success criteria verified:
-
-| Criteria | Status |
-|----------|--------|
-| Couples can select from pre-built templates | Verified |
-| Theme customization (colors, fonts) works | Verified |
-| Content sections can be added/reordered/hidden | Verified |
-| Section editors save content correctly | Verified |
-| Public site shows themed content to guests | Verified |
+| Plan | Status | Description |
+|------|--------|-------------|
+| 04-01 | Complete | Event Guest Data Model |
+| 04-02 | Pending | Guest CRUD API |
+| 04-03 | Pending | Event CRUD API |
+| 04-04 | Pending | Guest/Event Management UI |
 
 ## Deployment
 
@@ -97,6 +97,6 @@ All success criteria verified:
 
 ## Session Continuity
 
-Last session: 2026-01-17T10:52:00Z
-Stopped at: Completed 03-06-PLAN.md (Public Wedding Site)
-Resume file: None - Phase 03 complete, ready for Phase 04
+Last session: 2026-01-17T12:45:00Z
+Stopped at: Completed 04-01-PLAN.md (Event Guest Data Model)
+Resume file: None - Ready for 04-02
