@@ -158,9 +158,9 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 07-01-PLAN.md — Schema updates (GuestPhoto model, PhotoStatus enum), install lightbox package, configure Next.js remotePatterns
-- [ ] 07-02-PLAN.md — Couple photo dashboard with upload, moderation queue, settings, and QR code display
-- [ ] 07-03-PLAN.md — Public photo gallery with lightbox, guest upload page with client-side large file support
+- [x] 07-01-PLAN.md — Schema updates (GuestPhoto model, PhotoStatus enum), install lightbox package, configure Next.js remotePatterns
+- [x] 07-02-PLAN.md — Couple photo dashboard with upload, moderation queue, settings, and QR code display
+- [x] 07-03-PLAN.md — Public photo gallery with lightbox, guest upload page with client-side large file support
 
 **Success Criteria:**
 1. Couple can upload wedding photos that display in a gallery on their site
@@ -228,7 +228,7 @@ Plans:
 | 4 - Event & Guest Management | Complete | 2026-01-17 |
 | 5 - RSVP System | Complete | 2026-01-17 |
 | 6 - Gift Registry | Complete | 2026-01-17 |
-| 7 - Photo Sharing | Not started | - |
+| 7 - Photo Sharing | Complete | 2026-01-17 |
 | 8 - Guest Messaging | Not started | - |
 | 9 - Seating Chart | Not started | - |
 | 10 - Custom Domains & Polish | Not started | - |

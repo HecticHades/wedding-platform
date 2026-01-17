@@ -157,11 +157,11 @@
 | GIFT-04 | Phase 6 | Complete | Payment QR codes (EPC for EUR, PayPal.me links, Twint text) |
 | GIFT-05 | Phase 6 | Complete | Claimed status on dashboard gift cards |
 | GIFT-06 | Phase 6 | Complete | External registry links CRUD |
-| PHOTO-01 | Phase 7 | Pending | |
-| PHOTO-02 | Phase 7 | Pending | |
-| PHOTO-03 | Phase 7 | Pending | |
-| PHOTO-04 | Phase 7 | Pending | |
-| PHOTO-05 | Phase 7 | Pending | |
+| PHOTO-01 | Phase 7 | Complete | Couple photo upload in dashboard with CouplePhotoUploader |
+| PHOTO-02 | Phase 7 | Complete | Public photo gallery at /[domain]/photos with lightbox |
+| PHOTO-03 | Phase 7 | Complete | GuestUploader with Vercel Blob client upload (up to 20MB) |
+| PHOTO-04 | Phase 7 | Complete | PhotoUploadQRCode with download/print/copy options |
+| PHOTO-05 | Phase 7 | Complete | Moderation queue with approve/reject actions |
 | MSG-01 | Phase 8 | Pending | |
 | MSG-02 | Phase 8 | Pending | |
 | MSG-03 | Phase 8 | Pending | |
@@ -179,4 +179,4 @@
 
 ---
 *Requirements defined: 2026-01-16*
-*Last updated: 2026-01-17 - Phase 6 requirements marked Complete*
+*Last updated: 2026-01-17 - Phase 7 requirements marked Complete*
