@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** Phase 6 in progress - Gift Registry
+**Current focus:** Phase 6 complete - Gift Registry
 
 ## Current Position
 
 Phase: 6 of 10 (Gift Registry)
-Plan: 3 of 4 complete (06-03)
-Status: In progress
-Last activity: 2026-01-17 - Completed 06-03-PLAN.md (External Registries & Payment Settings)
+Plan: 4 of 4 complete (06-04)
+Status: Phase complete
+Last activity: 2026-01-17 - Completed 06-04-PLAN.md (Payment QR Codes)
 
-Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][] 96% (25/26 plans through Phase 6)
+Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (26/26 plans through Phase 6)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 25
+- Total plans completed: 26
 - Average duration: 8 min
 
 **By Phase:**
@@ -31,7 +31,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][] 96% (25/26 pl
 | 03-content-builder | 6/6 | 52 min | 9 min |
 | 04-event-guest-management | 4/4 | 30 min | 8 min |
 | 05-rsvp-system | 6/6 | 32 min | 5 min |
-| 06-gift-registry | 3/4 | 21 min | 7 min |
+| 06-gift-registry | 4/4 | 29 min | 7 min |
 
 ## Accumulated Context
 
@@ -101,6 +101,9 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][] 96% (25/26 pl
 | IBAN validation with Zod transform | 06-03 | Removes spaces and uppercases before validation |
 | Conditional payment fields by method | 06-03 | Only show relevant fields for selected payment method |
 | Unified Gift Registry title with tabs | 06-03 | Consistent UX across gifts/external/settings pages |
+| EPC QR for EUR, text display for CHF | 06-04 | EPC standard only supports EUR; Swiss QR bill overkill for peer-to-peer |
+| Two-step claiming flow (payment -> name) | 06-04 | Separates payment viewing from commitment; allows anonymous or named claims |
+| Optimistic local state for claimed gifts | 06-04 | Immediate UI feedback while server confirms; prevents double-selection |
 
 ### Pending Todos
 
@@ -111,7 +114,6 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][] 96% (25/26 pl
 - k6 load test needs to be run against deployed endpoint for full verification
 - Supabase pgbouncer connection on port 6543, direct on 5432
 - RESEND_API_KEY needs to be configured for email sending
-- Run `npm install` to install qrcode.react and sepa-payment-qr-code packages
 
 ## Phase 6 Progress
 
@@ -120,7 +122,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][] 96% (25/26 pl
 | 06-01 | Complete | Data Models |
 | 06-02 | Complete | Gift Management UI |
 | 06-03 | Complete | External Registries & Payment Settings |
-| 06-04 | Pending | Payment QR Codes |
+| 06-04 | Complete | Payment QR Codes |
 
 ## Deployment
 
@@ -131,6 +133,6 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][] 96% (25/26 pl
 
 ## Session Continuity
 
-Last session: 2026-01-17T13:58:00Z
-Stopped at: Completed 06-03-PLAN.md
-Resume file: None - Ready for 06-04
+Last session: 2026-01-17T14:13:00Z
+Stopped at: Completed 06-04-PLAN.md (Phase 6 complete)
+Resume file: None - Ready for Phase 7
