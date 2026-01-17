@@ -28,7 +28,7 @@ export default async function AdminDashboardPage() {
         guests: { select: { id: true } },
       },
     }),
-    prisma.rSVP.count(),
+    prisma.eventGuest.count({ where: { rsvpStatus: { not: null } } }),
   ])
 
   // Transform weddings for the table
