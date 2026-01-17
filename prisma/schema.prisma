@@ -82,6 +82,13 @@ model Tenant {
   subdomain    String    @unique
   customDomain String?   @unique
   name         String
+
+  // Domain management fields
+  domainStatus       DomainStatus @default(NONE)
+  domainVerification Json?        // Store verification challenges from Vercel
+  domainAddedAt      DateTime?    // When domain was added
+  domainVerifiedAt   DateTime?    // When domain was verified
+
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
@@ -147,6 +154,15 @@ enum MessageStatus {
   SENT       // Successfully delivered to Resend
   CANCELLED  // Cancelled before sending
   FAILED     // Failed to send
+}
+
+// Domain verification status for custom domains
+enum DomainStatus {
+  NONE       // No custom domain configured
+  PENDING    // Domain added, awaiting DNS configuration
+  VERIFYING  // DNS configured, verification in progress
+  VERIFIED   // Domain verified and active
+  FAILED     // Verification failed
 }
 
 model Guest {
