@@ -19,4 +19,7 @@ export const resend = {
     send: (...args: Parameters<Resend["emails"]["send"]>) => getResend().emails.send(...args),
     cancel: (...args: Parameters<Resend["emails"]["cancel"]>) => getResend().emails.cancel(...args),
   },
+  batch: {
+    send: (...args: Parameters<Resend["batch"]["send"]>) => getResend().batch.send(...args),
+  },
 };
