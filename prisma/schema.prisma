@@ -120,6 +120,7 @@ model Wedding {
   giftItems          GiftItem[]
   externalRegistries ExternalRegistry[]
   guestPhotos        GuestPhoto[]
+  broadcastMessages  BroadcastMessage[]
 
   @@index([tenantId])
 }
@@ -137,6 +138,14 @@ enum PhotoStatus {
   PENDING    // Awaiting couple review
   APPROVED   // Visible in gallery
   REJECTED   // Hidden from gallery
+}
+
+// Broadcast message status for guest messaging
+enum MessageStatus {
+  PENDING    // Scheduled but not yet sent
+  SENT       // Successfully delivered to Resend
+  CANCELLED  // Cancelled before sending
+  FAILED     // Failed to send
 }
 
 model Guest {
@@ -266,6 +275,30 @@ model GuestPhoto {
 
   // Metadata
   uploadedAt  DateTime    @default(now())
+
+  @@index([weddingId])
+  @@index([weddingId, status])
+}
+
+model BroadcastMessage {
+  id           String        @id @default(cuid())
+  weddingId    String
+  wedding      Wedding       @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  subject      String
+  content      String        @db.Text     // HTML content from textarea
+
+  // Scheduling
+  scheduledFor DateTime?                  // null = sent immediately
+  sentAt       DateTime?                  // When actually sent/delivered to Resend
+  status       MessageStatus @default(PENDING)
+
+  // Resend tracking - store email IDs for cancellation
+  resendEmailIds String[]                 // Array of Resend email IDs
+  recipientCount Int
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   @@index([weddingId])
   @@index([weddingId, status])
