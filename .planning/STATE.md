@@ -10,17 +10,17 @@ See: .planning/PROJECT.md
 ## Current Position
 
 Phase: 3 of 10 (Content Builder)
-Plan: 1 of 4 complete
+Plan: 2 of 6 complete (03-01, 03-04)
 Status: In progress
-Last activity: 2026-01-17 - Completed 03-01-PLAN.md (Content Builder Foundation)
+Last activity: 2026-01-17 - Completed 03-04-PLAN.md (Content Section Management)
 
-Progress: ██░░░░░░░░ 22%
+Progress: ██████░░░░ 67% (8/12 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: 10 min
+- Total plans completed: 8
+- Average duration: 9 min
 
 **By Phase:**
 
@@ -28,7 +28,7 @@ Progress: ██░░░░░░░░ 22%
 |-------|-------|-------|----------|
 | 01-foundation | 3/3 | 33 min | 11 min |
 | 02-admin-couple-auth | 3/3 | 29 min | 10 min |
-| 03-content-builder | 1/4 | 8 min | 8 min |
+| 03-content-builder | 2/6 | 14 min | 7 min |
 
 ## Accumulated Context
 
@@ -55,6 +55,8 @@ Progress: ██░░░░░░░░ 22%
 | prisma-json-types-generator@3.2.3 | 03-01 | Latest 4.x requires Prisma 7.2+; 3.2.3 compatible with Prisma 6.x |
 | CSS variables over Tailwind themes | 03-01 | Runtime theme switching without rebuild |
 | Discriminated union for content validation | 03-01 | Better Zod error messages and TypeScript inference |
+| Optimistic updates for drag-drop | 03-04 | Better UX for instant feedback with error rollback |
+| Section type uniqueness (one of each) | 03-04 | Simplifies content model and prevents confusion |
 
 ### Pending Todos
 
@@ -85,6 +87,6 @@ All success criteria verified:
 
 ## Session Continuity
 
-Last session: 2026-01-17T01:22:00Z
-Stopped at: Completed 03-01-PLAN.md (Content Builder Foundation)
-Resume file: None - ready for 03-02-PLAN.md
+Last session: 2026-01-17T01:28:00Z
+Stopped at: Completed 03-04-PLAN.md (Content Section Management)
+Resume file: None - ready for 03-02, 03-03, 03-05, or 03-06-PLAN.md
