@@ -39,7 +39,7 @@ export default async function CoupleDashboard() {
             dateTime: true,
           },
         },
-        photos: {
+        guestPhotos: {
           select: { id: true },
         },
       },
@@ -97,7 +97,7 @@ export default async function CoupleDashboard() {
     {
       id: "photos",
       label: "Upload photos",
-      completed: (wedding.photos?.length || 0) > 0,
+      completed: (wedding.guestPhotos?.length || 0) > 0,
       href: "/dashboard/photos",
     },
   ]
