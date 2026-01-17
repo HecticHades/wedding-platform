@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth/auth";
 import { redirect } from "next/navigation";
 import { prisma, withTenantContext } from "@/lib/db/prisma";
 import { ExternalRegistryList } from "./ExternalRegistryList";
+import { RegistryTabs } from "@/components/registry/RegistryTabs";
 
 // Common registry suggestions
 const REGISTRY_SUGGESTIONS = [
@@ -34,13 +35,16 @@ export default async function ExternalRegistriesPage() {
   return (
     <div>
       {/* Page header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">External Registries</h1>
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-gray-900">Gift Registry</h1>
         <p className="mt-2 text-gray-600">
           Add links to your registries on other platforms like Amazon, Target, or
-          Williams Sonoma. Guests will see these links on your public gift page.
+          Williams Sonoma.
         </p>
       </div>
+
+      {/* Navigation tabs */}
+      <RegistryTabs activeTab="external" />
 
       {/* Registry list with add functionality */}
       <ExternalRegistryList

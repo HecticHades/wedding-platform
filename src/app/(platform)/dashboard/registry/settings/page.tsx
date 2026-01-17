@@ -1,9 +1,9 @@
 import { auth } from "@/lib/auth/auth";
 import { redirect } from "next/navigation";
 import { prisma, withTenantContext } from "@/lib/db/prisma";
-import Link from "next/link";
-import { ArrowLeft, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import { PaymentSettingsForm } from "@/components/registry/PaymentSettingsForm";
+import { RegistryTabs } from "@/components/registry/RegistryTabs";
 import { updatePaymentSettings } from "./actions";
 
 export default async function PaymentSettingsPage() {
@@ -30,22 +30,16 @@ export default async function PaymentSettingsPage() {
 
   return (
     <div>
-      {/* Back link */}
-      <Link
-        href="/dashboard/registry"
-        className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-6"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back to Registry
-      </Link>
-
       {/* Page header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Payment Settings</h1>
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-gray-900">Gift Registry</h1>
         <p className="mt-2 text-gray-600">
           Configure how guests can contribute cash gifts to your wedding fund.
         </p>
       </div>
+
+      {/* Navigation tabs */}
+      <RegistryTabs activeTab="settings" />
 
       {/* Payment method info */}
       <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
