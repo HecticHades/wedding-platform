@@ -197,9 +197,9 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 09-01-PLAN.md — Schema (Table, SeatAssignment models), server actions for table CRUD and guest assignment
-- [ ] 09-02-PLAN.md — Seating chart UI with multi-container drag-and-drop (dnd-kit)
-- [ ] 09-03-PLAN.md — Print view, CSV export, guest seating page, dashboard navigation
+- [x] 09-01-PLAN.md — Schema (Table, SeatAssignment models), server actions for table CRUD and guest assignment
+- [x] 09-02-PLAN.md — Seating chart UI with multi-container drag-and-drop (dnd-kit)
+- [x] 09-03-PLAN.md — Print view, CSV export, guest seating page, dashboard navigation
 
 **Success Criteria:**
 1. Couple can create tables with names/numbers and seating capacity
@@ -237,7 +237,7 @@ Plans:
 | 6 - Gift Registry | Complete | 2026-01-17 |
 | 7 - Photo Sharing | Complete | 2026-01-17 |
 | 8 - Guest Messaging | Complete | 2026-01-17 |
-| 9 - Seating Chart | Not started | - |
+| 9 - Seating Chart | Complete | 2026-01-17 |
 | 10 - Custom Domains & Polish | Not started | - |
 
 ---

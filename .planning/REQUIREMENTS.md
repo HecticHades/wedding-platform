@@ -165,10 +165,10 @@
 | MSG-01 | Phase 8 | Complete | Broadcast email sending via Resend batch API |
 | MSG-02 | Phase 8 | Complete | Schedule messages up to 30 days with Resend scheduledAt |
 | MSG-03 | Phase 8 | Complete | BroadcastEmail template for personalized notifications |
-| SEAT-01 | Phase 9 | Pending | |
-| SEAT-02 | Phase 9 | Pending | |
-| SEAT-03 | Phase 9 | Pending | |
-| SEAT-04 | Phase 9 | Pending | |
+| SEAT-01 | Phase 9 | Complete | Table model with name, capacity, order; createTable/updateTable/deleteTable actions |
+| SEAT-02 | Phase 9 | Complete | SeatingChart with multi-container dnd-kit drag-drop; assignGuestToTable action |
+| SEAT-03 | Phase 9 | Complete | Print view with window.print(); CSV export via /api/seating/export |
+| SEAT-04 | Phase 9 | Complete | Guest seating page at /[domain]/seating with RSVP cookie auth |
 | COUPLE-06 | Phase 10 | Pending | |
 | TECH-05 | Phase 10 | Pending | |
 
@@ -179,4 +179,4 @@
 
 ---
 *Requirements defined: 2026-01-16*
-*Last updated: 2026-01-17 - Phase 8 requirements marked Complete*
+*Last updated: 2026-01-17 - Phase 9 requirements marked Complete*
