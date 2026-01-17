@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** Phase 5 Complete - Ready for Phase 6 (Gift Registry)
+**Current focus:** Phase 6 in progress - Gift Registry
 
 ## Current Position
 
-Phase: 5 of 10 (RSVP System) - COMPLETE
-Plan: 6 of 6 complete (05-06)
-Status: Phase complete
-Last activity: 2026-01-17 - Completed 05-06-PLAN.md (Admin RSVP Overview)
+Phase: 6 of 10 (Gift Registry)
+Plan: 1 of 4 complete (06-01)
+Status: In progress
+Last activity: 2026-01-17 - Completed 06-01-PLAN.md (Data Models)
 
-Progress: [][][][][][][][][][][][][][][][][][][][][][] 100% (22/22 plans through Phase 5)
+Progress: [][][][][][][][][][][][][][][][][][][][][][][][][] 88% (23/26 plans through Phase 6)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 22
+- Total plans completed: 23
 - Average duration: 8 min
 
 **By Phase:**
@@ -31,6 +31,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][] 100% (22/22 plans through
 | 03-content-builder | 6/6 | 52 min | 9 min |
 | 04-event-guest-management | 4/4 | 30 min | 8 min |
 | 05-rsvp-system | 6/6 | 32 min | 5 min |
+| 06-gift-registry | 1/4 | 6 min | 6 min |
 
 ## Accumulated Context
 
@@ -92,6 +93,9 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][] 100% (22/22 plans through
 | No tenant context for admin queries | 05-06 | Admin needs platform-wide visibility across all weddings |
 | Client-side sorting/filtering for admin | 05-06 | Wedding count typically manageable; instant UX |
 | Color-coded response rate progress bars | 05-06 | Quick visual identification of weddings needing attention |
+| Store paymentSettings separately from contentSections | 06-01 | Payment credentials shouldn't be in publicly-fetched JSON |
+| GiftItem as separate model (not content section) | 06-01 | Need claiming status, ordering, and individual item tracking |
+| Support EUR and CHF currencies | 06-01 | EPC QR for EUR, text display for CHF |
 
 ### Pending Todos
 
@@ -102,17 +106,16 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][] 100% (22/22 plans through
 - k6 load test needs to be run against deployed endpoint for full verification
 - Supabase pgbouncer connection on port 6543, direct on 5432
 - RESEND_API_KEY needs to be configured for email sending
+- Run `npm install` to install qrcode.react and sepa-payment-qr-code packages
 
-## Phase 5 Progress
+## Phase 6 Progress
 
 | Plan | Status | Description |
 |------|--------|-------------|
-| 05-01 | Complete | RSVP Infrastructure |
-| 05-02 | Complete | RSVP Guest Authentication |
-| 05-03 | Complete | RSVP Form UI |
-| 05-04 | Complete | RSVP Dashboard |
-| 05-05 | Complete | Email Notifications |
-| 05-06 | Complete | Admin RSVP Overview |
+| 06-01 | Complete | Data Models |
+| 06-02 | Pending | Gift Management UI |
+| 06-03 | Pending | Public Gift Registry View |
+| 06-04 | Pending | Payment QR Codes |
 
 ## Deployment
 
@@ -123,6 +126,6 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][] 100% (22/22 plans through
 
 ## Session Continuity
 
-Last session: 2026-01-17T14:30:00Z
-Stopped at: Phase 5 verified and complete
-Resume file: None - Ready for Phase 6
+Last session: 2026-01-17T15:00:00Z
+Stopped at: Completed 06-01-PLAN.md
+Resume file: None - Ready for 06-02
