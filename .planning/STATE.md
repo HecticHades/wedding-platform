@@ -10,16 +10,16 @@ See: .planning/PROJECT.md
 ## Current Position
 
 Phase: 10 of 10 (Custom Domains & Polish)
-Plan: 1 of 3 complete (10-01)
+Plan: 2 of 3 complete (10-02)
 Status: In progress
-Last activity: 2026-01-17 - Completed 10-01-PLAN.md (Domain Infrastructure)
+Last activity: 2026-01-17 - Completed 10-02-PLAN.md (Domain API Routes)
 
-Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=] 95% (35/37 plans)
+Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=] 97% (36/37 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 35
+- Total plans completed: 36
 - Average duration: 8 min
 
 **By Phase:**
@@ -35,7 +35,7 @@ Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][
 | 07-photo-sharing | 3/3 | 17 min | 6 min |
 | 08-guest-messaging | 2/2 | 11 min | 6 min |
 | 09-seating-chart | 3/3 | 15 min | 5 min |
-| 10-custom-domains-polish | 1/3 | 6 min | 6 min |
+| 10-custom-domains-polish | 2/3 | 9 min | 5 min |
 
 ## Accumulated Context
 
@@ -127,6 +127,8 @@ Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][
 | DomainStatus enum with 5 states | 10-01 | NONE/PENDING/VERIFYING/VERIFIED/FAILED covers full domain lifecycle |
 | Domain fields on Tenant (not Wedding) | 10-01 | Domain is tenant-level concern; subdomain already on Tenant |
 | Apex vs subdomain detection by dot count | 10-01 | Simple heuristic: 2 parts = apex, 3+ parts = subdomain |
+| Internal API for Edge middleware | 10-02 | Edge runtime cannot import Prisma; fetch internal API recommended |
+| Matcher excludes api/internal | 10-02 | Prevents recursive middleware calls when tenant-lookup fetches |
 
 ### Pending Todos
 
@@ -145,7 +147,7 @@ Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][
 | Plan | Status | Description |
 |------|--------|-------------|
 | 10-01 | Complete | Domain Infrastructure |
-| 10-02 | Pending | Domain API Routes |
+| 10-02 | Complete | Domain API Routes |
 | 10-03 | Pending | Domain Management UI |
 
 ## Deployment
@@ -157,6 +159,6 @@ Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][
 
 ## Session Continuity
 
-Last session: 2026-01-17T17:08:03Z
-Stopped at: Completed 10-01-PLAN.md (Domain Infrastructure)
+Last session: 2026-01-17T17:13:30Z
+Stopped at: Completed 10-02-PLAN.md (Domain API Routes)
 Resume file: None
