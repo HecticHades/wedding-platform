@@ -142,6 +142,34 @@ declare global {
       | GalleryContent
       | TimelineContent
       | ContactContent;
+
+    /**
+     * Payment settings for gift registry stored in Wedding.paymentSettings
+     */
+    interface PaymentSettings {
+      enabled: boolean;
+      method: 'bank_transfer' | 'paypal' | 'twint' | null;
+
+      // Bank transfer (EPC QR code for EUR, text display for CHF)
+      bankTransfer?: {
+        accountName: string;
+        iban: string;
+        bic?: string;
+        currency: 'EUR' | 'CHF';
+      };
+
+      // PayPal.me link
+      paypal?: {
+        username: string;
+        currency?: string;
+      };
+
+      // Twint (Swiss - display instructions only)
+      twint?: {
+        displayText: string;
+        phoneNumber?: string;
+      };
+    }
   }
 }
 
