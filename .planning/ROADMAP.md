@@ -214,14 +214,18 @@ Plans:
 **Goal:** Couples can use their own domain with SSL, completing the platform experience.
 **Depends on:** Phases 1-9
 **Requirements:** COUPLE-06, TECH-05
+**Plans:** 3 plans
+
+Plans:
+- [ ] 10-01-PLAN.md — Schema updates (DomainStatus enum), Vercel SDK setup, domain service layer
+- [ ] 10-02-PLAN.md — Domain API routes, tenant lookup API, custom domain middleware routing
+- [ ] 10-03-PLAN.md — Domain settings UI, DNS instructions, verification status components
 
 **Success Criteria:**
 1. Couple can configure a custom domain (e.g., `aliceandbobwedding.com`) in their settings
 2. System provides DNS instructions (CNAME record) for the couple to configure
 3. Custom domain is verified and SSL certificate is automatically provisioned
 4. Guests accessing the custom domain see the couple's wedding site with valid HTTPS
-
-**Plans:** (created by /gsd:plan-phase)
 
 ---
 
