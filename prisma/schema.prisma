@@ -5,6 +5,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator jsonTypes {
+  provider = "prisma-json-types-generator"
+}
+
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
@@ -95,6 +99,13 @@ model Wedding {
   partner2Name String
   weddingDate  DateTime?
   rsvpCode     String?   @unique
+
+  // Template and theme settings
+  templateId      String  @default("classic")
+  /// [ThemeSettings]
+  themeSettings   Json    @default("{}")
+  /// [ContentSection[]]
+  contentSections Json    @default("[]")
 
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
