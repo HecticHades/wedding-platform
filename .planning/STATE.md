@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** Phase 4 In Progress - Event Management UI complete
+**Current focus:** Phase 4 Complete - Ready for Phase 5 (RSVP System)
 
 ## Current Position
 
-Phase: 4 of 10 (Event Guest Management)
-Plan: 3 of 4 complete (04-01, 04-02, 04-03)
-Status: In progress
-Last activity: 2026-01-17 - Completed 04-02-PLAN.md (Event Management UI)
+Phase: 4 of 10 (Event Guest Management) - COMPLETE
+Plan: 4 of 4 complete (04-01, 04-02, 04-03, 04-04)
+Status: Phase complete
+Last activity: 2026-01-17 - Completed 04-04-PLAN.md (Event/Guest Assignment UI)
 
-Progress: ███████████████░░░░░ 94% (15/16 plans through Phase 4)
+Progress: ████████████████████ 100% (16/16 plans through Phase 4)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15
+- Total plans completed: 16
 - Average duration: 9 min
 
 **By Phase:**
@@ -29,7 +29,7 @@ Progress: ███████████████░░░░░ 94% (15/1
 | 01-foundation | 3/3 | 33 min | 11 min |
 | 02-admin-couple-auth | 3/3 | 29 min | 10 min |
 | 03-content-builder | 6/6 | 52 min | 9 min |
-| 04-event-guest-management | 3/4 | 22 min | 7 min |
+| 04-event-guest-management | 4/4 | 30 min | 8 min |
 
 ## Accumulated Context
 
@@ -74,6 +74,8 @@ Progress: ███████████████░░░░░ 94% (15/1
 | Checkbox value="true" for boolean form fields | 04-02 | HTML checkboxes only send value when checked |
 | Delete confirmation modal | 04-02 | Inline overlay modal for better UX than browser confirm() |
 | Client-side search for event list | 04-02 | Added when > 3 events for quick filtering |
+| Bulk invitation update via transaction | 04-04 | Delete all + create new atomically; simpler than diff |
+| Separate Events section from content-builder | 04-04 | Database events with access control vs. manual JSON content |
 
 ### Pending Todos
 
@@ -91,7 +93,7 @@ Progress: ███████████████░░░░░ 94% (15/1
 | 04-01 | Complete | Event Guest Data Model |
 | 04-02 | Complete | Event Management UI |
 | 04-03 | Complete | Guest Management UI |
-| 04-04 | Pending | Event/Guest Assignment UI |
+| 04-04 | Complete | Event/Guest Assignment UI |
 
 ## Deployment
 
@@ -102,6 +104,6 @@ Progress: ███████████████░░░░░ 94% (15/1
 
 ## Session Continuity
 
-Last session: 2026-01-17T11:40:47Z
-Stopped at: Completed 04-02-PLAN.md (Event Management UI)
-Resume file: None - Ready for 04-04
+Last session: 2026-01-17T11:50:58Z
+Stopped at: Completed 04-04-PLAN.md (Event/Guest Assignment UI)
+Resume file: None - Ready for Phase 5
