@@ -2,9 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Google Fonts imports */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Great+Vibes&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Couples Dashboard Palette */
+  --dashboard-bg: #faf8f5;
+  --dashboard-primary: #c4a4a4;
+  --dashboard-secondary: #9caa9c;
+  --dashboard-gold: #c9a962;
+  --dashboard-text: #3d3936;
+  --dashboard-border: #e8e4e0;
+
+  /* Landing Page Palette */
+  --landing-violet: #7C3AED;
+  --landing-pink: #EC4899;
+
+  /* Admin Dashboard Palette */
+  --admin-sidebar: #0f172a;
+  --admin-sidebar-hover: #1e293b;
+  --admin-primary: #2563eb;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,5 +37,58 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+}
+
+/* Utility classes for dashboard backgrounds */
+.dashboard-bg {
+  background-color: var(--dashboard-bg);
+}
+
+.admin-sidebar-bg {
+  background-color: var(--admin-sidebar);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Focus visible styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--landing-violet);
+  outline-offset: 2px;
+}
+
+/* Animation utilities */
+@layer utilities {
+  .animation-delay-150 {
+    animation-delay: 150ms;
+  }
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
 }

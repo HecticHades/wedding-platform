@@ -2,7 +2,8 @@ import { auth } from "@/lib/auth/auth";
 import { redirect } from "next/navigation";
 import { prisma, withTenantContext } from "@/lib/db/prisma";
 import { templates } from "@/lib/content/templates";
-import { TemplateSelector } from "./TemplateSelector";
+import { TemplateGallery } from "@/components/templates";
+import { applyTemplate } from "./actions";
 
 export default async function TemplatesPage() {
   const session = await auth();
@@ -29,16 +30,19 @@ export default async function TemplatesPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Choose Your Template</h1>
-        <p className="mt-2 text-gray-600">
-          Select a design template for your wedding site. Each template includes
-          a unique color palette, fonts, and default content sections.
+        <h1 className="text-2xl lg:text-3xl font-bold font-cormorant text-[#3d3936]">
+          Choose Your Template
+        </h1>
+        <p className="mt-2 text-[#3d3936]/70">
+          Select a design template for your wedding site. Preview templates in full,
+          compare side-by-side, and customize colors to match your style.
         </p>
       </div>
 
-      <TemplateSelector
+      <TemplateGallery
         templates={templates}
         currentTemplateId={currentTemplateId}
+        onApplyTemplate={applyTemplate}
       />
     </div>
   );
