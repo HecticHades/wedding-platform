@@ -10,16 +10,16 @@ See: .planning/PROJECT.md
 ## Current Position
 
 Phase: 6 of 10 (Gift Registry)
-Plan: 2 of 4 complete (06-02)
+Plan: 3 of 4 complete (06-03)
 Status: In progress
-Last activity: 2026-01-17 - Completed 06-02-PLAN.md (Gift Management UI)
+Last activity: 2026-01-17 - Completed 06-03-PLAN.md (External Registries & Payment Settings)
 
-Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][] 92% (24/26 plans through Phase 6)
+Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][] 96% (25/26 plans through Phase 6)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 24
+- Total plans completed: 25
 - Average duration: 8 min
 
 **By Phase:**
@@ -31,7 +31,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][] 92% (24/26 plans 
 | 03-content-builder | 6/6 | 52 min | 9 min |
 | 04-event-guest-management | 4/4 | 30 min | 8 min |
 | 05-rsvp-system | 6/6 | 32 min | 5 min |
-| 06-gift-registry | 2/4 | 13 min | 7 min |
+| 06-gift-registry | 3/4 | 21 min | 7 min |
 
 ## Accumulated Context
 
@@ -98,6 +98,9 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][] 92% (24/26 plans 
 | Support EUR and CHF currencies | 06-01 | EPC QR for EUR, text display for CHF |
 | Grid layout for gift cards (3 cols on lg) | 06-02 | Better visual density for gift items than vertical list |
 | Stats summary on registry page | 06-02 | Quick overview of total items, claimed count, total value |
+| IBAN validation with Zod transform | 06-03 | Removes spaces and uppercases before validation |
+| Conditional payment fields by method | 06-03 | Only show relevant fields for selected payment method |
+| Unified Gift Registry title with tabs | 06-03 | Consistent UX across gifts/external/settings pages |
 
 ### Pending Todos
 
@@ -116,7 +119,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][] 92% (24/26 plans 
 |------|--------|-------------|
 | 06-01 | Complete | Data Models |
 | 06-02 | Complete | Gift Management UI |
-| 06-03 | Pending | Public Gift Registry View |
+| 06-03 | Complete | External Registries & Payment Settings |
 | 06-04 | Pending | Payment QR Codes |
 
 ## Deployment
@@ -128,6 +131,6 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][] 92% (24/26 plans 
 
 ## Session Continuity
 
-Last session: 2026-01-17T13:56:00Z
-Stopped at: Completed 06-02-PLAN.md
-Resume file: None - Ready for 06-03
+Last session: 2026-01-17T13:58:00Z
+Stopped at: Completed 06-03-PLAN.md
+Resume file: None - Ready for 06-04
