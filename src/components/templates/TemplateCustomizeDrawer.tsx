@@ -277,12 +277,12 @@ export function TemplateCustomizeDrawer({
                 </label>
                 <div className="relative">
                   <select
-                    value={theme.bodyFont}
+                    value={theme.fontFamily}
                     onChange={(e) =>
-                      handleColorChange("bodyFont" as keyof ThemeSettings, e.target.value)
+                      handleColorChange("fontFamily" as keyof ThemeSettings, e.target.value)
                     }
                     className="w-full px-4 py-3 text-sm border border-gray-200 rounded-lg appearance-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 outline-none"
-                    style={{ fontFamily: theme.bodyFont }}
+                    style={{ fontFamily: theme.fontFamily }}
                   >
                     {fontOptions.body.map((font) => (
                       <option key={font} value={font} style={{ fontFamily: font }}>
@@ -294,7 +294,7 @@ export function TemplateCustomizeDrawer({
                 </div>
                 <p
                   className="mt-2 text-sm"
-                  style={{ fontFamily: theme.bodyFont }}
+                  style={{ fontFamily: theme.fontFamily }}
                 >
                   Preview: Join us for a celebration of love.
                 </p>

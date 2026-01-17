@@ -31,7 +31,7 @@ export function PreviewStorySection({ content, theme }: PreviewStorySectionProps
               key={index}
               className="text-lg leading-relaxed"
               style={{
-                fontFamily: theme.bodyFont,
+                fontFamily: theme.fontFamily,
                 color: theme.textColor,
               }}
             >

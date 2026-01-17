@@ -46,7 +46,7 @@ export function TemplateFullPreview({
       style={{
         ...cssVars,
         backgroundColor: theme.backgroundColor,
-        fontFamily: theme.bodyFont,
+        fontFamily: theme.fontFamily,
       }}
     >
       <PreviewHeroSection content={content} theme={theme} />
