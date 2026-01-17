@@ -61,6 +61,15 @@ Plans:
 **Goal:** Couples can customize their wedding website appearance and content sections.
 **Depends on:** Phase 2
 **Requirements:** COUPLE-02, COUPLE-03, COUPLE-04, CONTENT-01, CONTENT-02, CONTENT-03, CONTENT-04, CONTENT-05, CONTENT-06
+**Plans:** 6 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Schema updates, TypeScript types, Tailwind CSS variable theming, packages
+- [ ] 03-02-PLAN.md — Template system (3 templates, selection UI, apply to wedding)
+- [ ] 03-03-PLAN.md — Theme customization (color pickers, font selectors, live preview)
+- [ ] 03-04-PLAN.md — Content section management (add, remove, reorder with drag-and-drop)
+- [ ] 03-05-PLAN.md — Section editors for all 6 types (Event Details, Our Story, Travel, Gallery, Timeline, Contact)
+- [ ] 03-06-PLAN.md — Public site rendering (apply theme, display sections to guests)
 
 **Success Criteria:**
 1. Couple can select from at least 3 template designs and preview each before applying
@@ -68,8 +77,6 @@ Plans:
 3. Couple can add, edit, reorder, and remove content sections (Event Details, Our Story, Travel, Gallery, Timeline, Contact)
 4. Each content section saves correctly and displays on the public wedding site
 5. Guest visiting the wedding site URL sees the couple's customized design and content
-
-**Plans:** (created by /gsd:plan-phase)
 
 ---
 
@@ -196,7 +203,7 @@ Plans:
 |-------|--------|-----------|
 | 1 - Foundation | Complete | 2026-01-16 |
 | 2 - Admin & Couple Auth | Complete | 2026-01-17 |
-| 3 - Content Builder | Not started | - |
+| 3 - Content Builder | Planning complete | - |
 | 4 - Event & Guest Management | Not started | - |
 | 5 - RSVP System | Not started | - |
 | 6 - Gift Registry | Not started | - |
