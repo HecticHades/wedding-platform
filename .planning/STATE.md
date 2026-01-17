@@ -5,29 +5,29 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** Phase 2 - Admin & Couple Authentication
+**Current focus:** Phase 3 - Content Builder
 
 ## Current Position
 
-Phase: 2 of 10 (Admin & Couple Authentication)
-Plan: 2 of 4
-Status: In progress
-Last activity: 2026-01-17 - Completed 02-02-PLAN.md (Admin dashboard)
+Phase: 3 of 10 (Content Builder)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-01-17 - Phase 2 verified and complete
 
-Progress: ██████░░░░ 50%
+Progress: ██░░░░░░░░ 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: 9 min
+- Total plans completed: 6
+- Average duration: 10 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 3/3 | 33 min | 11 min |
-| 02-admin-couple-auth | 2/4 | 14 min | 7 min |
+| 02-admin-couple-auth | 3/3 | 29 min | 10 min |
 
 ## Accumulated Context
 
@@ -49,6 +49,8 @@ Progress: ██████░░░░ 50%
 | Server actions over API routes | 02-02 | Better DX with type-safe form handling |
 | $transaction for atomic wedding creation | 02-02 | Ensure data consistency across tenant/wedding/user |
 | Defense-in-depth role checks | 02-02 | CVE-2025-29927 mitigation - check role in layouts beyond middleware |
+| withTenantContext for couple queries | 02-03 | Ensures data isolation - couples only see their own wedding |
+| Combined auth + subdomain middleware | 02-03 | Single middleware handles both concerns efficiently |
 
 ### Pending Todos
 
@@ -56,28 +58,29 @@ Progress: ██████░░░░ 50%
 
 ### Blockers/Concerns
 
-- DATABASE_URL needs to be configured before database operations work
-- Local subdomain testing requires hosts file modification
-- `npx prisma migrate dev` required after DATABASE_URL configured
 - k6 load test needs to be run against deployed endpoint for full verification
-- AUTH_SECRET environment variable required for Auth.js
-- Run `npm install` to install new auth dependencies
-- Run `npx prisma db seed` to create admin user after migrations
+- Supabase pgbouncer connection on port 6543, direct on 5432
 
-## Phase 1 Completion Status
+## Phase 2 Completion Status
 
 All success criteria verified:
 
 | Criteria | Status |
 |----------|--------|
-| Subdomain routing | Verified |
-| Database tenant isolation | Code complete |
-| CDN cache headers | Ready (verify post-deployment) |
-| 100 concurrent users | Script ready |
-| Mobile responsive | Verified |
+| Admin login and wedding list | Verified |
+| Admin create wedding with couple | Verified |
+| Admin view/edit wedding settings | Verified |
+| Couple login to own dashboard | Verified |
+| Couple data isolation | Verified |
+
+## Deployment
+
+- **Vercel:** wedding-platform-fawn.vercel.app
+- **Database:** Supabase (PostgreSQL)
+- **Auth:** Auth.js v5 with JWT strategy
 
 ## Session Continuity
 
-Last session: 2026-01-16T23:18:35Z
-Stopped at: Completed 02-02-PLAN.md (Admin dashboard)
-Resume file: None - ready for 02-03-PLAN.md
+Last session: 2026-01-17T01:30:00Z
+Stopped at: Completed Phase 2 - Admin & Couple Authentication
+Resume file: None - ready for Phase 3 planning

@@ -41,9 +41,9 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Auth.js v5 setup with Prisma adapter, credentials provider, JWT strategy
-- [ ] 02-02-PLAN.md — Admin authentication and dashboard (platform-level management)
-- [ ] 02-03-PLAN.md — Couple authentication integrated with tenant context
+- [x] 02-01-PLAN.md — Auth.js v5 setup with Prisma adapter, credentials provider, JWT strategy
+- [x] 02-02-PLAN.md — Admin authentication and dashboard (platform-level management)
+- [x] 02-03-PLAN.md — Couple authentication integrated with tenant context
 
 **Success Criteria:**
 1. Admin can log in and see a list of all wedding sites on the platform
@@ -195,7 +195,7 @@ Plans:
 | Phase | Status | Completed |
 |-------|--------|-----------|
 | 1 - Foundation | Complete | 2026-01-16 |
-| 2 - Admin & Couple Auth | Planned | - |
+| 2 - Admin & Couple Auth | Complete | 2026-01-17 |
 | 3 - Content Builder | Not started | - |
 | 4 - Event & Guest Management | Not started | - |
 | 5 - RSVP System | Not started | - |
