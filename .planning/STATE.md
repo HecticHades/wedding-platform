@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** Phase 8 complete - Guest Messaging
+**Current focus:** Phase 9 - Seating Chart
 
 ## Current Position
 
-Phase: 8 of 10 (Guest Messaging) - COMPLETE
-Plan: 2 of 2 complete (08-02)
-Status: Phase complete
-Last activity: 2026-01-17 - Completed 08-02-PLAN.md (Messaging UI Components)
+Phase: 9 of 10 (Seating Chart)
+Plan: 1 of 2 complete (09-01)
+Status: In progress
+Last activity: 2026-01-17 - Completed 09-01-PLAN.md (Seating Data Layer)
 
-Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (31/31 plans through Phase 8)
+Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 94% (32/34 plans through Phase 9)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 31
+- Total plans completed: 32
 - Average duration: 8 min
 
 **By Phase:**
@@ -34,6 +34,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (3
 | 06-gift-registry | 4/4 | 29 min | 7 min |
 | 07-photo-sharing | 3/3 | 17 min | 6 min |
 | 08-guest-messaging | 2/2 | 11 min | 6 min |
+| 09-seating-chart | 1/2 | 3 min | 3 min |
 
 ## Accumulated Context
 
@@ -118,6 +119,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (3
 | Store resendEmailIds for cancellation | 08-01 | Array of email IDs enables cancellation of scheduled messages |
 | 500ms delay between scheduled sends | 08-01 | Rate limit: 2 req/sec; prevents 429 errors |
 | Complete dashboard navigation with icons | 08-02 | All dashboard sections accessible from nav; Messaging uses Mail icon |
+| Plus-one capacity calculation for seating | 09-01 | Sum (1 + plusOneCount) for ATTENDING events for accurate headcount |
 
 ### Pending Todos
 
@@ -130,12 +132,12 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (3
 - RESEND_API_KEY needs to be configured for email sending
 - BLOB_READ_WRITE_TOKEN needs to be configured for photo uploads
 
-## Phase 8 Progress
+## Phase 9 Progress
 
 | Plan | Status | Description |
 |------|--------|-------------|
-| 08-01 | Complete | Guest Messaging Data Layer |
-| 08-02 | Complete | Messaging UI Components |
+| 09-01 | Complete | Seating Data Layer |
+| 09-02 | Pending | Seating UI Components |
 
 ## Deployment
 
@@ -146,6 +148,6 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (3
 
 ## Session Continuity
 
-Last session: 2026-01-17T18:00:00Z
-Stopped at: Completed 08-02-PLAN.md (Phase 8 complete)
-Resume file: None - Ready for Phase 9
+Last session: 2026-01-17T16:20:00Z
+Stopped at: Completed 09-01-PLAN.md (Seating Data Layer)
+Resume file: None - Ready for 09-02
