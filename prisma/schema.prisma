@@ -109,6 +109,9 @@ model Wedding {
   /// [PaymentSettings]
   paymentSettings Json    @default("{}")
 
+  // Photo sharing settings
+  photoSharingEnabled Boolean @default(false)
+
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
@@ -116,6 +119,7 @@ model Wedding {
   events             Event[]
   giftItems          GiftItem[]
   externalRegistries ExternalRegistry[]
+  guestPhotos        GuestPhoto[]
 
   @@index([tenantId])
 }
@@ -126,6 +130,13 @@ enum RsvpStatus {
   ATTENDING
   DECLINED
   MAYBE
+}
+
+// Photo moderation status for guest uploads
+enum PhotoStatus {
+  PENDING    // Awaiting couple review
+  APPROVED   // Visible in gallery
+  REJECTED   // Hidden from gallery
 }
 
 model Guest {
@@ -238,4 +249,24 @@ model ExternalRegistry {
   updatedAt   DateTime @updatedAt
 
   @@index([weddingId])
+}
+
+model GuestPhoto {
+  id          String      @id @default(cuid())
+  weddingId   String
+  wedding     Wedding     @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  url         String              // Vercel Blob URL
+  caption     String?             // Optional caption from guest
+  uploadedBy  String?             // Guest name (optional)
+
+  // Moderation
+  status      PhotoStatus @default(PENDING)
+  reviewedAt  DateTime?
+
+  // Metadata
+  uploadedAt  DateTime    @default(now())
+
+  @@index([weddingId])
+  @@index([weddingId, status])
 }

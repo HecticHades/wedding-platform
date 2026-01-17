@@ -170,6 +170,15 @@ declare global {
         phoneNumber?: string;
       };
     }
+
+    /**
+     * Photo sharing settings for guest photo uploads
+     */
+    interface PhotoSettings {
+      enabled: boolean;
+      allowGuestUploads: boolean;
+      requireModeration: boolean;
+    }
   }
 }
 
