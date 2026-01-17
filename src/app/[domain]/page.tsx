@@ -7,7 +7,8 @@ import {
   mergeWithDefaults,
   type ThemeSettings,
 } from "@/lib/content/theme-utils";
-import { Heart, ChevronDown } from "lucide-react";
+import { getVisibleEvents, type VisibleEvent } from "@/lib/events/event-utils";
+import { Heart, ChevronDown, Calendar, MapPin, Clock, Shirt } from "lucide-react";
 import Link from "next/link";
 
 interface PageProps {
@@ -24,6 +25,140 @@ function formatWeddingDate(date: Date): string {
     month: "long",
     day: "numeric",
   });
+}
+
+/**
+ * Format event date for display
+ */
+function formatEventDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+/**
+ * Format event time for display
+ */
+function formatEventTime(date: Date): string {
+  return date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
+/**
+ * Creates a Google Maps URL from an address
+ */
+function getGoogleMapsUrl(address: string): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+}
+
+/**
+ * Display events from the database (with visibility filtering)
+ */
+function EventsDisplay({ events }: { events: VisibleEvent[] }) {
+  if (events.length === 0) {
+    return (
+      <div className="py-12 px-4 md:py-16 md:px-6 bg-wedding-background">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2
+            id="events-heading"
+            className="font-wedding-heading text-3xl md:text-4xl text-wedding-primary mb-4"
+          >
+            Events
+          </h2>
+          <p className="font-wedding text-wedding-text/70">
+            Event details coming soon.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="py-12 px-4 md:py-16 md:px-6 bg-wedding-background">
+      <div className="max-w-4xl mx-auto">
+        <h2
+          id="events-heading"
+          className="font-wedding-heading text-3xl md:text-4xl text-wedding-primary text-center mb-10"
+        >
+          Events
+        </h2>
+
+        <div className="space-y-6">
+          {events.map((event) => (
+            <div
+              key={event.id}
+              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-wedding-primary/10 p-6 md:p-8"
+            >
+              {/* Event name */}
+              <h3 className="font-wedding-heading text-2xl md:text-3xl text-wedding-primary mb-4">
+                {event.name}
+              </h3>
+
+              <div className="space-y-3">
+                {/* Date */}
+                <div className="flex items-start gap-3 text-wedding-text">
+                  <Calendar className="h-5 w-5 text-wedding-secondary flex-shrink-0 mt-0.5" />
+                  <span className="font-wedding">{formatEventDate(event.dateTime)}</span>
+                </div>
+
+                {/* Time */}
+                <div className="flex items-start gap-3 text-wedding-text">
+                  <Clock className="h-5 w-5 text-wedding-secondary flex-shrink-0 mt-0.5" />
+                  <span className="font-wedding">
+                    {formatEventTime(event.dateTime)}
+                    {event.endTime && ` - ${formatEventTime(event.endTime)}`}
+                  </span>
+                </div>
+
+                {/* Location */}
+                {(event.location || event.address) && (
+                  <div className="flex items-start gap-3 text-wedding-text">
+                    <MapPin className="h-5 w-5 text-wedding-secondary flex-shrink-0 mt-0.5" />
+                    <div className="font-wedding">
+                      {event.location && <p className="font-medium">{event.location}</p>}
+                      {event.address && (
+                        <a
+                          href={getGoogleMapsUrl(event.address)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-wedding-accent hover:underline text-sm"
+                        >
+                          {event.address}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Dress code */}
+                {event.dressCode && (
+                  <div className="flex items-start gap-3 text-wedding-text">
+                    <Shirt className="h-5 w-5 text-wedding-secondary flex-shrink-0 mt-0.5" />
+                    <span className="font-wedding">
+                      <span className="font-medium">Dress Code:</span> {event.dressCode}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Description */}
+              {event.description && (
+                <p className="mt-4 font-wedding text-wedding-text/80 leading-relaxed border-t border-wedding-primary/10 pt-4">
+                  {event.description}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 /**
@@ -88,8 +223,22 @@ export default async function TenantHomePage({ params }: PageProps) {
     .filter((section) => section.isVisible)
     .sort((a, b) => a.order - b.order);
 
-  // Get navigation links for visible sections
+  // Get navigation links for visible sections (add "Events" link for database events)
   const navLinks = getSectionNavLinks(visibleSections);
+
+  // Fetch visible events from the database
+  // For anonymous visitors (no guestId), this returns only public events
+  // Guest identification will be added in Phase 5 with RSVP code
+  const events = await getVisibleEvents({ weddingId: tenant.wedding.id });
+
+  // Add Events to nav if we have database events and no event-details section
+  const hasEventDetailsSection = visibleSections.some(
+    (s) => s.type === "event-details"
+  );
+  const allNavLinks =
+    events.length > 0 && !hasEventDetailsSection
+      ? [{ href: "#events", label: "Events" }, ...navLinks]
+      : navLinks;
 
   // Use tenant context for any further tenant-scoped operations
   return withTenantContext(tenant.id, () => (
@@ -134,11 +283,11 @@ export default async function TenantHomePage({ params }: PageProps) {
             )}
           </div>
 
-          {/* Section navigation - only show if there are visible sections */}
-          {navLinks.length > 0 && (
+          {/* Section navigation - only show if there are visible sections or events */}
+          {allNavLinks.length > 0 && (
             <nav className="relative z-10 mt-12">
               <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-                {navLinks.map((link) => (
+                {allNavLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
@@ -153,12 +302,19 @@ export default async function TenantHomePage({ params }: PageProps) {
           )}
 
           {/* Scroll indicator */}
-          {visibleSections.length > 0 && (
+          {(visibleSections.length > 0 || events.length > 0) && (
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
               <ChevronDown className="w-6 h-6 text-wedding-text/40" />
             </div>
           )}
         </header>
+
+        {/* Events Section (from database with visibility filtering) */}
+        {events.length > 0 && (
+          <section id="events" className="scroll-mt-20">
+            <EventsDisplay events={events} />
+          </section>
+        )}
 
         {/* Content Sections */}
         {visibleSections.length > 0 && (

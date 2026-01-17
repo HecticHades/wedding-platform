@@ -19,8 +19,20 @@ export default async function CoupleDashboard() {
     const wedding = await prisma.wedding.findFirst({
       include: {
         tenant: true,
-        guests: true,
-        events: true,
+        guests: {
+          select: {
+            id: true,
+            partySize: true,
+          },
+        },
+        events: {
+          orderBy: { dateTime: "asc" },
+          select: {
+            id: true,
+            name: true,
+            dateTime: true,
+          },
+        },
       },
     })
     return { wedding }
@@ -37,6 +49,11 @@ export default async function CoupleDashboard() {
 
   const { wedding } = data
 
+  // Calculate stats
+  const totalGuests = wedding.guests.length
+  const totalAttendees = wedding.guests.reduce((sum, g) => sum + g.partySize, 0)
+  const nextEvent = wedding.events[0] // Already sorted by dateTime ascending
+
   return (
     <div>
       <div className="mb-8">
@@ -51,14 +68,22 @@ export default async function CoupleDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white rounded-lg shadow p-6">
           <h3 className="text-lg font-medium text-gray-900">Guests</h3>
-          <p className="mt-2 text-3xl font-bold text-blue-600">{wedding.guests.length}</p>
-          <p className="text-sm text-gray-500">Total guests added</p>
+          <p className="mt-2 text-3xl font-bold text-blue-600">{totalGuests}</p>
+          <p className="text-sm text-gray-500">
+            {totalAttendees !== totalGuests
+              ? `${totalAttendees} total attendees`
+              : "Total guests added"}
+          </p>
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
           <h3 className="text-lg font-medium text-gray-900">Events</h3>
           <p className="mt-2 text-3xl font-bold text-green-600">{wedding.events.length}</p>
-          <p className="text-sm text-gray-500">Events planned</p>
+          <p className="text-sm text-gray-500">
+            {nextEvent
+              ? `Next: ${nextEvent.name} on ${new Date(nextEvent.dateTime).toLocaleDateString()}`
+              : "Events planned"}
+          </p>
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
@@ -93,9 +118,18 @@ export default async function CoupleDashboard() {
           >
             Edit Content
           </Link>
-          <span className="px-4 py-2 bg-gray-100 text-gray-500 rounded-lg">
-            Manage Guests (Coming in Phase 4)
-          </span>
+          <Link
+            href="/dashboard/events"
+            className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+          >
+            Manage Events
+          </Link>
+          <Link
+            href="/dashboard/guests"
+            className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors"
+          >
+            Manage Guests
+          </Link>
           <span className="px-4 py-2 bg-gray-100 text-gray-500 rounded-lg">
             View RSVPs (Coming in Phase 5)
           </span>
