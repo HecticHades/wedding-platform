@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** Phase 3 - Content Builder
+**Current focus:** Phase 3 Complete - Ready for Phase 4 (RSVP Management)
 
 ## Current Position
 
-Phase: 3 of 10 (Content Builder)
-Plan: 5 of 6 complete (03-01, 03-02, 03-03, 03-04, 03-05)
-Status: In progress
-Last activity: 2026-01-17 - Completed 03-05-PLAN.md (Section Content Editors)
+Phase: 3 of 10 (Content Builder) - COMPLETE
+Plan: 6 of 6 complete (03-01, 03-02, 03-03, 03-04, 03-05, 03-06)
+Status: Phase complete
+Last activity: 2026-01-17 - Completed 03-06-PLAN.md (Public Wedding Site)
 
-Progress: █████████░ 92% (11/12 plans)
+Progress: ██████████ 100% (12/12 plans through Phase 3)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
+- Total plans completed: 12
 - Average duration: 9 min
 
 **By Phase:**
@@ -28,7 +28,7 @@ Progress: █████████░ 92% (11/12 plans)
 |-------|-------|-------|----------|
 | 01-foundation | 3/3 | 33 min | 11 min |
 | 02-admin-couple-auth | 3/3 | 29 min | 10 min |
-| 03-content-builder | 5/6 | 40 min | 8 min |
+| 03-content-builder | 6/6 | 52 min | 9 min |
 
 ## Accumulated Context
 
@@ -64,6 +64,8 @@ Progress: █████████░ 92% (11/12 plans)
 | SVG thumbnails for templates | 03-02 | Lightweight (<2KB), scalable, fast-loading previews |
 | Type guards in editors | 03-05 | Ensures TypeScript knows exact content type from discriminated union |
 | Move buttons over drag for nested lists | 03-05 | Simpler than nested dnd-kit; section list already has drag-drop |
+| Component router pattern | 03-06 | ContentSection routes by type for clean separation |
+| Semantic section IDs | 03-06 | Enables anchor link navigation from header |
 
 ### Pending Todos
 
@@ -74,17 +76,17 @@ Progress: █████████░ 92% (11/12 plans)
 - k6 load test needs to be run against deployed endpoint for full verification
 - Supabase pgbouncer connection on port 6543, direct on 5432
 
-## Phase 2 Completion Status
+## Phase 3 Completion Status
 
 All success criteria verified:
 
 | Criteria | Status |
 |----------|--------|
-| Admin login and wedding list | Verified |
-| Admin create wedding with couple | Verified |
-| Admin view/edit wedding settings | Verified |
-| Couple login to own dashboard | Verified |
-| Couple data isolation | Verified |
+| Couples can select from pre-built templates | Verified |
+| Theme customization (colors, fonts) works | Verified |
+| Content sections can be added/reordered/hidden | Verified |
+| Section editors save content correctly | Verified |
+| Public site shows themed content to guests | Verified |
 
 ## Deployment
 
@@ -95,6 +97,6 @@ All success criteria verified:
 
 ## Session Continuity
 
-Last session: 2026-01-17T01:44:00Z
-Stopped at: Completed 03-05-PLAN.md (Section Content Editors)
-Resume file: None - ready for 03-06-PLAN.md
+Last session: 2026-01-17T10:52:00Z
+Stopped at: Completed 03-06-PLAN.md (Public Wedding Site)
+Resume file: None - Phase 03 complete, ready for Phase 04
