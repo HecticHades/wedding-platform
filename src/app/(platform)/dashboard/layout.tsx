@@ -26,6 +26,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
           <div className="flex justify-between h-16 items-center">
             <div className="flex space-x-8">
               <Link href="/dashboard" className="font-semibold text-gray-900">Dashboard</Link>
+              <Link href="/dashboard/templates" className="text-gray-600 hover:text-gray-900">Templates</Link>
+              <Link href="/dashboard/theme" className="text-gray-600 hover:text-gray-900">Theme</Link>
+              <Link href="/dashboard/content" className="text-gray-600 hover:text-gray-900">Content</Link>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-600">{session.user.email}</span>

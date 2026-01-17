@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth/auth"
 import { redirect } from "next/navigation"
+import Link from "next/link"
 import { prisma, withTenantContext } from "@/lib/db/prisma"
 
 export default async function CoupleDashboard() {
@@ -74,11 +75,26 @@ export default async function CoupleDashboard() {
       <div className="mt-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div className="flex flex-wrap gap-4">
+          <Link
+            href="/dashboard/templates"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Choose Template
+          </Link>
+          <Link
+            href="/dashboard/theme"
+            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            Customize Theme
+          </Link>
+          <Link
+            href="/dashboard/content"
+            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+          >
+            Edit Content
+          </Link>
           <span className="px-4 py-2 bg-gray-100 text-gray-500 rounded-lg">
             Manage Guests (Coming in Phase 4)
-          </span>
-          <span className="px-4 py-2 bg-gray-100 text-gray-500 rounded-lg">
-            Edit Content (Coming in Phase 3)
           </span>
           <span className="px-4 py-2 bg-gray-100 text-gray-500 rounded-lg">
             View RSVPs (Coming in Phase 5)

@@ -23,34 +23,42 @@ export const DEFAULT_THEME: ThemeSettings = {
 /**
  * Generate CSS variable declarations from theme settings
  * Returns a string that can be used in a style attribute or style tag
+ * Uses next/font CSS variables for proper font loading
  */
 export function generateCSSVariables(theme: ThemeSettings): string {
+  const bodyFont = FONT_CSS_VAR_MAP[theme.fontFamily] || `"${theme.fontFamily}"`;
+  const headingFont = FONT_CSS_VAR_MAP[theme.headingFont] || `"${theme.headingFont}"`;
+
   return `
     --wedding-primary: ${theme.primaryColor};
     --wedding-secondary: ${theme.secondaryColor};
     --wedding-background: ${theme.backgroundColor};
     --wedding-text: ${theme.textColor};
     --wedding-accent: ${theme.accentColor};
-    --wedding-font-body: "${theme.fontFamily}", serif;
-    --wedding-font-heading: "${theme.headingFont}", cursive;
+    --wedding-font-body: ${bodyFont}, serif;
+    --wedding-font-heading: ${headingFont}, cursive;
   `.trim();
 }
 
 /**
  * Generate CSS variable declarations as an object for inline styles
  * Can be spread into a style prop
+ * Uses next/font CSS variables for proper font loading
  */
 export function generateCSSVariablesObject(
   theme: ThemeSettings
 ): Record<string, string> {
+  const bodyFont = FONT_CSS_VAR_MAP[theme.fontFamily] || `"${theme.fontFamily}"`;
+  const headingFont = FONT_CSS_VAR_MAP[theme.headingFont] || `"${theme.headingFont}"`;
+
   return {
     "--wedding-primary": theme.primaryColor,
     "--wedding-secondary": theme.secondaryColor,
     "--wedding-background": theme.backgroundColor,
     "--wedding-text": theme.textColor,
     "--wedding-accent": theme.accentColor,
-    "--wedding-font-body": `"${theme.fontFamily}", serif`,
-    "--wedding-font-heading": `"${theme.headingFont}", cursive`,
+    "--wedding-font-body": `${bodyFont}, serif`,
+    "--wedding-font-heading": `${headingFont}, cursive`,
   } as Record<string, string>;
 }
 
@@ -87,6 +95,43 @@ export const FONT_OPTIONS = [
   { value: "Josefin Sans", label: "Josefin Sans", category: "heading" },
   { value: "Amatic SC", label: "Amatic SC", category: "heading" },
 ] as const;
+
+/**
+ * Map font names to their CSS variable names from next/font
+ * Used by generateCSSVariables to reference self-hosted fonts
+ */
+export const FONT_CSS_VAR_MAP: Record<string, string> = {
+  // Body fonts
+  "Playfair Display": "var(--font-playfair-display)",
+  "Cormorant Garamond": "var(--font-cormorant-garamond)",
+  "Libre Baskerville": "var(--font-libre-baskerville)",
+  "Merriweather": "var(--font-merriweather)",
+  "Lora": "var(--font-lora)",
+  "EB Garamond": "var(--font-eb-garamond)",
+  "Inter": "var(--font-inter)",
+  "Montserrat": "var(--font-montserrat)",
+  "Raleway": "var(--font-raleway)",
+  "Open Sans": "var(--font-open-sans)",
+  // Heading fonts
+  "Great Vibes": "var(--font-great-vibes)",
+  "Sacramento": "var(--font-sacramento)",
+  "Tangerine": "var(--font-tangerine)",
+  "Alex Brush": "var(--font-alex-brush)",
+  "Parisienne": "var(--font-parisienne)",
+  "Dancing Script": "var(--font-dancing-script)",
+  "Allura": "var(--font-allura)",
+  "Cinzel": "var(--font-cinzel)",
+  "Josefin Sans": "var(--font-josefin-sans)",
+  "Amatic SC": "var(--font-amatic-sc)",
+};
+
+/**
+ * Get the CSS variable reference for a font name
+ * Falls back to font name in quotes if not in map
+ */
+export function getFontCSSVar(fontName: string): string {
+  return FONT_CSS_VAR_MAP[fontName] || `"${fontName}"`;
+}
 
 /**
  * Get fonts by category
