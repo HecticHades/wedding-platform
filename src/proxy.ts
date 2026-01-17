@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth/auth"
 import { NextResponse } from "next/server"
 
-export default auth((req) => {
+export default auth(async (req) => {
   const { nextUrl, auth: session } = req
   const isLoggedIn = !!session?.user
   const isAdmin = session?.user?.role === "admin"
@@ -32,7 +32,7 @@ export default auth((req) => {
     return NextResponse.redirect(new URL(redirectTo, nextUrl.origin))
   }
 
-  // Subdomain routing (existing Phase 1 logic)
+  // Hostname-based routing (subdomain or custom domain)
   const hostname = req.headers.get("host") || ""
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || "localhost:3000"
 
@@ -53,12 +53,44 @@ export default auth((req) => {
     return NextResponse.rewrite(new URL(`/${subdomain}${nextUrl.pathname}`, req.url))
   }
 
+  // Check for custom domain (not subdomain, not root, not localhost dev)
+  const isCustomDomain =
+    !hostname.endsWith(`.${rootDomain}`) &&
+    hostname !== rootDomain &&
+    !hostname.includes("localhost") &&
+    !hostname.startsWith("www.")
+
+  if (isCustomDomain) {
+    try {
+      // Lookup tenant by custom domain via internal API
+      // We use fetch because middleware runs in Edge runtime and cannot use Prisma directly
+      const lookupUrl = new URL("/api/internal/tenant-lookup", req.url)
+      lookupUrl.searchParams.set("domain", hostname)
+
+      const response = await fetch(lookupUrl.toString())
+      const data = await response.json()
+
+      if (data.tenant?.subdomain) {
+        // Rewrite to tenant route using their subdomain
+        return NextResponse.rewrite(
+          new URL(`/${data.tenant.subdomain}${nextUrl.pathname}`, req.url)
+        )
+      }
+
+      // Custom domain not found or not verified - show error page
+      // Could redirect to a "domain not configured" page on root domain
+      console.warn(`Custom domain not found or not verified: ${hostname}`)
+    } catch (error) {
+      console.error("Custom domain lookup failed:", error)
+    }
+  }
+
   return NextResponse.next()
 })
 
 export const config = {
   matcher: [
-    // Match all paths except static files, api/auth, and Next.js internals
-    "/((?!api/auth|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)",
+    // Match all paths except static files, api/auth, api/internal, and Next.js internals
+    "/((?!api/auth|api/internal|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)",
   ],
 }
