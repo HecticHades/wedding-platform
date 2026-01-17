@@ -5,6 +5,15 @@
 declare global {
   namespace PrismaJson {
     /**
+     * Meal option for event RSVP stored in Event.mealOptions
+     */
+    interface MealOption {
+      id: string;
+      name: string;
+      description?: string;
+    }
+
+    /**
      * Theme customization settings stored in Wedding.themeSettings
      */
     interface ThemeSettings {
