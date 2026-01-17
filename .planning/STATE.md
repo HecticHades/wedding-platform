@@ -10,16 +10,16 @@ See: .planning/PROJECT.md
 ## Current Position
 
 Phase: 3 of 10 (Content Builder)
-Plan: 2 of 6 complete (03-01, 03-04)
+Plan: 3 of 6 complete (03-01, 03-03, 03-04)
 Status: In progress
-Last activity: 2026-01-17 - Completed 03-04-PLAN.md (Content Section Management)
+Last activity: 2026-01-17 - Completed 03-03-PLAN.md (Theme Customization)
 
-Progress: ██████░░░░ 67% (8/12 plans)
+Progress: ███████░░░ 75% (9/12 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
+- Total plans completed: 9
 - Average duration: 9 min
 
 **By Phase:**
@@ -28,7 +28,7 @@ Progress: ██████░░░░ 67% (8/12 plans)
 |-------|-------|-------|----------|
 | 01-foundation | 3/3 | 33 min | 11 min |
 | 02-admin-couple-auth | 3/3 | 29 min | 10 min |
-| 03-content-builder | 2/6 | 14 min | 7 min |
+| 03-content-builder | 3/6 | 24 min | 8 min |
 
 ## Accumulated Context
 
@@ -57,6 +57,9 @@ Progress: ██████░░░░ 67% (8/12 plans)
 | Discriminated union for content validation | 03-01 | Better Zod error messages and TypeScript inference |
 | Optimistic updates for drag-drop | 03-04 | Better UX for instant feedback with error rollback |
 | Section type uniqueness (one of each) | 03-04 | Simplifies content model and prevents confusion |
+| Load all 20 wedding fonts via next/font | 03-03 | Self-hosted for GDPR compliance and performance |
+| Font CSS variable map | 03-03 | Bridges font names in theme settings to next/font CSS vars |
+| Debounced color picker (100ms) | 03-03 | Prevents excessive re-renders during color selection |
 
 ### Pending Todos
 
@@ -87,6 +90,6 @@ All success criteria verified:
 
 ## Session Continuity
 
-Last session: 2026-01-17T01:28:00Z
-Stopped at: Completed 03-04-PLAN.md (Content Section Management)
-Resume file: None - ready for 03-02, 03-03, 03-05, or 03-06-PLAN.md
+Last session: 2026-01-17T01:33:00Z
+Stopped at: Completed 03-03-PLAN.md (Theme Customization)
+Resume file: None - ready for 03-02, 03-05, or 03-06-PLAN.md
