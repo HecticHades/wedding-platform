@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** Phase 7 complete - Photo Sharing
+**Current focus:** Phase 8 in progress - Guest Messaging
 
 ## Current Position
 
-Phase: 7 of 10 (Photo Sharing)
-Plan: 3 of 3 complete (07-03)
-Status: Phase complete
-Last activity: 2026-01-17 - Completed 07-03-PLAN.md (Public Gallery & Guest Upload)
+Phase: 8 of 10 (Guest Messaging)
+Plan: 1 of 2 complete (08-01)
+Status: In progress
+Last activity: 2026-01-17 - Completed 08-01-PLAN.md (Guest Messaging Data Layer)
 
-Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (29/29 plans through Phase 7)
+Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 97% (30/31 plans through Phase 8-01)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 29
+- Total plans completed: 30
 - Average duration: 8 min
 
 **By Phase:**
@@ -33,6 +33,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (29/
 | 05-rsvp-system | 6/6 | 32 min | 5 min |
 | 06-gift-registry | 4/4 | 29 min | 7 min |
 | 07-photo-sharing | 3/3 | 17 min | 6 min |
+| 08-guest-messaging | 1/2 | 5 min | 5 min |
 
 ## Accumulated Context
 
@@ -113,6 +114,9 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (29/
 | Couple photos + guest photos combined | 07-03 | Gallery shows both sources; guest photos have badge indicator |
 | PhotoStatusConfig for UI display | 07-02 | Centralized status labels and colors for consistency |
 | QR code with download/print | 07-02 | Print-friendly output for venue display |
+| Individual sends for scheduled broadcasts | 08-01 | Resend batch API doesn't support scheduledAt parameter |
+| Store resendEmailIds for cancellation | 08-01 | Array of email IDs enables cancellation of scheduled messages |
+| 500ms delay between scheduled sends | 08-01 | Rate limit: 2 req/sec; prevents 429 errors |
 
 ### Pending Todos
 
@@ -125,13 +129,12 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (29/
 - RESEND_API_KEY needs to be configured for email sending
 - BLOB_READ_WRITE_TOKEN needs to be configured for photo uploads
 
-## Phase 7 Progress
+## Phase 8 Progress
 
 | Plan | Status | Description |
 |------|--------|-------------|
-| 07-01 | Complete | Photo Sharing Schema Setup |
-| 07-02 | Complete | Photo Moderation Dashboard |
-| 07-03 | Complete | Public Gallery & Guest Upload |
+| 08-01 | Complete | Guest Messaging Data Layer |
+| 08-02 | Pending | Messaging UI Components |
 
 ## Deployment
 
@@ -142,6 +145,6 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (29/
 
 ## Session Continuity
 
-Last session: 2026-01-17T17:00:00Z
-Stopped at: Completed 07-03-PLAN.md (Phase 7 complete)
-Resume file: None - Ready for Phase 8
+Last session: 2026-01-17T17:35:00Z
+Stopped at: Completed 08-01-PLAN.md
+Resume file: None - Ready for 08-02
