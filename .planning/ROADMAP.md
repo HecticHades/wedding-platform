@@ -106,6 +106,15 @@ Plans:
 **Goal:** Guests can RSVP to events with meal preferences, and couples can track responses.
 **Depends on:** Phase 4
 **Requirements:** COUPLE-05, COUPLE-07, COUPLE-08, RSVP-01, RSVP-02, RSVP-03, RSVP-04, RSVP-05, RSVP-06, RSVP-07, ADMIN-03
+**Plans:** 6 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Schema update (mealOptions on Event), install RSVP packages (resend, papaparse, react-email)
+- [ ] 05-02-PLAN.md — Guest RSVP code authentication and name lookup flow
+- [ ] 05-03-PLAN.md — Guest RSVP submission form (attendance, plus-one, meal, dietary)
+- [ ] 05-04-PLAN.md — Couple RSVP dashboard, meal options configuration, set RSVP code
+- [ ] 05-05-PLAN.md — CSV export endpoint and reminder email sending
+- [ ] 05-06-PLAN.md — Admin cross-wedding RSVP overview
 
 **Success Criteria:**
 1. Guest can access the wedding site using the couple's RSVP code
@@ -115,8 +124,6 @@ Plans:
 5. Couple can export RSVP data as CSV with guest names, responses, meals, and dietary needs
 6. Couple can send reminder notification to guests who have not yet responded
 7. Admin can view RSVP data across all weddings (ADMIN-03)
-
-**Plans:** (created by /gsd:plan-phase)
 
 ---
 
@@ -210,7 +217,7 @@ Plans:
 | 2 - Admin & Couple Auth | Complete | 2026-01-17 |
 | 3 - Content Builder | Complete | 2026-01-17 |
 | 4 - Event & Guest Management | Complete | 2026-01-17 |
-| 5 - RSVP System | Not started | - |
+| 5 - RSVP System | Planned | - |
 | 6 - Gift Registry | Not started | - |
 | 7 - Photo Sharing | Not started | - |
 | 8 - Guest Messaging | Not started | - |
