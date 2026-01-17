@@ -88,10 +88,10 @@ Plans:
 **Plans:** 4 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — Schema updates (Guest, Event, EventGuest join table), migrations, Prisma client extension
-- [ ] 04-02-PLAN.md — Event CRUD (server actions, event list, event form, event management pages)
-- [ ] 04-03-PLAN.md — Guest CRUD (server actions, guest list, guest form, guest management pages)
-- [ ] 04-04-PLAN.md — Event-guest assignment UI, public site event visibility filtering
+- [x] 04-01-PLAN.md — Schema updates (Guest, Event, EventGuest join table), migrations, Prisma client extension
+- [x] 04-02-PLAN.md — Event CRUD (server actions, event list, event form, event management pages)
+- [x] 04-03-PLAN.md — Guest CRUD (server actions, guest list, guest form, guest management pages)
+- [x] 04-04-PLAN.md — Event-guest assignment UI, public site event visibility filtering
 
 **Success Criteria:**
 1. Couple can create multiple events (rehearsal dinner, ceremony, reception) with distinct dates/times/locations
@@ -209,7 +209,7 @@ Plans:
 | 1 - Foundation | Complete | 2026-01-16 |
 | 2 - Admin & Couple Auth | Complete | 2026-01-17 |
 | 3 - Content Builder | Complete | 2026-01-17 |
-| 4 - Event & Guest Management | Planned | - |
+| 4 - Event & Guest Management | Complete | 2026-01-17 |
 | 5 - RSVP System | Not started | - |
 | 6 - Gift Registry | Not started | - |
 | 7 - Photo Sharing | Not started | - |

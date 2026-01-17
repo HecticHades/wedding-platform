@@ -137,10 +137,10 @@
 | CONTENT-04 | Phase 3 | Complete | |
 | CONTENT-05 | Phase 3 | Complete | |
 | CONTENT-06 | Phase 3 | Complete | |
-| EVENT-01 | Phase 4 | Pending | |
-| EVENT-02 | Phase 4 | Pending | |
-| EVENT-03 | Phase 4 | Pending | |
-| EVENT-04 | Phase 4 | Pending | |
+| EVENT-01 | Phase 4 | Complete | |
+| EVENT-02 | Phase 4 | Complete | |
+| EVENT-03 | Phase 4 | Complete | |
+| EVENT-04 | Phase 4 | Pending | Requires RSVP system from Phase 5 |
 | COUPLE-05 | Phase 5 | Pending | |
 | COUPLE-07 | Phase 5 | Pending | |
 | COUPLE-08 | Phase 5 | Pending | |
@@ -179,4 +179,4 @@
 
 ---
 *Requirements defined: 2026-01-16*
-*Last updated: 2026-01-17 - Phase 2 and Phase 3 requirements marked Complete*
+*Last updated: 2026-01-17 - Phase 4 requirements marked Complete (EVENT-04 pending Phase 5 RSVP)*
