@@ -64,12 +64,12 @@ Plans:
 **Plans:** 6 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Schema updates, TypeScript types, Tailwind CSS variable theming, packages
-- [ ] 03-02-PLAN.md — Template system (3 templates, selection UI, apply to wedding)
-- [ ] 03-03-PLAN.md — Theme customization (color pickers, font selectors, live preview)
-- [ ] 03-04-PLAN.md — Content section management (add, remove, reorder with drag-and-drop)
-- [ ] 03-05-PLAN.md — Section editors for all 6 types (Event Details, Our Story, Travel, Gallery, Timeline, Contact)
-- [ ] 03-06-PLAN.md — Public site rendering (apply theme, display sections to guests)
+- [x] 03-01-PLAN.md — Schema updates, TypeScript types, Tailwind CSS variable theming, packages
+- [x] 03-02-PLAN.md — Template system (3 templates, selection UI, apply to wedding)
+- [x] 03-03-PLAN.md — Theme customization (color pickers, font selectors, live preview)
+- [x] 03-04-PLAN.md — Content section management (add, remove, reorder with drag-and-drop)
+- [x] 03-05-PLAN.md — Section editors for all 6 types (Event Details, Our Story, Travel, Gallery, Timeline, Contact)
+- [x] 03-06-PLAN.md — Public site rendering (apply theme, display sections to guests)
 
 **Success Criteria:**
 1. Couple can select from at least 3 template designs and preview each before applying
@@ -203,7 +203,7 @@ Plans:
 |-------|--------|-----------|
 | 1 - Foundation | Complete | 2026-01-16 |
 | 2 - Admin & Couple Auth | Complete | 2026-01-17 |
-| 3 - Content Builder | Planning complete | - |
+| 3 - Content Builder | Complete | 2026-01-17 |
 | 4 - Event & Guest Management | Not started | - |
 | 5 - RSVP System | Not started | - |
 | 6 - Gift Registry | Not started | - |
