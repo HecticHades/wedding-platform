@@ -162,9 +162,9 @@
 | PHOTO-03 | Phase 7 | Complete | GuestUploader with Vercel Blob client upload (up to 20MB) |
 | PHOTO-04 | Phase 7 | Complete | PhotoUploadQRCode with download/print/copy options |
 | PHOTO-05 | Phase 7 | Complete | Moderation queue with approve/reject actions |
-| MSG-01 | Phase 8 | Pending | |
-| MSG-02 | Phase 8 | Pending | |
-| MSG-03 | Phase 8 | Pending | |
+| MSG-01 | Phase 8 | Complete | Broadcast email sending via Resend batch API |
+| MSG-02 | Phase 8 | Complete | Schedule messages up to 30 days with Resend scheduledAt |
+| MSG-03 | Phase 8 | Complete | BroadcastEmail template for personalized notifications |
 | SEAT-01 | Phase 9 | Pending | |
 | SEAT-02 | Phase 9 | Pending | |
 | SEAT-03 | Phase 9 | Pending | |
@@ -179,4 +179,4 @@
 
 ---
 *Requirements defined: 2026-01-16*
-*Last updated: 2026-01-17 - Phase 7 requirements marked Complete*
+*Last updated: 2026-01-17 - Phase 8 requirements marked Complete*

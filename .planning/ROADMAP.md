@@ -179,8 +179,8 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 08-01-PLAN.md — BroadcastMessage schema, BroadcastEmail template, server actions (send, schedule, cancel)
-- [ ] 08-02-PLAN.md — Messaging UI pages (list, compose, detail) and dashboard navigation
+- [x] 08-01-PLAN.md — BroadcastMessage schema, BroadcastEmail template, server actions (send, schedule, cancel)
+- [x] 08-02-PLAN.md — Messaging UI pages (list, compose, detail) and dashboard navigation
 
 **Success Criteria:**
 1. Couple can compose and send a broadcast email to all guests with email addresses
@@ -232,7 +232,7 @@ Plans:
 | 5 - RSVP System | Complete | 2026-01-17 |
 | 6 - Gift Registry | Complete | 2026-01-17 |
 | 7 - Photo Sharing | Complete | 2026-01-17 |
-| 8 - Guest Messaging | Not started | - |
+| 8 - Guest Messaging | Complete | 2026-01-17 |
 | 9 - Seating Chart | Not started | - |
 | 10 - Custom Domains & Polish | Not started | - |
 
