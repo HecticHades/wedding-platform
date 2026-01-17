@@ -10,16 +10,16 @@ See: .planning/PROJECT.md
 ## Current Position
 
 Phase: 3 of 10 (Content Builder)
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-01-17 - Phase 2 verified and complete
+Plan: 1 of 4 complete
+Status: In progress
+Last activity: 2026-01-17 - Completed 03-01-PLAN.md (Content Builder Foundation)
 
-Progress: ██░░░░░░░░ 20%
+Progress: ██░░░░░░░░ 22%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
+- Total plans completed: 7
 - Average duration: 10 min
 
 **By Phase:**
@@ -28,6 +28,7 @@ Progress: ██░░░░░░░░ 20%
 |-------|-------|-------|----------|
 | 01-foundation | 3/3 | 33 min | 11 min |
 | 02-admin-couple-auth | 3/3 | 29 min | 10 min |
+| 03-content-builder | 1/4 | 8 min | 8 min |
 
 ## Accumulated Context
 
@@ -51,6 +52,9 @@ Progress: ██░░░░░░░░ 20%
 | Defense-in-depth role checks | 02-02 | CVE-2025-29927 mitigation - check role in layouts beyond middleware |
 | withTenantContext for couple queries | 02-03 | Ensures data isolation - couples only see their own wedding |
 | Combined auth + subdomain middleware | 02-03 | Single middleware handles both concerns efficiently |
+| prisma-json-types-generator@3.2.3 | 03-01 | Latest 4.x requires Prisma 7.2+; 3.2.3 compatible with Prisma 6.x |
+| CSS variables over Tailwind themes | 03-01 | Runtime theme switching without rebuild |
+| Discriminated union for content validation | 03-01 | Better Zod error messages and TypeScript inference |
 
 ### Pending Todos
 
@@ -81,6 +85,6 @@ All success criteria verified:
 
 ## Session Continuity
 
-Last session: 2026-01-17T01:30:00Z
-Stopped at: Completed Phase 2 - Admin & Couple Authentication
-Resume file: None - ready for Phase 3 planning
+Last session: 2026-01-17T01:22:00Z
+Stopped at: Completed 03-01-PLAN.md (Content Builder Foundation)
+Resume file: None - ready for 03-02-PLAN.md
