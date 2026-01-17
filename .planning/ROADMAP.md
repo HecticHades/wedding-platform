@@ -109,12 +109,12 @@ Plans:
 **Plans:** 6 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Schema update (mealOptions on Event), install RSVP packages (resend, papaparse, react-email)
-- [ ] 05-02-PLAN.md — Guest RSVP code authentication and name lookup flow
-- [ ] 05-03-PLAN.md — Guest RSVP submission form (attendance, plus-one, meal, dietary)
-- [ ] 05-04-PLAN.md — Couple RSVP dashboard, meal options configuration, set RSVP code
-- [ ] 05-05-PLAN.md — CSV export endpoint and reminder email sending
-- [ ] 05-06-PLAN.md — Admin cross-wedding RSVP overview
+- [x] 05-01-PLAN.md — Schema update (mealOptions on Event), install RSVP packages (resend, papaparse, react-email)
+- [x] 05-02-PLAN.md — Guest RSVP code authentication and name lookup flow
+- [x] 05-03-PLAN.md — Guest RSVP submission form (attendance, plus-one, meal, dietary)
+- [x] 05-04-PLAN.md — Couple RSVP dashboard, meal options configuration, set RSVP code
+- [x] 05-05-PLAN.md — CSV export endpoint and reminder email sending
+- [x] 05-06-PLAN.md — Admin cross-wedding RSVP overview
 
 **Success Criteria:**
 1. Guest can access the wedding site using the couple's RSVP code
@@ -217,7 +217,7 @@ Plans:
 | 2 - Admin & Couple Auth | Complete | 2026-01-17 |
 | 3 - Content Builder | Complete | 2026-01-17 |
 | 4 - Event & Guest Management | Complete | 2026-01-17 |
-| 5 - RSVP System | Planned | - |
+| 5 - RSVP System | Complete | 2026-01-17 |
 | 6 - Gift Registry | Not started | - |
 | 7 - Photo Sharing | Not started | - |
 | 8 - Guest Messaging | Not started | - |

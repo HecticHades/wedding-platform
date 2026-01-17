@@ -125,7 +125,7 @@
 | TECH-06 | Phase 1 | Complete | |
 | ADMIN-01 | Phase 2 | Complete | |
 | ADMIN-02 | Phase 2 | Complete | |
-| ADMIN-03 | Phase 5 | Pending | Requires RSVP infrastructure from Phase 5; admin role established in Phase 2 |
+| ADMIN-03 | Phase 5 | Complete | Admin RSVP overview page with cross-wedding visibility |
 | ADMIN-04 | Phase 2 | Complete | |
 | COUPLE-01 | Phase 2 | Complete | |
 | COUPLE-02 | Phase 3 | Complete | |
@@ -140,17 +140,17 @@
 | EVENT-01 | Phase 4 | Complete | |
 | EVENT-02 | Phase 4 | Complete | |
 | EVENT-03 | Phase 4 | Complete | |
-| EVENT-04 | Phase 4 | Pending | Requires RSVP system from Phase 5 |
-| COUPLE-05 | Phase 5 | Pending | |
-| COUPLE-07 | Phase 5 | Pending | |
-| COUPLE-08 | Phase 5 | Pending | |
-| RSVP-01 | Phase 5 | Pending | |
-| RSVP-02 | Phase 5 | Pending | |
-| RSVP-03 | Phase 5 | Pending | |
-| RSVP-04 | Phase 5 | Pending | |
-| RSVP-05 | Phase 5 | Pending | |
-| RSVP-06 | Phase 5 | Pending | |
-| RSVP-07 | Phase 5 | Pending | |
+| EVENT-04 | Phase 4 | Complete | Guest can RSVP separately for each visible event |
+| COUPLE-05 | Phase 5 | Complete | RSVP code management in dashboard |
+| COUPLE-07 | Phase 5 | Complete | RSVP dashboard with stats, guest list, meal tallies |
+| COUPLE-08 | Phase 5 | Complete | CSV export endpoint with all RSVP data |
+| RSVP-01 | Phase 5 | Complete | RSVP code entry with cookie auth |
+| RSVP-02 | Phase 5 | Complete | Attendance confirmation (yes/no) per event |
+| RSVP-03 | Phase 5 | Complete | Plus-one count and names in RSVP form |
+| RSVP-04 | Phase 5 | Complete | Meal preference selection from event options |
+| RSVP-05 | Phase 5 | Complete | Dietary restrictions free text field |
+| RSVP-06 | Phase 5 | Complete | Meal options editor per event |
+| RSVP-07 | Phase 5 | Complete | Reminder email sending via Resend |
 | GIFT-01 | Phase 6 | Pending | |
 | GIFT-02 | Phase 6 | Pending | |
 | GIFT-03 | Phase 6 | Pending | |
@@ -179,4 +179,4 @@
 
 ---
 *Requirements defined: 2026-01-16*
-*Last updated: 2026-01-17 - Phase 4 requirements marked Complete (EVENT-04 pending Phase 5 RSVP)*
+*Last updated: 2026-01-17 - Phase 5 requirements marked Complete*
