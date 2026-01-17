@@ -422,3 +422,85 @@ export async function removeGuestFromEvent(
     return { success: false, error: "Failed to remove guest" };
   }
 }
+
+/**
+ * Meal option type for event configuration
+ */
+export interface MealOption {
+  id: string;
+  name: string;
+  description?: string;
+}
+
+// Validation schema for meal options
+const mealOptionSchema = z.object({
+  id: z.string().min(1, "Meal option ID is required"),
+  name: z.string().min(1, "Meal option name is required"),
+  description: z.string().optional(),
+});
+
+const mealOptionsSchema = z.array(mealOptionSchema);
+
+/**
+ * Update meal options for an event
+ */
+export async function updateMealOptions(
+  eventId: string,
+  mealOptions: MealOption[]
+): Promise<ActionResult> {
+  const session = await auth();
+
+  if (!session || !session.user.tenantId) {
+    return { success: false, error: "Unauthorized" };
+  }
+
+  if (!eventId) {
+    return { success: false, error: "Event ID is required" };
+  }
+
+  // Validate input
+  const parsed = mealOptionsSchema.safeParse(mealOptions);
+  if (!parsed.success) {
+    return {
+      success: false,
+      error: parsed.error.errors[0]?.message ?? "Invalid meal options",
+    };
+  }
+
+  // Check for duplicate IDs
+  const ids = parsed.data.map((opt) => opt.id);
+  if (new Set(ids).size !== ids.length) {
+    return { success: false, error: "Duplicate meal option IDs" };
+  }
+
+  try {
+    const result = await withTenantContext(session.user.tenantId, async () => {
+      // Verify event exists and belongs to this tenant's wedding
+      const existingEvent = await prisma.event.findFirst({
+        where: { id: eventId },
+        select: { id: true },
+      });
+
+      if (!existingEvent) {
+        return { success: false as const, error: "Event not found" };
+      }
+
+      // Update meal options
+      await prisma.event.update({
+        where: { id: eventId },
+        data: {
+          mealOptions: parsed.data,
+        },
+      });
+
+      return { success: true as const };
+    });
+
+    revalidatePath(`/dashboard/events/${eventId}`);
+    revalidatePath(`/dashboard/events/${eventId}/meal-options`);
+    return result;
+  } catch (error) {
+    console.error("Failed to update meal options:", error);
+    return { success: false, error: "Failed to update meal options" };
+  }
+}

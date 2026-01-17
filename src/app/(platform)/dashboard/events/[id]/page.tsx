@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth/auth";
 import { redirect, notFound } from "next/navigation";
 import { prisma, withTenantContext } from "@/lib/db/prisma";
 import Link from "next/link";
-import { ChevronRight, Users } from "lucide-react";
+import { ChevronRight, Users, Utensils } from "lucide-react";
 import { EventForm } from "@/components/events/EventForm";
 
 interface EditEventPageProps {
@@ -63,18 +63,27 @@ export default async function EditEventPage({ params }: EditEventPageProps) {
             Update the details for {event.name}.
           </p>
         </div>
-        <Link
-          href={`/dashboard/events/${event.id}/guests`}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
-        >
-          <Users className="h-4 w-4" />
-          Manage Guest Invitations
-          {event._count.guestInvitations > 0 && (
-            <span className="bg-green-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-              {event._count.guestInvitations}
-            </span>
-          )}
-        </Link>
+        <div className="flex gap-3">
+          <Link
+            href={`/dashboard/events/${event.id}/meal-options`}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 transition-colors"
+          >
+            <Utensils className="h-4 w-4" />
+            Meal Options
+          </Link>
+          <Link
+            href={`/dashboard/events/${event.id}/guests`}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
+          >
+            <Users className="h-4 w-4" />
+            Manage Guests
+            {event._count.guestInvitations > 0 && (
+              <span className="bg-green-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                {event._count.guestInvitations}
+              </span>
+            )}
+          </Link>
+        </div>
       </div>
 
       {/* Form card */}
