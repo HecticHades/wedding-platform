@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** Phase 6 complete - Gift Registry
+**Current focus:** Phase 7 in progress - Photo Sharing
 
 ## Current Position
 
-Phase: 6 of 10 (Gift Registry)
-Plan: 4 of 4 complete (06-04)
-Status: Phase complete
-Last activity: 2026-01-17 - Completed 06-04-PLAN.md (Payment QR Codes)
+Phase: 7 of 10 (Photo Sharing)
+Plan: 1 of 3 complete (07-01)
+Status: In progress
+Last activity: 2026-01-17 - Completed 07-01-PLAN.md (Photo Sharing Schema Setup)
 
-Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (26/26 plans through Phase 6)
+Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 90% (27/30 plans through Phase 7-01)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 26
+- Total plans completed: 27
 - Average duration: 8 min
 
 **By Phase:**
@@ -32,6 +32,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (26/26
 | 04-event-guest-management | 4/4 | 30 min | 8 min |
 | 05-rsvp-system | 6/6 | 32 min | 5 min |
 | 06-gift-registry | 4/4 | 29 min | 7 min |
+| 07-photo-sharing | 1/3 | 5 min | 5 min |
 
 ## Accumulated Context
 
@@ -104,6 +105,9 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (26/26
 | EPC QR for EUR, text display for CHF | 06-04 | EPC standard only supports EUR; Swiss QR bill overkill for peer-to-peer |
 | Two-step claiming flow (payment -> name) | 06-04 | Separates payment viewing from commitment; allows anonymous or named claims |
 | Optimistic local state for claimed gifts | 06-04 | Immediate UI feedback while server confirms; prevents double-selection |
+| GuestPhoto with PhotoStatus moderation | 07-01 | PENDING/APPROVED/REJECTED workflow for guest uploads |
+| yet-another-react-lightbox for gallery | 07-01 | Full-featured lightbox with zoom, swipe, keyboard nav |
+| Vercel Blob remote patterns | 07-01 | Next.js Image requires explicit allowlist for remote images |
 
 ### Pending Todos
 
@@ -114,15 +118,15 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (26/26
 - k6 load test needs to be run against deployed endpoint for full verification
 - Supabase pgbouncer connection on port 6543, direct on 5432
 - RESEND_API_KEY needs to be configured for email sending
+- BLOB_READ_WRITE_TOKEN needs to be configured for photo uploads
 
-## Phase 6 Progress
+## Phase 7 Progress
 
 | Plan | Status | Description |
 |------|--------|-------------|
-| 06-01 | Complete | Data Models |
-| 06-02 | Complete | Gift Management UI |
-| 06-03 | Complete | External Registries & Payment Settings |
-| 06-04 | Complete | Payment QR Codes |
+| 07-01 | Complete | Photo Sharing Schema Setup |
+| 07-02 | Pending | Photo Upload API & Gallery |
+| 07-03 | Pending | Moderation Dashboard |
 
 ## Deployment
 
@@ -133,6 +137,6 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 100% (26/26
 
 ## Session Continuity
 
-Last session: 2026-01-17T14:13:00Z
-Stopped at: Completed 06-04-PLAN.md (Phase 6 complete)
-Resume file: None - Ready for Phase 7
+Last session: 2026-01-17T15:00:00Z
+Stopped at: Completed 07-01-PLAN.md
+Resume file: None - Ready for 07-02
