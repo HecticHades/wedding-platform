@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth/auth";
 import { redirect, notFound } from "next/navigation";
 import { prisma, withTenantContext } from "@/lib/db/prisma";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Users } from "lucide-react";
 import { EventForm } from "@/components/events/EventForm";
 
 interface EditEventPageProps {
@@ -21,16 +21,24 @@ export default async function EditEventPage({ params }: EditEventPageProps) {
     redirect("/dashboard/no-tenant");
   }
 
-  // Fetch event with tenant context
-  const event = await withTenantContext(session.user.tenantId, async () => {
-    return prisma.event.findFirst({
+  // Fetch event with tenant context including invitation count
+  const data = await withTenantContext(session.user.tenantId, async () => {
+    const event = await prisma.event.findFirst({
       where: { id },
+      include: {
+        _count: {
+          select: { guestInvitations: true },
+        },
+      },
     });
+    return { event };
   });
 
-  if (!event) {
+  if (!data.event) {
     notFound();
   }
+
+  const { event } = data;
 
   return (
     <div>
@@ -48,11 +56,25 @@ export default async function EditEventPage({ params }: EditEventPageProps) {
       </nav>
 
       {/* Page header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Edit Event</h1>
-        <p className="mt-2 text-gray-600">
-          Update the details for {event.name}.
-        </p>
+      <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Edit Event</h1>
+          <p className="mt-2 text-gray-600">
+            Update the details for {event.name}.
+          </p>
+        </div>
+        <Link
+          href={`/dashboard/events/${event.id}/guests`}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
+        >
+          <Users className="h-4 w-4" />
+          Manage Guest Invitations
+          {event._count.guestInvitations > 0 && (
+            <span className="bg-green-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+              {event._count.guestInvitations}
+            </span>
+          )}
+        </Link>
       </div>
 
       {/* Form card */}
