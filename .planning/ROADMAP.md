@@ -155,6 +155,12 @@ Plans:
 **Goal:** Couples can share wedding photos and guests can upload their own photos.
 **Depends on:** Phase 5
 **Requirements:** PHOTO-01, PHOTO-02, PHOTO-03, PHOTO-04, PHOTO-05
+**Plans:** 3 plans
+
+Plans:
+- [ ] 07-01-PLAN.md — Schema updates (GuestPhoto model, PhotoStatus enum), install lightbox package, configure Next.js remotePatterns
+- [ ] 07-02-PLAN.md — Couple photo dashboard with upload, moderation queue, settings, and QR code display
+- [ ] 07-03-PLAN.md — Public photo gallery with lightbox, guest upload page with client-side large file support
 
 **Success Criteria:**
 1. Couple can upload wedding photos that display in a gallery on their site
@@ -162,8 +168,6 @@ Plans:
 3. Guest can upload their own photos from the wedding event
 4. QR code is available (for table cards, etc.) that guests scan to access the photo upload page
 5. Couple can moderate guest photos - approve or reject before they appear publicly
-
-**Plans:** (created by /gsd:plan-phase)
 
 ---
 
