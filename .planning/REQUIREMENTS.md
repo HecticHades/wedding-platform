@@ -151,12 +151,12 @@
 | RSVP-05 | Phase 5 | Complete | Dietary restrictions free text field |
 | RSVP-06 | Phase 5 | Complete | Meal options editor per event |
 | RSVP-07 | Phase 5 | Complete | Reminder email sending via Resend |
-| GIFT-01 | Phase 6 | Pending | |
-| GIFT-02 | Phase 6 | Pending | |
-| GIFT-03 | Phase 6 | Pending | |
-| GIFT-04 | Phase 6 | Pending | |
-| GIFT-05 | Phase 6 | Pending | |
-| GIFT-06 | Phase 6 | Pending | |
+| GIFT-01 | Phase 6 | Complete | Gift CRUD with descriptions and target amounts |
+| GIFT-02 | Phase 6 | Complete | Payment settings for bank transfer, PayPal, Twint |
+| GIFT-03 | Phase 6 | Complete | Public registry page with available/claimed display |
+| GIFT-04 | Phase 6 | Complete | Payment QR codes (EPC for EUR, PayPal.me links, Twint text) |
+| GIFT-05 | Phase 6 | Complete | Claimed status on dashboard gift cards |
+| GIFT-06 | Phase 6 | Complete | External registry links CRUD |
 | PHOTO-01 | Phase 7 | Pending | |
 | PHOTO-02 | Phase 7 | Pending | |
 | PHOTO-03 | Phase 7 | Pending | |
@@ -179,4 +179,4 @@
 
 ---
 *Requirements defined: 2026-01-16*
-*Last updated: 2026-01-17 - Phase 5 requirements marked Complete*
+*Last updated: 2026-01-17 - Phase 6 requirements marked Complete*

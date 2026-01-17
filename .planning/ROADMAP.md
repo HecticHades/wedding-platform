@@ -135,10 +135,10 @@ Plans:
 **Plans:** 4 plans
 
 Plans:
-- [ ] 06-01-PLAN.md — Schema updates (GiftItem, ExternalRegistry, PaymentSettings), install QR packages
-- [ ] 06-02-PLAN.md — Gift CRUD for couple dashboard (create, edit, delete gift items)
-- [ ] 06-03-PLAN.md — External registry management and payment settings configuration
-- [ ] 06-04-PLAN.md — Public registry page with QR code generation and gift claiming
+- [x] 06-01-PLAN.md — Schema updates (GiftItem, ExternalRegistry, PaymentSettings), install QR packages
+- [x] 06-02-PLAN.md — Gift CRUD for couple dashboard (create, edit, delete gift items)
+- [x] 06-03-PLAN.md — External registry management and payment settings configuration
+- [x] 06-04-PLAN.md — Public registry page with QR code generation and gift claiming
 
 **Success Criteria:**
 1. Couple can create gift items with descriptions and target amounts (e.g., "Honeymoon Fund - $500")
@@ -223,7 +223,7 @@ Plans:
 | 3 - Content Builder | Complete | 2026-01-17 |
 | 4 - Event & Guest Management | Complete | 2026-01-17 |
 | 5 - RSVP System | Complete | 2026-01-17 |
-| 6 - Gift Registry | Planned | - |
+| 6 - Gift Registry | Complete | 2026-01-17 |
 | 7 - Photo Sharing | Not started | - |
 | 8 - Guest Messaging | Not started | - |
 | 9 - Seating Chart | Not started | - |
