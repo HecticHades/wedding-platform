@@ -6,6 +6,7 @@ declare module "sepa-payment-qr-code" {
     amount?: number;
     currency?: string;
     remittanceInfo?: string;
+    unstructuredReference?: string;
     information?: string;
   }
 
