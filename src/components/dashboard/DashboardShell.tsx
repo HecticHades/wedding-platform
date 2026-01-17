@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, LogOut, Bell } from "lucide-react";
+import { Menu, LogOut } from "lucide-react";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { MobileBottomNav } from "./MobileBottomNav";
 
@@ -47,12 +47,6 @@ export function DashboardShell({
 
             {/* Right side */}
             <div className="flex items-center gap-3">
-              {/* Notifications */}
-              <button className="relative p-2 rounded-lg hover:bg-[#e8e4e0] text-[#3d3936]/70 hover:text-[#3d3936] transition-colors">
-                <Bell className="h-5 w-5" />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#c4a4a4] rounded-full" />
-              </button>
-
               {/* User menu */}
               <div className="flex items-center gap-3 pl-3 border-l border-[#e8e4e0]">
                 <span className="text-sm text-[#3d3936]/70 hidden sm:inline">

@@ -49,7 +49,7 @@ export default async function GuestUploadPage({ params }: PageProps) {
             Photo sharing is not currently enabled for this wedding.
           </p>
           <Link
-            href="/"
+            href={`/${domain}`}
             className="mt-8 inline-flex items-center text-blue-600 hover:text-blue-700"
           >
             &larr; Back to wedding site
@@ -90,7 +90,7 @@ export default async function GuestUploadPage({ params }: PageProps) {
         {/* Gallery link */}
         <div className="mt-8 text-center">
           <Link
-            href="/photos"
+            href={`/${domain}/photos`}
             className="text-blue-600 hover:text-blue-700 text-sm"
           >
             View the photo gallery &rarr;
@@ -99,7 +99,7 @@ export default async function GuestUploadPage({ params }: PageProps) {
 
         {/* Back link */}
         <div className="mt-4 text-center">
-          <Link href="/" className="text-gray-500 hover:text-gray-700 text-sm">
+          <Link href={`/${domain}`} className="text-gray-500 hover:text-gray-700 text-sm">
             &larr; Back to wedding site
           </Link>
         </div>

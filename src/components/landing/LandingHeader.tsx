@@ -8,7 +8,6 @@ const navLinks = [
   { href: "#features", label: "Features" },
   { href: "#templates", label: "Templates" },
   { href: "#testimonials", label: "Testimonials" },
-  { href: "#pricing", label: "Pricing" },
 ];
 
 export function LandingHeader() {
@@ -90,18 +89,21 @@ export function LandingHeader() {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 text-gray-600 hover:text-gray-900"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-nav-menu"
           >
             {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6" aria-hidden="true" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-6 w-6" aria-hidden="true" />
             )}
           </button>
         </div>
 
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-gray-100">
+          <div id="mobile-nav-menu" className="lg:hidden py-4 border-t border-gray-100">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a

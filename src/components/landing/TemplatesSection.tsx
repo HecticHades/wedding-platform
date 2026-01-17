@@ -41,18 +41,19 @@ export function TemplatesSection() {
         </div>
 
         {/* Template cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8" role="list">
           {templates.map((template, index) => (
-            <div
+            <article
               key={index}
-              className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+              className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 focus-within:ring-2 focus-within:ring-violet-500 focus-within:ring-offset-2"
+              role="listitem"
             >
               {/* Preview */}
               <div
                 className={`aspect-[4/3] bg-gradient-to-br ${template.gradient} relative overflow-hidden`}
               >
                 {/* Mockup content */}
-                <div className="absolute inset-0 flex items-center justify-center p-8">
+                <div className="absolute inset-0 flex items-center justify-center p-8" aria-hidden="true">
                   <div className="text-center text-white">
                     <p className="text-xs uppercase tracking-widest opacity-70 mb-2">
                       We're Getting Married
@@ -64,11 +65,12 @@ export function TemplatesSection() {
                   </div>
                 </div>
 
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                {/* Hover overlay with accessible link */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 group-focus-within:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100">
                   <Link
                     href="/register"
-                    className="px-4 py-2 bg-white text-gray-900 rounded-lg text-sm font-medium shadow-lg transform -translate-y-2 group-hover:translate-y-0 transition-transform"
+                    className="px-4 py-2 bg-white text-gray-900 rounded-lg text-sm font-medium shadow-lg transform -translate-y-2 group-hover:translate-y-0 group-focus-within:translate-y-0 transition-transform focus:outline-none focus:ring-2 focus:ring-violet-500"
+                    aria-label={`Use ${template.name} template`}
                   >
                     Use This Template
                   </Link>
@@ -93,7 +95,7 @@ export function TemplatesSection() {
                 </div>
                 <p className="text-gray-600 text-sm">{template.description}</p>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 

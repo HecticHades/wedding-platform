@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Calendar } from "lucide-react";
+import { Plus, Calendar, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import type { Event } from "@prisma/client";
 import { EventCard } from "./EventCard";
@@ -19,6 +19,7 @@ export function EventList({ events }: EventListProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [searchQuery, setSearchQuery] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   // Filter events by name
   const filteredEvents = events.filter((event) =>
@@ -30,13 +31,14 @@ export function EventList({ events }: EventListProps) {
   };
 
   const handleDelete = async (eventId: string) => {
+    setError(null);
     const result = await deleteEvent(eventId);
     if (result.success) {
       startTransition(() => {
         router.refresh();
       });
     } else {
-      alert(result.error);
+      setError(result.error ?? "Failed to delete event");
     }
   };
 
@@ -62,6 +64,21 @@ export function EventList({ events }: EventListProps) {
 
   return (
     <div className="space-y-6">
+      {/* Error Banner */}
+      {error && (
+        <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0" />
+          <p className="text-sm text-red-700">{error}</p>
+          <button
+            type="button"
+            onClick={() => setError(null)}
+            className="ml-auto text-red-500 hover:text-red-700"
+          >
+            &times;
+          </button>
+        </div>
+      )}
+
       {/* Header with count and search */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <p className="text-sm text-gray-600">

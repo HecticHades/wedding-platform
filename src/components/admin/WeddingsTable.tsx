@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import {
   ChevronUp,
@@ -10,8 +10,10 @@ import {
   Edit,
   Trash2,
   Search,
+  Loader2,
 } from "lucide-react";
 import { StatusBadge } from "./StatusBadge";
+import { deleteWedding } from "@/app/(platform)/admin/weddings/[id]/actions";
 
 interface Wedding {
   id: string;
@@ -46,6 +48,27 @@ export function WeddingsTable({
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [searchQuery, setSearchQuery] = useState("");
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  const handleDelete = (weddingId: string, weddingName: string) => {
+    if (!confirm(`Are you sure you want to delete "${weddingName}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    setDeletingId(weddingId);
+    setDeleteError(null);
+    setOpenMenuId(null);
+
+    startTransition(async () => {
+      const result = await deleteWedding(weddingId);
+      if (!result.success) {
+        setDeleteError(result.error || "Failed to delete wedding");
+      }
+      setDeletingId(null);
+    });
+  };
 
   const totalPages = Math.ceil(totalCount / pageSize);
 
@@ -80,6 +103,18 @@ export function WeddingsTable({
 
   return (
     <div className="bg-white rounded-xl border border-gray-200">
+      {/* Delete Error */}
+      {deleteError && (
+        <div className="mx-4 mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center justify-between">
+          <p className="text-sm text-red-700">{deleteError}</p>
+          <button
+            onClick={() => setDeleteError(null)}
+            className="text-red-500 hover:text-red-700"
+          >
+            &times;
+          </button>
+        </div>
+      )}
       {/* Header */}
       <div className="px-4 py-3 border-b border-gray-200">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -182,7 +217,7 @@ export function WeddingsTable({
                         />
                         <div className="absolute right-0 mt-1 w-40 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
                           <a
-                            href={`http://${wedding.subdomain}.localhost:3000`}
+                            href={`${typeof window !== "undefined" ? window.location.protocol : "http:"}//${wedding.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN || "localhost:3000"}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -197,9 +232,17 @@ export function WeddingsTable({
                             <Edit className="h-4 w-4" />
                             Edit
                           </Link>
-                          <button className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 w-full">
-                            <Trash2 className="h-4 w-4" />
-                            Delete
+                          <button
+                            onClick={() => handleDelete(wedding.id, `${wedding.partner1Name} & ${wedding.partner2Name}`)}
+                            disabled={isPending && deletingId === wedding.id}
+                            className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 w-full disabled:opacity-50"
+                          >
+                            {isPending && deletingId === wedding.id ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Trash2 className="h-4 w-4" />
+                            )}
+                            {isPending && deletingId === wedding.id ? "Deleting..." : "Delete"}
                           </button>
                         </div>
                       </>
@@ -237,7 +280,7 @@ export function WeddingsTable({
             </div>
             <div className="flex gap-2">
               <a
-                href={`http://${wedding.subdomain}.localhost:3000`}
+                href={`${typeof window !== "undefined" ? window.location.protocol : "http:"}//${wedding.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN || "localhost:3000"}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-1.5 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"

@@ -63,6 +63,7 @@ export default async function GuestRsvpPage({ params }: PageProps) {
           guestName={guest.name}
           coupleNames={guest.wedding.coupleNames}
           allowPlusOne={guest.allowPlusOne}
+          domain={domain}
           events={guest.events.map((e) => ({
             ...e,
             dateTime: new Date(e.dateTime),

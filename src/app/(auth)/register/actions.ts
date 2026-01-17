@@ -1,45 +1,38 @@
 "use server"
 
-import { auth } from "@/lib/auth/auth"
 import { prisma } from "@/lib/db/prisma"
 import { hashPassword } from "@/lib/auth/password"
 import { redirect } from "next/navigation"
 import { z } from "zod"
 
-const createWeddingSchema = z.object({
+const registerSchema = z.object({
   subdomain: z
     .string()
     .min(3, "Subdomain must be at least 3 characters")
     .max(63, "Subdomain must be at most 63 characters")
     .regex(/^[a-z0-9-]+$/, "Lowercase letters, numbers, and hyphens only"),
-  partner1Name: z.string().min(1, "Partner 1 name is required"),
-  partner2Name: z.string().min(1, "Partner 2 name is required"),
-  coupleEmail: z.string().email("Valid email required"),
-  couplePassword: z.string().min(8, "Password must be at least 8 characters"),
+  partner1Name: z.string().min(1, "Your name is required"),
+  partner2Name: z.string().min(1, "Partner's name is required"),
+  email: z.string().email("Valid email required"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
 })
 
-export type CreateWeddingState = {
+export type RegisterState = {
   success: boolean
   error?: string
   fieldErrors?: Record<string, string>
 }
 
-export async function createWeddingSite(
-  _prevState: CreateWeddingState,
+export async function registerCouple(
+  _prevState: RegisterState,
   formData: FormData
-): Promise<CreateWeddingState> {
-  const session = await auth()
-
-  if (!session || session.user.role !== "admin") {
-    return { success: false, error: "Unauthorized" }
-  }
-
-  const parsed = createWeddingSchema.safeParse({
+): Promise<RegisterState> {
+  const parsed = registerSchema.safeParse({
     subdomain: formData.get("subdomain"),
     partner1Name: formData.get("partner1Name"),
     partner2Name: formData.get("partner2Name"),
-    coupleEmail: formData.get("coupleEmail"),
-    couplePassword: formData.get("couplePassword"),
+    email: formData.get("email"),
+    password: formData.get("password"),
   })
 
   if (!parsed.success) {
@@ -54,22 +47,28 @@ export async function createWeddingSite(
 
   const data = parsed.data
 
-  // Check if subdomain is already taken
+  // Check if subdomain is taken
   const existingTenant = await prisma.tenant.findUnique({
     where: { subdomain: data.subdomain },
   })
 
   if (existingTenant) {
-    return { success: false, fieldErrors: { subdomain: "This subdomain is already taken" } }
+    return {
+      success: false,
+      fieldErrors: { subdomain: "This subdomain is already taken" },
+    }
   }
 
-  // Check if email is already taken
+  // Check if email is taken
   const existingUser = await prisma.user.findUnique({
-    where: { email: data.coupleEmail },
+    where: { email: data.email },
   })
 
   if (existingUser) {
-    return { success: false, fieldErrors: { coupleEmail: "This email is already in use" } }
+    return {
+      success: false,
+      fieldErrors: { email: "An account with this email already exists" },
+    }
   }
 
   try {
@@ -92,8 +91,8 @@ export async function createWeddingSite(
 
       await tx.user.create({
         data: {
-          email: data.coupleEmail,
-          hashedPassword: await hashPassword(data.couplePassword),
+          email: data.email,
+          hashedPassword: await hashPassword(data.password),
           name: `${data.partner1Name} & ${data.partner2Name}`,
           role: "couple",
           tenantId: tenant.id,
@@ -101,8 +100,11 @@ export async function createWeddingSite(
       })
     })
   } catch {
-    return { success: false, error: "Failed to create wedding. Please try again." }
+    return {
+      success: false,
+      error: "Something went wrong. Please try again.",
+    }
   }
 
-  redirect("/admin/weddings")
+  redirect("/login?registered=true")
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { User, Mail, Phone, Users, UserPlus, Pencil, Trash2 } from "lucide-react";
+import { User, Mail, Phone, Users, UserPlus, Pencil, Trash2, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { deleteGuest } from "@/app/(platform)/dashboard/guests/actions";
 
@@ -26,19 +26,35 @@ interface GuestCardProps {
 export function GuestCard({ guest, onDeleted }: GuestCardProps) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   const handleDelete = () => {
+    setError(null);
     startTransition(async () => {
       const result = await deleteGuest(guest.id);
       if (result.success) {
         setShowDeleteConfirm(false);
         onDeleted?.();
+      } else {
+        setError(result.error ?? "Failed to delete guest");
+        setShowDeleteConfirm(false);
       }
     });
   };
 
   return (
     <div className="bg-white rounded-lg shadow border border-gray-200 p-4">
+      {/* Error Banner */}
+      {error && (
+        <div className="flex items-center gap-2 mb-3 p-2 bg-red-50 border border-red-200 rounded-lg text-sm">
+          <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+          <p className="text-red-700 flex-1">{error}</p>
+          <button onClick={() => setError(null)} className="text-red-500 hover:text-red-700">
+            &times;
+          </button>
+        </div>
+      )}
+
       <div className="flex items-start gap-4">
         {/* Guest icon */}
         <div className="p-2 bg-blue-50 rounded-lg flex-shrink-0">

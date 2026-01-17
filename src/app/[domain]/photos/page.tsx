@@ -97,7 +97,7 @@ export default async function PublicPhotosPage({ params }: PageProps) {
             {/* Upload link if sharing enabled */}
             {wedding.photoSharingEnabled && (
               <Link
-                href="/photos/upload"
+                href={`/${domain}/photos/upload`}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
               >
                 <Upload className="w-4 h-4" />
@@ -144,7 +144,7 @@ export default async function PublicPhotosPage({ params }: PageProps) {
             </p>
             {wedding.photoSharingEnabled && (
               <Link
-                href="/photos/upload"
+                href={`/${domain}/photos/upload`}
                 className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
               >
                 <Upload className="w-4 h-4" />
@@ -158,7 +158,7 @@ export default async function PublicPhotosPage({ params }: PageProps) {
       {/* Back link */}
       <footer className="px-4 py-8 text-center">
         <Link
-          href="/"
+          href={`/${domain}`}
           className="text-gray-600 hover:text-gray-900 text-sm"
         >
           &larr; Back to wedding site

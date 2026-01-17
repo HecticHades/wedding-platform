@@ -7,12 +7,14 @@ interface RsvpConfirmationProps {
   guestName: string;
   coupleNames: string;
   eventsCount: number;
+  domain: string;
 }
 
 export function RsvpConfirmation({
   guestName,
   coupleNames,
   eventsCount,
+  domain,
 }: RsvpConfirmationProps) {
   return (
     <div className="w-full max-w-md mx-auto">
@@ -50,7 +52,7 @@ export function RsvpConfirmation({
 
         {/* Back to Homepage Link */}
         <Link
-          href="/"
+          href={`/${domain}`}
           className="inline-flex items-center gap-2 text-wedding-primary hover:text-wedding-primary/80 font-wedding text-sm transition-colors"
         >
           <Home className="w-4 h-4" />

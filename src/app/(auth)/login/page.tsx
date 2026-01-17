@@ -24,17 +24,35 @@ async function login(formData: FormData) {
   redirect("/dashboard")
 }
 
-export default function LoginPage({
+export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>
+  searchParams: Promise<{ error?: string; registered?: string }>
 }) {
+  const params = await searchParams
+
   return (
     <div className="bg-white shadow-md rounded-lg p-8">
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Sign In</h1>
         <p className="text-gray-600 mt-2">Welcome to Wedding Platform</p>
       </div>
+
+      {params.registered && (
+        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <p className="text-sm text-green-700">
+            Account created successfully! Please sign in.
+          </p>
+        </div>
+      )}
+
+      {params.error === "CredentialsSignin" && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-sm text-red-700">
+            Invalid email or password. Please try again.
+          </p>
+        </div>
+      )}
 
       <form action={login} className="space-y-6">
         <div>

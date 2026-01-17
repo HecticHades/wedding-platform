@@ -17,11 +17,20 @@ const updateWeddingSchema = z.object({
   weddingDate: z.string().optional(),
 })
 
-export async function updateWeddingDetails(formData: FormData) {
+export type UpdateWeddingState = {
+  success: boolean
+  error?: string
+  fieldErrors?: Record<string, string>
+}
+
+export async function updateWeddingDetails(
+  _prevState: UpdateWeddingState,
+  formData: FormData
+): Promise<UpdateWeddingState> {
   const session = await auth()
 
   if (!session || session.user.role !== "admin") {
-    throw new Error("Unauthorized")
+    return { success: false, error: "Unauthorized" }
   }
 
   const parsed = updateWeddingSchema.safeParse({
@@ -33,7 +42,13 @@ export async function updateWeddingDetails(formData: FormData) {
   })
 
   if (!parsed.success) {
-    throw new Error(parsed.error.errors.map((e) => e.message).join(", "))
+    const fieldErrors: Record<string, string> = {}
+    for (const error of parsed.error.errors) {
+      if (error.path[0]) {
+        fieldErrors[error.path[0].toString()] = error.message
+      }
+    }
+    return { success: false, fieldErrors }
   }
 
   const data = parsed.data
@@ -41,32 +56,89 @@ export async function updateWeddingDetails(formData: FormData) {
   // Get wedding to find tenantId
   const wedding = await prisma.wedding.findUnique({
     where: { id: data.weddingId },
+    select: { tenantId: true },
   })
 
   if (!wedding) {
-    throw new Error("Wedding not found")
+    return { success: false, error: "Wedding not found" }
   }
 
-  // Update wedding and tenant in transaction
-  await prisma.$transaction(async (tx) => {
-    await tx.wedding.update({
-      where: { id: data.weddingId },
-      data: {
-        partner1Name: data.partner1Name,
-        partner2Name: data.partner2Name,
-        weddingDate: data.weddingDate ? new Date(data.weddingDate) : null,
-      },
-    })
-
-    await tx.tenant.update({
-      where: { id: wedding.tenantId },
-      data: {
-        subdomain: data.subdomain,
-        name: `${data.partner1Name} & ${data.partner2Name}`,
-      },
-    })
+  // Check if subdomain is taken by another tenant
+  const existingTenant = await prisma.tenant.findFirst({
+    where: {
+      subdomain: data.subdomain,
+      id: { not: wedding.tenantId },
+    },
   })
+
+  if (existingTenant) {
+    return { success: false, fieldErrors: { subdomain: "This subdomain is already taken" } }
+  }
+
+  try {
+    // Update wedding and tenant in transaction
+    await prisma.$transaction(async (tx) => {
+      await tx.wedding.update({
+        where: { id: data.weddingId },
+        data: {
+          partner1Name: data.partner1Name,
+          partner2Name: data.partner2Name,
+          weddingDate: data.weddingDate ? new Date(data.weddingDate) : null,
+        },
+      })
+
+      await tx.tenant.update({
+        where: { id: wedding.tenantId },
+        data: {
+          subdomain: data.subdomain,
+          name: `${data.partner1Name} & ${data.partner2Name}`,
+        },
+      })
+    })
+  } catch {
+    return { success: false, error: "Failed to update wedding. Please try again." }
+  }
 
   revalidatePath(`/admin/weddings/${data.weddingId}`)
   revalidatePath("/admin/weddings")
+
+  return { success: true }
+}
+
+export async function deleteWedding(weddingId: string) {
+  const session = await auth()
+
+  if (!session || session.user.role !== "admin") {
+    return { success: false, error: "Unauthorized" }
+  }
+
+  // Get wedding to find tenantId
+  const wedding = await prisma.wedding.findUnique({
+    where: { id: weddingId },
+    select: { tenantId: true },
+  })
+
+  if (!wedding) {
+    return { success: false, error: "Wedding not found" }
+  }
+
+  try {
+    // Delete tenant (cascade deletes wedding) and associated user
+    await prisma.$transaction(async (tx) => {
+      // Delete user associated with this tenant first
+      await tx.user.deleteMany({
+        where: { tenantId: wedding.tenantId },
+      })
+
+      // Delete tenant (which cascades to delete wedding and all related data)
+      await tx.tenant.delete({
+        where: { id: wedding.tenantId },
+      })
+    })
+
+    revalidatePath("/admin/weddings")
+    return { success: true }
+  } catch {
+    return { success: false, error: "Failed to delete wedding" }
+  }
 }

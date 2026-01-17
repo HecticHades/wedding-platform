@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus, Download, Settings, RefreshCw } from "lucide-react";
+import { Plus } from "lucide-react";
 
 interface QuickAction {
   label: string;
@@ -15,18 +15,6 @@ const defaultActions: QuickAction[] = [
     href: "/admin/weddings/new",
     icon: Plus,
     variant: "primary",
-  },
-  {
-    label: "Export Data",
-    href: "/admin/export",
-    icon: Download,
-    variant: "secondary",
-  },
-  {
-    label: "Settings",
-    href: "/admin/settings",
-    icon: Settings,
-    variant: "secondary",
   },
 ];
 

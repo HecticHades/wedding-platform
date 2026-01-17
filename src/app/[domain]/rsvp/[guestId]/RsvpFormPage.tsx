@@ -37,6 +37,7 @@ interface RsvpFormPageProps {
   coupleNames: string;
   allowPlusOne: boolean;
   events: EventData[];
+  domain: string;
 }
 
 export function RsvpFormPage({
@@ -45,6 +46,7 @@ export function RsvpFormPage({
   coupleNames,
   allowPlusOne,
   events,
+  domain,
 }: RsvpFormPageProps) {
   // Track which events have been responded to in this session
   const [respondedEvents, setRespondedEvents] = useState<Set<string>>(
@@ -91,6 +93,7 @@ export function RsvpFormPage({
           guestName={guestName}
           coupleNames={coupleNames}
           eventsCount={totalEvents}
+          domain={domain}
         />
 
         {/* Option to review/change responses */}

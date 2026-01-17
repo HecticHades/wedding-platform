@@ -7,6 +7,7 @@ import { Search, User, Users, Loader2 } from "lucide-react";
 
 interface GuestLookupProps {
   weddingId: string;
+  domain: string;
 }
 
 interface GuestResult {
@@ -15,7 +16,7 @@ interface GuestResult {
   partyName: string | null;
 }
 
-export function GuestLookup({ weddingId }: GuestLookupProps) {
+export function GuestLookup({ weddingId, domain }: GuestLookupProps) {
   const [searchName, setSearchName] = useState("");
   const [results, setResults] = useState<GuestResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -43,7 +44,9 @@ export function GuestLookup({ weddingId }: GuestLookupProps) {
   }, [searchName, weddingId]);
 
   const handleSelectGuest = (guestId: string) => {
-    router.push(`/rsvp/${guestId}`);
+    // Set cookie to remember guest selection (30 day expiry)
+    document.cookie = `rsvp_guest_${weddingId}=${guestId}; path=/; max-age=${30 * 24 * 60 * 60}; SameSite=Lax`;
+    router.push(`/${domain}/rsvp/${guestId}`);
   };
 
   return (

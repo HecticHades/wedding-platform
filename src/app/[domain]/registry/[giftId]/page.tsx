@@ -70,7 +70,7 @@ export default async function GiftDetailPage({ params }: PageProps) {
       <div className="max-w-2xl mx-auto">
         {/* Back link */}
         <Link
-          href={`/registry`}
+          href={`/${domain}/registry`}
           className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
         >
           <ArrowLeft className="h-4 w-4" />

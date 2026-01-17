@@ -14,7 +14,6 @@ import {
   Mail,
   Grid3X3,
   Globe,
-  Settings,
   X,
   ExternalLink,
 } from "lucide-react";
@@ -55,10 +54,6 @@ const navGroups = [
       { href: "/dashboard/registry", label: "Registry", icon: Gift },
       { href: "/dashboard/photos", label: "Photos", icon: Camera },
     ],
-  },
-  {
-    title: "Settings",
-    items: [{ href: "/dashboard/settings", label: "Settings", icon: Settings }],
   },
 ];
 
@@ -114,7 +109,7 @@ export function DashboardSidebar({
         {/* View Site Link */}
         <div className="px-3 py-3 border-b border-[#e8e4e0]">
           <a
-            href={`http://${subdomain}.localhost:3000`}
+            href={`${window.location.protocol}//${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN || "localhost:3000"}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#c4a4a4]/10 text-[#3d3936] hover:bg-[#c4a4a4]/20 transition-colors text-sm font-medium"

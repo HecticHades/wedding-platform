@@ -1,7 +1,8 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { AlertCircle } from "lucide-react";
 import type { Event } from "@prisma/client";
 import { createEvent, updateEvent } from "@/app/(platform)/dashboard/events/actions";
 
@@ -16,6 +17,7 @@ interface EventFormProps {
 export function EventForm({ event, onSuccess }: EventFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
   const isEditing = !!event;
 
   // Format date for datetime-local input (YYYY-MM-DDTHH:mm)
@@ -31,6 +33,7 @@ export function EventForm({ event, onSuccess }: EventFormProps) {
   };
 
   const handleSubmit = async (formData: FormData) => {
+    setError(null);
     startTransition(async () => {
       let result;
 
@@ -45,7 +48,7 @@ export function EventForm({ event, onSuccess }: EventFormProps) {
         router.push("/dashboard/events");
         router.refresh();
       } else {
-        alert(result.error);
+        setError(result.error ?? "An error occurred");
       }
     });
   };
@@ -56,6 +59,21 @@ export function EventForm({ event, onSuccess }: EventFormProps) {
 
   return (
     <form action={handleSubmit} className="space-y-6">
+      {/* Error Banner */}
+      {error && (
+        <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0" />
+          <p className="text-sm text-red-700">{error}</p>
+          <button
+            type="button"
+            onClick={() => setError(null)}
+            className="ml-auto text-red-500 hover:text-red-700"
+          >
+            &times;
+          </button>
+        </div>
+      )}
+
       {/* Event Name */}
       <div>
         <label

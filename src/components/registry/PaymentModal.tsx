@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect, useRef, useCallback } from "react";
 import { X, Check, Loader2 } from "lucide-react";
 import type { GiftItem } from "@prisma/client";
 import type { Decimal } from "@prisma/client/runtime/library";
@@ -42,6 +42,57 @@ export function PaymentModal({
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<"payment" | "confirm">("payment");
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Handle escape key
+  const handleEscape = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      handleClose();
+    }
+  }, []);
+
+  // Focus trap and escape key handler
+  useEffect(() => {
+    if (isOpen) {
+      // Store the previously focused element
+      const previouslyFocused = document.activeElement as HTMLElement;
+
+      // Focus the close button when modal opens
+      closeButtonRef.current?.focus();
+
+      // Add escape key listener
+      document.addEventListener("keydown", handleEscape);
+
+      // Trap focus within modal
+      const handleTab = (e: KeyboardEvent) => {
+        if (e.key !== "Tab" || !modalRef.current) return;
+
+        const focusableElements = modalRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement?.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement?.focus();
+        }
+      };
+
+      document.addEventListener("keydown", handleTab);
+
+      return () => {
+        document.removeEventListener("keydown", handleEscape);
+        document.removeEventListener("keydown", handleTab);
+        // Restore focus to previously focused element
+        previouslyFocused?.focus();
+      };
+    }
+  }, [isOpen, handleEscape]);
 
   if (!isOpen) return null;
 
@@ -71,14 +122,25 @@ export function PaymentModal({
   const amount = Number(gift.targetAmount);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="payment-modal-title"
+      onClick={(e) => e.target === e.currentTarget && handleClose()}
+    >
+      <div
+        ref={modalRef}
+        className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">{gift.name}</h2>
+          <h2 id="payment-modal-title" className="text-xl font-semibold text-gray-900">{gift.name}</h2>
           <button
+            ref={closeButtonRef}
             type="button"
             onClick={handleClose}
+            aria-label="Close modal"
             className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
           >
             <X className="h-5 w-5" />

@@ -1,8 +1,8 @@
 "use client";
 
-import { useTransition, useRef } from "react";
+import { useState, useTransition, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { User, Mail, Phone, Users, UserPlus } from "lucide-react";
+import { User, Mail, Phone, Users, UserPlus, AlertCircle } from "lucide-react";
 import { createGuest, updateGuest } from "@/app/(platform)/dashboard/guests/actions";
 
 interface Guest {
@@ -25,12 +25,14 @@ interface GuestFormProps {
  */
 export function GuestForm({ guest, onSuccess }: GuestFormProps) {
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
 
   const isEditing = !!guest;
 
   const handleSubmit = (formData: FormData) => {
+    setError(null);
     startTransition(async () => {
       let result;
 
@@ -48,14 +50,28 @@ export function GuestForm({ guest, onSuccess }: GuestFormProps) {
         router.push("/dashboard/guests");
         router.refresh();
       } else {
-        // Show error - in a real app, you'd have better error handling
-        alert(result.error ?? "An error occurred");
+        setError(result.error ?? "An error occurred");
       }
     });
   };
 
   return (
     <form ref={formRef} action={handleSubmit} className="space-y-6">
+      {/* Error Banner */}
+      {error && (
+        <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0" />
+          <p className="text-sm text-red-700">{error}</p>
+          <button
+            type="button"
+            onClick={() => setError(null)}
+            className="ml-auto text-red-500 hover:text-red-700"
+          >
+            &times;
+          </button>
+        </div>
+      )}
+
       {/* Guest Name */}
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">

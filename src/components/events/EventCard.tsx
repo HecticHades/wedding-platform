@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Calendar, MapPin, Clock, Users, Lock, Pencil, Trash2 } from "lucide-react";
 import type { Event } from "@prisma/client";
 
@@ -16,6 +16,51 @@ interface EventCardProps {
 export function EventCard({ event, onEdit, onDelete }: EventCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const cancelButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Handle escape key to close modal
+  const handleEscape = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape" && showDeleteConfirm) {
+      setShowDeleteConfirm(false);
+    }
+  }, [showDeleteConfirm]);
+
+  // Focus trap and escape key handler
+  useEffect(() => {
+    if (showDeleteConfirm) {
+      const previouslyFocused = document.activeElement as HTMLElement;
+      cancelButtonRef.current?.focus();
+
+      document.addEventListener("keydown", handleEscape);
+
+      const handleTab = (e: KeyboardEvent) => {
+        if (e.key !== "Tab" || !modalRef.current) return;
+
+        const focusableElements = modalRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement?.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement?.focus();
+        }
+      };
+
+      document.addEventListener("keydown", handleTab);
+
+      return () => {
+        document.removeEventListener("keydown", handleEscape);
+        document.removeEventListener("keydown", handleTab);
+        previouslyFocused?.focus();
+      };
+    }
+  }, [showDeleteConfirm, handleEscape]);
 
   // Format date and time for display
   const formatDate = (date: Date) => {
@@ -136,9 +181,15 @@ export function EventCard({ event, onEdit, onDelete }: EventCardProps) {
 
       {/* Delete confirmation modal */}
       {showDeleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4 shadow-xl">
-            <h4 className="text-lg font-semibold text-gray-900">Delete Event?</h4>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="delete-event-title"
+          onClick={(e) => e.target === e.currentTarget && !isDeleting && setShowDeleteConfirm(false)}
+        >
+          <div ref={modalRef} className="bg-white rounded-lg p-6 max-w-sm w-full mx-4 shadow-xl">
+            <h4 id="delete-event-title" className="text-lg font-semibold text-gray-900">Delete Event?</h4>
             <p className="mt-2 text-sm text-gray-600">
               Are you sure you want to delete &quot;{event.name}&quot;? This will also
               remove all guest invitations for this event. This action cannot be
@@ -146,6 +197,7 @@ export function EventCard({ event, onEdit, onDelete }: EventCardProps) {
             </p>
             <div className="mt-4 flex justify-end gap-3">
               <button
+                ref={cancelButtonRef}
                 type="button"
                 onClick={() => setShowDeleteConfirm(false)}
                 disabled={isDeleting}

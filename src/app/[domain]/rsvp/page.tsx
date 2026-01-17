@@ -83,6 +83,7 @@ export default async function RsvpPage({ params }: PageProps) {
           weddingId={wedding.id}
           hasRsvpCode={!!wedding.rsvpCode}
           initialAuthenticated={isAuthenticated}
+          domain={domain}
         />
       </div>
     </main>

@@ -24,6 +24,7 @@ export function PhotoCard({
   return (
     <button
       onClick={onClick}
+      aria-label={caption ? `View photo: ${caption}` : "View wedding photo"}
       className="group relative aspect-square rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
     >
       <Image
