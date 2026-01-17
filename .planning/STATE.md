@@ -87,6 +87,8 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][] 100% (22/22 plans through
 | Accordion for per-event stats | 05-04 | Clean way to show breakdown without overwhelming view |
 | Client-side status filter for guest list | 05-04 | Guest lists typically <500; instant filtering UX |
 | Move buttons for meal options reorder | 05-04 | Simpler than dnd-kit for typically short lists |
+| Route Handler over Server Action for CSV | 05-05 | Route Handlers better for file downloads with proper headers |
+| Preview list limited to 10 guests | 05-05 | Shows representative sample without overwhelming UI |
 | No tenant context for admin queries | 05-06 | Admin needs platform-wide visibility across all weddings |
 | Client-side sorting/filtering for admin | 05-06 | Wedding count typically manageable; instant UX |
 | Color-coded response rate progress bars | 05-06 | Quick visual identification of weddings needing attention |
@@ -121,6 +123,6 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][] 100% (22/22 plans through
 
 ## Session Continuity
 
-Last session: 2026-01-17T12:58:58Z
-Stopped at: Completed 05-06-PLAN.md (Admin RSVP Overview)
+Last session: 2026-01-17T13:00:39Z
+Stopped at: Completed 05-05-PLAN.md (Email Notifications)
 Resume file: None - Phase 5 complete, ready for Phase 6
