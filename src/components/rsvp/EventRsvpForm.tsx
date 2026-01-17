@@ -53,7 +53,9 @@ export function EventRsvpForm({
   onSubmitted,
 }: EventRsvpFormProps) {
   const [rsvpStatus, setRsvpStatus] = useState<"ATTENDING" | "DECLINED" | "">(
-    currentRsvp?.rsvpStatus ?? ""
+    currentRsvp?.rsvpStatus === "ATTENDING" || currentRsvp?.rsvpStatus === "DECLINED"
+      ? currentRsvp.rsvpStatus
+      : ""
   );
   const [plusOneCount, setPlusOneCount] = useState(
     currentRsvp?.plusOneCount ?? 0
