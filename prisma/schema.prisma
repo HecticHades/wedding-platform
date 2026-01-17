@@ -116,6 +116,14 @@ model Wedding {
   @@index([tenantId])
 }
 
+// RSVP status enum for EventGuest responses
+enum RsvpStatus {
+  PENDING
+  ATTENDING
+  DECLINED
+  MAYBE
+}
+
 model Guest {
   id        String   @id @default(cuid())
   weddingId String
@@ -125,10 +133,19 @@ model Guest {
   email     String?
   phone     String?
 
+  // Household/party grouping
+  partyName    String?           // e.g., "The Smith Family"
+  partySize    Int      @default(1)
+  allowPlusOne Boolean  @default(false)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Relations
+  eventInvitations EventGuest[]
+
   @@index([weddingId])
+  @@index([weddingId, email])
 }
 
 model Event {
@@ -136,13 +153,44 @@ model Event {
   weddingId String
   wedding   Wedding  @relation(fields: [weddingId], references: [id], onDelete: Cascade)
 
-  name      String
-  dateTime  DateTime
-  location  String?
-  isPublic  Boolean  @default(true)
+  name        String
+  description String?
+  dateTime    DateTime
+  endTime     DateTime?
+  location    String?          // Venue name
+  address     String?          // Full address
+  dressCode   String?
+  isPublic    Boolean  @default(true)
+  order       Int      @default(0)  // Custom display ordering
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Relations
+  guestInvitations EventGuest[]
+
   @@index([weddingId])
+  @@index([weddingId, dateTime])
+}
+
+model EventGuest {
+  id        String   @id @default(cuid())
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  guestId   String
+  guest     Guest    @relation(fields: [guestId], references: [id], onDelete: Cascade)
+
+  invitedAt DateTime @default(now())
+
+  // RSVP fields (prepared for Phase 5, nullable for now)
+  rsvpStatus   RsvpStatus?
+  rsvpAt       DateTime?
+  plusOneCount Int?
+  plusOneName  String?
+  mealChoice   String?
+  dietaryNotes String?
+
+  @@unique([eventId, guestId])
+  @@index([eventId])
+  @@index([guestId])
 }
