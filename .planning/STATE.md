@@ -10,16 +10,16 @@ See: .planning/PROJECT.md
 ## Current Position
 
 Phase: 7 of 10 (Photo Sharing)
-Plan: 1 of 3 complete (07-01)
+Plan: 2 of 3 complete (07-03)
 Status: In progress
-Last activity: 2026-01-17 - Completed 07-01-PLAN.md (Photo Sharing Schema Setup)
+Last activity: 2026-01-17 - Completed 07-03-PLAN.md (Public Gallery & Guest Upload)
 
-Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 90% (27/30 plans through Phase 7-01)
+Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 93% (28/30 plans through Phase 7-03)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 27
+- Total plans completed: 28
 - Average duration: 8 min
 
 **By Phase:**
@@ -32,7 +32,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 90% (27/30 
 | 04-event-guest-management | 4/4 | 30 min | 8 min |
 | 05-rsvp-system | 6/6 | 32 min | 5 min |
 | 06-gift-registry | 4/4 | 29 min | 7 min |
-| 07-photo-sharing | 1/3 | 5 min | 5 min |
+| 07-photo-sharing | 2/3 | 11 min | 6 min |
 
 ## Accumulated Context
 
@@ -108,6 +108,9 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 90% (27/30 
 | GuestPhoto with PhotoStatus moderation | 07-01 | PENDING/APPROVED/REJECTED workflow for guest uploads |
 | yet-another-react-lightbox for gallery | 07-01 | Full-featured lightbox with zoom, swipe, keyboard nav |
 | Vercel Blob remote patterns | 07-01 | Next.js Image requires explicit allowlist for remote images |
+| Vercel Blob client upload for guests | 07-03 | Bypasses 4.5MB serverless limit; supports 20MB photos |
+| Fallback action for local dev | 07-03 | onUploadCompleted webhook needs public URL; action ensures record creation |
+| Couple photos + guest photos combined | 07-03 | Gallery shows both sources; guest photos have badge indicator |
 
 ### Pending Todos
 
@@ -125,8 +128,8 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 90% (27/30 
 | Plan | Status | Description |
 |------|--------|-------------|
 | 07-01 | Complete | Photo Sharing Schema Setup |
-| 07-02 | Pending | Photo Upload API & Gallery |
-| 07-03 | Pending | Moderation Dashboard |
+| 07-02 | Pending | Photo Moderation Dashboard |
+| 07-03 | Complete | Public Gallery & Guest Upload |
 
 ## Deployment
 
@@ -137,6 +140,6 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 90% (27/30 
 
 ## Session Continuity
 
-Last session: 2026-01-17T15:00:00Z
-Stopped at: Completed 07-01-PLAN.md
+Last session: 2026-01-17T15:03:00Z
+Stopped at: Completed 07-03-PLAN.md
 Resume file: None - Ready for 07-02
