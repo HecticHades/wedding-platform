@@ -85,14 +85,19 @@ Plans:
 **Goal:** Couples can define multiple events and manage their guest list infrastructure.
 **Depends on:** Phase 3
 **Requirements:** EVENT-01, EVENT-02, EVENT-03, EVENT-04
+**Plans:** 4 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Schema updates (Guest, Event, EventGuest join table), migrations, Prisma client extension
+- [ ] 04-02-PLAN.md — Event CRUD (server actions, event list, event form, event management pages)
+- [ ] 04-03-PLAN.md — Guest CRUD (server actions, guest list, guest form, guest management pages)
+- [ ] 04-04-PLAN.md — Event-guest assignment UI, public site event visibility filtering
 
 **Success Criteria:**
 1. Couple can create multiple events (rehearsal dinner, ceremony, reception) with distinct dates/times/locations
 2. Couple can control which events are visible to guests (some events may be invite-only)
 3. Each event maintains its own attendance tracking separate from other events
 4. Guest can see only the events they have access to when viewing the wedding site
-
-**Plans:** (created by /gsd:plan-phase)
 
 ---
 
@@ -204,7 +209,7 @@ Plans:
 | 1 - Foundation | Complete | 2026-01-16 |
 | 2 - Admin & Couple Auth | Complete | 2026-01-17 |
 | 3 - Content Builder | Complete | 2026-01-17 |
-| 4 - Event & Guest Management | Not started | - |
+| 4 - Event & Guest Management | Planned | - |
 | 5 - RSVP System | Not started | - |
 | 6 - Gift Registry | Not started | - |
 | 7 - Photo Sharing | Not started | - |
