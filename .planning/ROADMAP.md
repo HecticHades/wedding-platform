@@ -176,13 +176,16 @@ Plans:
 **Goal:** Couples can communicate with guests via email broadcasts and scheduled messages.
 **Depends on:** Phase 5
 **Requirements:** MSG-01, MSG-02, MSG-03
+**Plans:** 2 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — BroadcastMessage schema, BroadcastEmail template, server actions (send, schedule, cancel)
+- [ ] 08-02-PLAN.md — Messaging UI pages (list, compose, detail) and dashboard navigation
 
 **Success Criteria:**
 1. Couple can compose and send a broadcast email to all guests with email addresses
 2. Couple can schedule a message for future delivery (e.g., "Save the date reminder 2 weeks before")
 3. Guest receives email notifications when couple sends updates or reminders
-
-**Plans:** (created by /gsd:plan-phase)
 
 ---
 
