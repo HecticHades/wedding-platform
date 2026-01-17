@@ -261,3 +261,164 @@ export async function reorderEvents(
     return { success: false, error: "Failed to reorder events" };
   }
 }
+
+/**
+ * Update all guest invitations for an event (bulk replace)
+ * Atomically removes all existing invitations and creates new ones
+ */
+export async function updateEventInvitations(
+  eventId: string,
+  guestIds: string[]
+): Promise<ActionResult> {
+  const session = await auth();
+
+  if (!session || !session.user.tenantId) {
+    return { success: false, error: "Unauthorized" };
+  }
+
+  // Validate input
+  if (!eventId || typeof eventId !== "string") {
+    return { success: false, error: "Event ID is required" };
+  }
+
+  const guestIdsSchema = z.array(z.string().min(1));
+  const parsed = guestIdsSchema.safeParse(guestIds);
+  if (!parsed.success) {
+    return { success: false, error: "Invalid guest IDs" };
+  }
+
+  try {
+    const result = await withTenantContext(session.user.tenantId, async () => {
+      // Verify event exists and belongs to this tenant's wedding
+      const existingEvent = await prisma.event.findFirst({
+        where: { id: eventId },
+        select: { id: true },
+      });
+
+      if (!existingEvent) {
+        return { success: false as const, error: "Event not found" };
+      }
+
+      // Use transaction for atomicity
+      await prisma.$transaction(async (tx) => {
+        // Delete all existing invitations for this event
+        await tx.eventGuest.deleteMany({
+          where: { eventId },
+        });
+
+        // Create new invitations for each guest
+        if (parsed.data.length > 0) {
+          await tx.eventGuest.createMany({
+            data: parsed.data.map((guestId) => ({
+              eventId,
+              guestId,
+            })),
+          });
+        }
+      });
+
+      return { success: true as const };
+    });
+
+    revalidatePath(`/dashboard/events/${eventId}/guests`);
+    revalidatePath("/dashboard/events");
+    return result;
+  } catch (error) {
+    console.error("Failed to update event invitations:", error);
+    return { success: false, error: "Failed to update invitations" };
+  }
+}
+
+/**
+ * Invite a single guest to an event (upsert - no-op if already invited)
+ */
+export async function inviteGuestToEvent(
+  eventId: string,
+  guestId: string
+): Promise<ActionResult> {
+  const session = await auth();
+
+  if (!session || !session.user.tenantId) {
+    return { success: false, error: "Unauthorized" };
+  }
+
+  if (!eventId || !guestId) {
+    return { success: false, error: "Event ID and Guest ID are required" };
+  }
+
+  try {
+    const result = await withTenantContext(session.user.tenantId, async () => {
+      // Verify event exists
+      const existingEvent = await prisma.event.findFirst({
+        where: { id: eventId },
+        select: { id: true },
+      });
+
+      if (!existingEvent) {
+        return { success: false as const, error: "Event not found" };
+      }
+
+      // Upsert invitation
+      await prisma.eventGuest.upsert({
+        where: {
+          eventId_guestId: { eventId, guestId },
+        },
+        create: { eventId, guestId },
+        update: {}, // No update needed, just confirm existence
+      });
+
+      return { success: true as const };
+    });
+
+    revalidatePath(`/dashboard/events/${eventId}/guests`);
+    return result;
+  } catch (error) {
+    console.error("Failed to invite guest to event:", error);
+    return { success: false, error: "Failed to invite guest" };
+  }
+}
+
+/**
+ * Remove a single guest from an event
+ */
+export async function removeGuestFromEvent(
+  eventId: string,
+  guestId: string
+): Promise<ActionResult> {
+  const session = await auth();
+
+  if (!session || !session.user.tenantId) {
+    return { success: false, error: "Unauthorized" };
+  }
+
+  if (!eventId || !guestId) {
+    return { success: false, error: "Event ID and Guest ID are required" };
+  }
+
+  try {
+    const result = await withTenantContext(session.user.tenantId, async () => {
+      // Verify event exists
+      const existingEvent = await prisma.event.findFirst({
+        where: { id: eventId },
+        select: { id: true },
+      });
+
+      if (!existingEvent) {
+        return { success: false as const, error: "Event not found" };
+      }
+
+      // Delete invitation
+      await prisma.eventGuest.deleteMany({
+        where: { eventId, guestId },
+      });
+
+      return { success: true as const };
+    });
+
+    revalidatePath(`/dashboard/events/${eventId}/guests`);
+    return result;
+  } catch (error) {
+    console.error("Failed to remove guest from event:", error);
+    return { success: false, error: "Failed to remove guest" };
+  }
+}
