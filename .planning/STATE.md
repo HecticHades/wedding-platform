@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** All phases complete
+**Current focus:** Phase 10 - Custom Domains & Polish
 
 ## Current Position
 
-Phase: 9 of 10 (Seating Chart)
-Plan: 3 of 3 complete (09-03)
-Status: All phases complete
-Last activity: 2026-01-17 - Completed 09-03-PLAN.md (Export & Guest View)
+Phase: 10 of 10 (Custom Domains & Polish)
+Plan: 1 of 3 complete (10-01)
+Status: In progress
+Last activity: 2026-01-17 - Completed 10-01-PLAN.md (Domain Infrastructure)
 
-Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=] 100% (34/34 plans)
+Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=] 95% (35/37 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 34
+- Total plans completed: 35
 - Average duration: 8 min
 
 **By Phase:**
@@ -35,6 +35,7 @@ Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][
 | 07-photo-sharing | 3/3 | 17 min | 6 min |
 | 08-guest-messaging | 2/2 | 11 min | 6 min |
 | 09-seating-chart | 3/3 | 15 min | 5 min |
+| 10-custom-domains-polish | 1/3 | 6 min | 6 min |
 
 ## Accumulated Context
 
@@ -123,6 +124,9 @@ Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][
 | Multi-container DndContext for seating | 09-02 | Single context wrapping UnassignedPool and all TableCards |
 | Optimistic updates with rollback for drag-drop | 09-02 | Instant feedback for better UX while maintaining consistency |
 | Client-side capacity check in drag handler | 09-02 | Prevents visual snap-back by blocking invalid drops early |
+| DomainStatus enum with 5 states | 10-01 | NONE/PENDING/VERIFYING/VERIFIED/FAILED covers full domain lifecycle |
+| Domain fields on Tenant (not Wedding) | 10-01 | Domain is tenant-level concern; subdomain already on Tenant |
+| Apex vs subdomain detection by dot count | 10-01 | Simple heuristic: 2 parts = apex, 3+ parts = subdomain |
 
 ### Pending Todos
 
@@ -134,14 +138,15 @@ Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][
 - Supabase pgbouncer connection on port 6543, direct on 5432
 - RESEND_API_KEY needs to be configured for email sending
 - BLOB_READ_WRITE_TOKEN needs to be configured for photo uploads
+- VERCEL_API_TOKEN needs to be configured for custom domain management
 
-## Phase 9 Progress
+## Phase 10 Progress
 
 | Plan | Status | Description |
 |------|--------|-------------|
-| 09-01 | Complete | Seating Data Layer |
-| 09-02 | Complete | Seating UI Components |
-| 09-03 | Complete | Export & Guest View |
+| 10-01 | Complete | Domain Infrastructure |
+| 10-02 | Pending | Domain API Routes |
+| 10-03 | Pending | Domain Management UI |
 
 ## Deployment
 
@@ -152,6 +157,6 @@ Progress: [=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][=][
 
 ## Session Continuity
 
-Last session: 2026-01-17T16:29:35Z
-Stopped at: Completed 09-03-PLAN.md (Export & Guest View)
-Resume file: None - All 34 plans complete
+Last session: 2026-01-17T17:08:03Z
+Stopped at: Completed 10-01-PLAN.md (Domain Infrastructure)
+Resume file: None
