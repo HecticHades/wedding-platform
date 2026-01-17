@@ -1,4 +1,5 @@
 import NextAuth from "next-auth"
+import type { Adapter } from "next-auth/adapters"
 import Credentials from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { PrismaClient } from "@prisma/client"
@@ -11,6 +12,9 @@ import { authConfig } from "./auth.config"
 // Auth operations are platform-level, not tenant-scoped
 const prisma = new PrismaClient()
 
+// Cast adapter to fix type mismatch between @auth/prisma-adapter and next-auth
+const adapter = PrismaAdapter(prisma) as Adapter
+
 const credentialsSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
@@ -18,7 +22,7 @@ const credentialsSchema = z.object({
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
-  adapter: PrismaAdapter(prisma),
+  adapter,
   session: {
     strategy: "jwt",
   },
