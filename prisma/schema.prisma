@@ -106,12 +106,16 @@ model Wedding {
   themeSettings   Json    @default("{}")
   /// [ContentSection[]]
   contentSections Json    @default("[]")
+  /// [PaymentSettings]
+  paymentSettings Json    @default("{}")
 
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
-  guests       Guest[]
-  events       Event[]
+  guests             Guest[]
+  events             Event[]
+  giftItems          GiftItem[]
+  externalRegistries ExternalRegistry[]
 
   @@index([tenantId])
 }
@@ -195,4 +199,43 @@ model EventGuest {
   @@unique([eventId, guestId])
   @@index([eventId])
   @@index([guestId])
+}
+
+model GiftItem {
+  id          String   @id @default(cuid())
+  weddingId   String
+  wedding     Wedding  @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?
+  targetAmount Decimal  @db.Decimal(10, 2)
+  imageUrl    String?
+  order       Int      @default(0)
+
+  // Claiming
+  isClaimed   Boolean  @default(false)
+  claimedBy   String?
+  claimedAt   DateTime?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([weddingId])
+  @@index([weddingId, isClaimed])
+}
+
+model ExternalRegistry {
+  id          String   @id @default(cuid())
+  weddingId   String
+  wedding     Wedding  @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+
+  name        String
+  url         String
+  description String?
+  order       Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([weddingId])
 }
