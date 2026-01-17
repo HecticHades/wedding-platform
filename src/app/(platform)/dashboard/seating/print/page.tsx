@@ -5,6 +5,7 @@ import { ArrowLeft, Download } from "lucide-react";
 import { prisma, withTenantContext } from "@/lib/db/prisma";
 import { SeatingPrintView } from "@/components/seating/SeatingPrintView";
 import { PrintButton } from "@/components/seating/PrintButton";
+import { PrintStyles } from "@/components/seating/PrintStyles";
 
 /**
  * Get tables with guests for print view
@@ -110,23 +111,7 @@ export default async function SeatingPrintPage() {
       </div>
 
       {/* Print-specific styles */}
-      <style jsx global>{`
-        @media print {
-          .print\\:hidden {
-            display: none !important;
-          }
-
-          @page {
-            margin: 0.5in;
-            size: letter portrait;
-          }
-
-          body {
-            print-color-adjust: exact;
-            -webkit-print-color-adjust: exact;
-          }
-        }
-      `}</style>
+      <PrintStyles />
     </>
   );
 }
