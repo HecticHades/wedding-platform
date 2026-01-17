@@ -194,14 +194,18 @@ Plans:
 **Goal:** Couples can create a seating arrangement and guests can view their table assignment.
 **Depends on:** Phase 5
 **Requirements:** SEAT-01, SEAT-02, SEAT-03, SEAT-04
+**Plans:** 3 plans
+
+Plans:
+- [ ] 09-01-PLAN.md — Schema (Table, SeatAssignment models), server actions for table CRUD and guest assignment
+- [ ] 09-02-PLAN.md — Seating chart UI with multi-container drag-and-drop (dnd-kit)
+- [ ] 09-03-PLAN.md — Print view, CSV export, guest seating page, dashboard navigation
 
 **Success Criteria:**
 1. Couple can create tables with names/numbers and seating capacity
 2. Couple can assign RSVP'd guests to tables using drag-and-drop interface
 3. Couple can export the seating arrangement (printable format for venue)
 4. Guest who has RSVP'd can view their table assignment on the wedding site
-
-**Plans:** (created by /gsd:plan-phase)
 
 ---
 
