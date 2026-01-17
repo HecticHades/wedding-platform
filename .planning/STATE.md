@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md
 
 **Core value:** Couples can easily share their wedding details with guests and manage RSVPs, gifts, and photos in one place - with minimal friction for both couples and guests.
-**Current focus:** Phase 9 - Seating Chart
+**Current focus:** Phase 9 - Seating Chart (Complete)
 
 ## Current Position
 
 Phase: 9 of 10 (Seating Chart)
-Plan: 1 of 2 complete (09-01)
-Status: In progress
-Last activity: 2026-01-17 - Completed 09-01-PLAN.md (Seating Data Layer)
+Plan: 2 of 2 complete (09-02)
+Status: Phase complete
+Last activity: 2026-01-17 - Completed 09-02-PLAN.md (Seating UI Components)
 
-Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 94% (32/34 plans through Phase 9)
+Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 97% (33/34 plans through Phase 9)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 32
+- Total plans completed: 33
 - Average duration: 8 min
 
 **By Phase:**
@@ -34,7 +34,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 94%
 | 06-gift-registry | 4/4 | 29 min | 7 min |
 | 07-photo-sharing | 3/3 | 17 min | 6 min |
 | 08-guest-messaging | 2/2 | 11 min | 6 min |
-| 09-seating-chart | 1/2 | 3 min | 3 min |
+| 09-seating-chart | 2/2 | 9 min | 5 min |
 
 ## Accumulated Context
 
@@ -120,6 +120,9 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 94%
 | 500ms delay between scheduled sends | 08-01 | Rate limit: 2 req/sec; prevents 429 errors |
 | Complete dashboard navigation with icons | 08-02 | All dashboard sections accessible from nav; Messaging uses Mail icon |
 | Plus-one capacity calculation for seating | 09-01 | Sum (1 + plusOneCount) for ATTENDING events for accurate headcount |
+| Multi-container DndContext for seating | 09-02 | Single context wrapping UnassignedPool and all TableCards |
+| Optimistic updates with rollback for drag-drop | 09-02 | Instant feedback for better UX while maintaining consistency |
+| Client-side capacity check in drag handler | 09-02 | Prevents visual snap-back by blocking invalid drops early |
 
 ### Pending Todos
 
@@ -137,7 +140,7 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 94%
 | Plan | Status | Description |
 |------|--------|-------------|
 | 09-01 | Complete | Seating Data Layer |
-| 09-02 | Pending | Seating UI Components |
+| 09-02 | Complete | Seating UI Components |
 
 ## Deployment
 
@@ -148,6 +151,6 @@ Progress: [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 94%
 
 ## Session Continuity
 
-Last session: 2026-01-17T16:20:00Z
-Stopped at: Completed 09-01-PLAN.md (Seating Data Layer)
-Resume file: None - Ready for 09-02
+Last session: 2026-01-17T16:29:00Z
+Stopped at: Completed 09-02-PLAN.md (Seating UI Components)
+Resume file: None - Phase 9 complete, ready for Phase 10
