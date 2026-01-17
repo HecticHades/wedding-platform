@@ -1,6 +1,16 @@
 import { auth } from "@/lib/auth/auth"
 import { NextResponse } from "next/server"
 
+// Internal API secret for secure middleware-to-API communication
+const INTERNAL_API_SECRET = process.env.INTERNAL_API_SECRET || "default-internal-secret-change-in-production"
+
+// Validate subdomain format: alphanumeric and hyphens only, 1-63 chars
+const SUBDOMAIN_REGEX = /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/i
+
+function isValidSubdomain(subdomain: string): boolean {
+  return SUBDOMAIN_REGEX.test(subdomain) && subdomain.length <= 63
+}
+
 export default auth(async (req) => {
   const { nextUrl, auth: session } = req
   const isLoggedIn = !!session?.user
@@ -48,8 +58,13 @@ export default auth(async (req) => {
     subdomain = hostname.split(".")[0]
   }
 
-  // Subdomain detected - rewrite to tenant route
+  // Subdomain detected - validate and rewrite to tenant route
   if (subdomain) {
+    // Security: Validate subdomain format to prevent path traversal
+    if (!isValidSubdomain(subdomain)) {
+      console.warn(`Invalid subdomain format rejected: ${subdomain}`)
+      return NextResponse.redirect(new URL("/", nextUrl.origin))
+    }
     return NextResponse.rewrite(new URL(`/${subdomain}${nextUrl.pathname}`, req.url))
   }
 
@@ -67,10 +82,14 @@ export default auth(async (req) => {
       const lookupUrl = new URL("/api/internal/tenant-lookup", req.url)
       lookupUrl.searchParams.set("domain", hostname)
 
-      const response = await fetch(lookupUrl.toString())
+      const response = await fetch(lookupUrl.toString(), {
+        headers: {
+          "x-internal-secret": INTERNAL_API_SECRET,
+        },
+      })
       const data = await response.json()
 
-      if (data.tenant?.subdomain) {
+      if (data.tenant?.subdomain && isValidSubdomain(data.tenant.subdomain)) {
         // Rewrite to tenant route using their subdomain
         return NextResponse.rewrite(
           new URL(`/${data.tenant.subdomain}${nextUrl.pathname}`, req.url)
@@ -78,7 +97,6 @@ export default auth(async (req) => {
       }
 
       // Custom domain not found or not verified - show error page
-      // Could redirect to a "domain not configured" page on root domain
       console.warn(`Custom domain not found or not verified: ${hostname}`)
     } catch (error) {
       console.error("Custom domain lookup failed:", error)
