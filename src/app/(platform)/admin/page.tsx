@@ -40,6 +40,19 @@ export default async function AdminDashboardPage() {
             {userCount}
           </div>
         </div>
+
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="text-sm font-medium text-gray-500">RSVP Overview</div>
+          <div className="mt-2 text-lg font-semibold text-gray-900">
+            Platform-wide RSVP Stats
+          </div>
+          <Link
+            href="/admin/rsvp"
+            className="mt-4 inline-block text-sm text-blue-600 hover:text-blue-800"
+          >
+            View RSVP overview
+          </Link>
+        </div>
       </div>
 
       <div className="bg-white rounded-lg shadow p-6">
