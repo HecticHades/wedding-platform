@@ -69,13 +69,14 @@ export default async function RsvpDashboardPage() {
           </p>
         </div>
         <div className="flex gap-3">
-          <Link
-            href="/dashboard/rsvp/export"
+          <a
+            href="/api/export/rsvp"
+            download
             className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
           >
             <Download className="h-4 w-4" />
             Export CSV
-          </Link>
+          </a>
           <Link
             href="/dashboard/rsvp/reminders"
             className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
