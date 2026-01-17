@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "prisma generate",
     "test:load": "k6 run tests/load/wedding-site.js",
     "test:load:ci": "k6 run --out json=load-test-results.json tests/load/wedding-site.js"
   },
