@@ -132,6 +132,13 @@ Plans:
 **Goal:** Couples can create a cash/gift registry and guests can contribute via payment QR codes.
 **Depends on:** Phase 5
 **Requirements:** GIFT-01, GIFT-02, GIFT-03, GIFT-04, GIFT-05, GIFT-06
+**Plans:** 4 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Schema updates (GiftItem, ExternalRegistry, PaymentSettings), install QR packages
+- [ ] 06-02-PLAN.md — Gift CRUD for couple dashboard (create, edit, delete gift items)
+- [ ] 06-03-PLAN.md — External registry management and payment settings configuration
+- [ ] 06-04-PLAN.md — Public registry page with QR code generation and gift claiming
 
 **Success Criteria:**
 1. Couple can create gift items with descriptions and target amounts (e.g., "Honeymoon Fund - $500")
@@ -140,8 +147,6 @@ Plans:
 4. Guest selects a gift and receives a QR code for the configured payment method
 5. Couple can see which gifts have been selected (marked as claimed)
 6. Couple can add links to external registries (Amazon, etc.) alongside their cash fund
-
-**Plans:** (created by /gsd:plan-phase)
 
 ---
 
@@ -218,7 +223,7 @@ Plans:
 | 3 - Content Builder | Complete | 2026-01-17 |
 | 4 - Event & Guest Management | Complete | 2026-01-17 |
 | 5 - RSVP System | Complete | 2026-01-17 |
-| 6 - Gift Registry | Not started | - |
+| 6 - Gift Registry | Planned | - |
 | 7 - Photo Sharing | Not started | - |
 | 8 - Guest Messaging | Not started | - |
 | 9 - Seating Chart | Not started | - |
