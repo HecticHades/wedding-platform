@@ -80,16 +80,16 @@ export default async function PublicPhotosPage({ params }: PageProps) {
   const hasPhotos = allPhotos.length > 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-wedding-background">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-4 py-6 sm:py-8">
+      <header className="bg-white/80 backdrop-blur-sm border-b border-wedding-primary/10 px-4 py-6 sm:py-8">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+              <h1 className="text-2xl sm:text-3xl font-bold font-wedding-heading text-wedding-primary">
                 Photos
               </h1>
-              <p className="text-gray-600 mt-1">
+              <p className="text-wedding-text/70 mt-1 font-wedding">
                 {wedding.partner1Name} & {wedding.partner2Name}
               </p>
             </div>
@@ -98,7 +98,7 @@ export default async function PublicPhotosPage({ params }: PageProps) {
             {wedding.photoSharingEnabled && (
               <Link
                 href={`/${domain}/photos/upload`}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-wedding-primary text-white rounded-lg hover:bg-wedding-primary/90 transition-colors text-sm font-medium"
               >
                 <Upload className="w-4 h-4" />
                 Upload Your Photos
@@ -113,7 +113,7 @@ export default async function PublicPhotosPage({ params }: PageProps) {
         {hasPhotos ? (
           <>
             {/* Stats */}
-            <div className="mb-6 text-sm text-gray-600">
+            <div className="mb-6 text-sm text-wedding-text/60 font-wedding">
               {couplePhotos.length > 0 && (
                 <span>
                   {couplePhotos.length} photo
@@ -135,17 +135,17 @@ export default async function PublicPhotosPage({ params }: PageProps) {
           </>
         ) : (
           <div className="text-center py-16">
-            <Camera className="mx-auto h-16 w-16 text-gray-400" />
-            <h2 className="mt-6 text-xl font-semibold text-gray-900">
+            <Camera className="mx-auto h-16 w-16 text-wedding-secondary" />
+            <h2 className="mt-6 text-xl font-semibold font-wedding-heading text-wedding-primary">
               No Photos Yet
             </h2>
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-wedding-text/70 font-wedding">
               Check back soon for photos from the celebration.
             </p>
             {wedding.photoSharingEnabled && (
               <Link
                 href={`/${domain}/photos/upload`}
-                className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-wedding-primary text-white rounded-lg hover:bg-wedding-primary/90 transition-colors text-sm font-medium"
               >
                 <Upload className="w-4 h-4" />
                 Be the first to upload!
@@ -159,7 +159,7 @@ export default async function PublicPhotosPage({ params }: PageProps) {
       <footer className="px-4 py-8 text-center">
         <Link
           href={`/${domain}`}
-          className="text-gray-600 hover:text-gray-900 text-sm"
+          className="text-wedding-text/60 hover:text-wedding-primary text-sm font-wedding"
         >
           &larr; Back to wedding site
         </Link>

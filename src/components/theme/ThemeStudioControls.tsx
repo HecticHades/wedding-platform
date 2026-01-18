@@ -18,9 +18,9 @@ interface ThemeStudioControlsProps {
 
 const TABS = [
   { id: "colors", label: "Colors", icon: Palette },
+  { id: "hero", label: "Hero Image", icon: Image },
   { id: "typography", label: "Typography", icon: Type },
   { id: "style", label: "Style", icon: Sparkles },
-  { id: "hero", label: "Hero Image", icon: Image },
   { id: "presets", label: "Presets", icon: Wand2 },
 ] as const;
 
@@ -37,7 +37,11 @@ export function ThemeStudioControls({
   return (
     <div className="flex flex-col h-full bg-white rounded-xl border border-gray-200 overflow-hidden">
       {/* Tab navigation */}
-      <div className="flex border-b border-gray-200 bg-gray-50">
+      <div
+        className="flex overflow-x-auto scrollbar-hide border-b border-gray-200 bg-gray-50"
+        role="tablist"
+        aria-label="Theme settings tabs"
+      >
         {TABS.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -46,21 +50,30 @@ export function ThemeStudioControls({
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 flex items-center justify-center gap-2 px-3 py-3 text-sm font-medium transition-colors ${
+              role="tab"
+              aria-selected={isActive}
+              aria-controls={`tabpanel-${tab.id}`}
+              id={`tab-${tab.id}`}
+              className={`flex-shrink-0 flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors ${
                 isActive
                   ? "bg-white text-violet-600 border-b-2 border-violet-500 -mb-px"
                   : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
               }`}
             >
               <Icon className="h-4 w-4" />
-              <span className="hidden sm:inline">{tab.label}</span>
+              <span>{tab.label}</span>
             </button>
           );
         })}
       </div>
 
       {/* Tab content */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div
+        className="flex-1 overflow-y-auto p-4"
+        role="tabpanel"
+        id={`tabpanel-${activeTab}`}
+        aria-labelledby={`tab-${activeTab}`}
+      >
         {activeTab === "colors" && (
           <ColorPalettePanel theme={theme} onChange={onChange} />
         )}

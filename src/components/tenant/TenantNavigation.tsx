@@ -39,13 +39,13 @@ export function TenantNavigation({
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-wedding-background/95 backdrop-blur-sm border-b border-wedding-primary/10 shadow-sm">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-14">
           {/* Wedding name */}
           <Link
             href={`/${domain}`}
-            className="font-semibold text-gray-900 text-sm truncate max-w-[150px] sm:max-w-none"
+            className="font-wedding-heading text-wedding-text text-sm truncate max-w-[150px] sm:max-w-none"
           >
             {weddingName}
           </Link>
@@ -59,8 +59,8 @@ export function TenantNavigation({
                   className={`
                     flex items-center gap-1.5 px-2 sm:px-3 py-2 rounded-lg text-sm font-medium transition-colors
                     ${isActive(href)
-                      ? "bg-blue-50 text-blue-700"
-                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                      ? "bg-wedding-primary/10 text-wedding-primary"
+                      : "text-wedding-text/70 hover:bg-wedding-primary/5 hover:text-wedding-text"
                     }
                   `}
                 >
