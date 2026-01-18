@@ -89,19 +89,33 @@ function getGoogleMapsUrl(address: string): string {
 
 /**
  * Display events from the database (with visibility filtering)
+ * Styled to match Theme Studio preview for consistency
  */
-function EventsDisplay({ events }: { events: VisibleEvent[] }) {
+function EventsDisplay({ events, theme }: { events: VisibleEvent[]; theme: ThemeSettings }) {
   if (events.length === 0) {
     return (
-      <div className="py-12 px-4 md:py-16 md:px-6 bg-wedding-background">
+      <div
+        className="py-16 md:py-20 px-4"
+        style={{ backgroundColor: `${theme.primaryColor}08` }}
+      >
         <div className="max-w-4xl mx-auto text-center">
           <h2
             id="events-heading"
-            className="font-wedding-heading text-3xl md:text-4xl text-wedding-primary mb-4"
+            className="text-3xl md:text-4xl font-bold mb-4"
+            style={{
+              fontFamily: theme.headingFont,
+              color: theme.primaryColor,
+            }}
           >
             Events
           </h2>
-          <p className="font-wedding text-wedding-text/70">
+          <p
+            className="opacity-70"
+            style={{
+              fontFamily: theme.fontFamily,
+              color: theme.textColor,
+            }}
+          >
             Event details coming soon.
           </p>
         </div>
@@ -110,37 +124,59 @@ function EventsDisplay({ events }: { events: VisibleEvent[] }) {
   }
 
   return (
-    <div className="py-12 px-4 md:py-16 md:px-6 bg-wedding-background">
+    <div
+      className="py-16 md:py-20 px-4"
+      style={{ backgroundColor: `${theme.primaryColor}08` }}
+    >
       <div className="max-w-4xl mx-auto">
         <h2
           id="events-heading"
-          className="font-wedding-heading text-3xl md:text-4xl text-wedding-primary text-center mb-10"
+          className="text-3xl md:text-4xl font-bold text-center mb-12"
+          style={{
+            fontFamily: theme.headingFont,
+            color: theme.primaryColor,
+          }}
         >
-          Events
+          Wedding Events
         </h2>
 
-        <div className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-8">
           {events.map((event) => (
             <div
               key={event.id}
-              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-wedding-primary/10 p-6 md:p-8"
+              className="bg-white rounded-2xl p-8 shadow-lg"
+              style={{ borderTop: `4px solid ${theme.accentColor}` }}
             >
               {/* Event name */}
-              <h3 className="font-wedding-heading text-2xl md:text-3xl text-wedding-primary mb-4">
+              <h3
+                className="text-xl font-semibold mb-4"
+                style={{
+                  fontFamily: theme.headingFont,
+                  color: theme.textColor,
+                }}
+              >
                 {event.name}
               </h3>
 
               <div className="space-y-3">
                 {/* Date */}
-                <div className="flex items-start gap-3 text-wedding-text">
-                  <Calendar className="h-5 w-5 text-wedding-secondary flex-shrink-0 mt-0.5" />
-                  <span className="font-wedding">{formatEventDate(event.dateTime)}</span>
+                <div className="flex items-center gap-3">
+                  <Calendar
+                    className="w-5 h-5"
+                    style={{ color: theme.secondaryColor }}
+                  />
+                  <span style={{ color: theme.textColor }}>
+                    {formatEventDate(event.dateTime)}
+                  </span>
                 </div>
 
                 {/* Time */}
-                <div className="flex items-start gap-3 text-wedding-text">
-                  <Clock className="h-5 w-5 text-wedding-secondary flex-shrink-0 mt-0.5" />
-                  <span className="font-wedding">
+                <div className="flex items-center gap-3">
+                  <Clock
+                    className="w-5 h-5"
+                    style={{ color: theme.secondaryColor }}
+                  />
+                  <span style={{ color: theme.textColor }}>
                     {formatEventTime(event.dateTime)}
                     {event.endTime && ` - ${formatEventTime(event.endTime)}`}
                   </span>
@@ -148,16 +184,24 @@ function EventsDisplay({ events }: { events: VisibleEvent[] }) {
 
                 {/* Location */}
                 {(event.location || event.address) && (
-                  <div className="flex items-start gap-3 text-wedding-text">
-                    <MapPin className="h-5 w-5 text-wedding-secondary flex-shrink-0 mt-0.5" />
-                    <div className="font-wedding">
-                      {event.location && <p className="font-medium">{event.location}</p>}
+                  <div className="flex items-start gap-3">
+                    <MapPin
+                      className="w-5 h-5 mt-0.5"
+                      style={{ color: theme.secondaryColor }}
+                    />
+                    <div>
+                      {event.location && (
+                        <p className="font-medium" style={{ color: theme.textColor }}>
+                          {event.location}
+                        </p>
+                      )}
                       {event.address && (
                         <a
                           href={getGoogleMapsUrl(event.address)}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-wedding-accent hover:underline text-sm"
+                          className="text-sm opacity-70 hover:underline"
+                          style={{ color: theme.textColor }}
                         >
                           {event.address}
                         </a>
@@ -168,9 +212,12 @@ function EventsDisplay({ events }: { events: VisibleEvent[] }) {
 
                 {/* Dress code */}
                 {event.dressCode && (
-                  <div className="flex items-start gap-3 text-wedding-text">
-                    <Shirt className="h-5 w-5 text-wedding-secondary flex-shrink-0 mt-0.5" />
-                    <span className="font-wedding">
+                  <div className="flex items-center gap-3">
+                    <Shirt
+                      className="w-5 h-5"
+                      style={{ color: theme.secondaryColor }}
+                    />
+                    <span style={{ color: theme.textColor }}>
                       <span className="font-medium">Dress Code:</span> {event.dressCode}
                     </span>
                   </div>
@@ -179,9 +226,31 @@ function EventsDisplay({ events }: { events: VisibleEvent[] }) {
 
               {/* Description */}
               {event.description && (
-                <p className="mt-4 font-wedding text-wedding-text/80 leading-relaxed border-t border-wedding-primary/10 pt-4">
+                <p
+                  className="mt-4 text-sm leading-relaxed opacity-80 border-t pt-4"
+                  style={{
+                    color: theme.textColor,
+                    borderColor: `${theme.primaryColor}10`,
+                  }}
+                >
                   {event.description}
                 </p>
+              )}
+
+              {/* Get Directions Button */}
+              {event.address && (
+                <a
+                  href={getGoogleMapsUrl(event.address)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 w-full py-2 rounded-lg font-medium transition-colors text-center block"
+                  style={{
+                    backgroundColor: `${theme.secondaryColor}20`,
+                    color: theme.secondaryColor,
+                  }}
+                >
+                  Get Directions
+                </a>
               )}
             </div>
           ))}
@@ -425,7 +494,7 @@ export default async function TenantHomePage({ params }: PageProps) {
       {/* Events Section (from database with visibility filtering) */}
       {events.length > 0 && (
         <section id="events" className="scroll-mt-20">
-          <EventsDisplay events={events} />
+          <EventsDisplay events={events} theme={theme} />
         </section>
       )}
 
@@ -433,7 +502,7 @@ export default async function TenantHomePage({ params }: PageProps) {
       {visibleSections.length > 0 && (
         <div className="divide-y divide-wedding-primary/10">
           {visibleSections.map((section) => (
-            <ContentSection key={section.id} section={section} />
+            <ContentSection key={section.id} section={section} theme={theme} />
           ))}
         </div>
       )}

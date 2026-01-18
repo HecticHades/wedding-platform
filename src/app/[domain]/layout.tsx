@@ -40,10 +40,8 @@ export default async function TenantLayout({
 
   return (
     <ThemeProvider theme={themeSettings}>
-      <div className="min-h-screen">
-        <TenantHeader domain={domain} />
-        {children}
-      </div>
+      <TenantHeader domain={domain} />
+      {children}
     </ThemeProvider>
   );
 }

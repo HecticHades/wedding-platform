@@ -1,40 +1,56 @@
 import { Mail, Phone, User } from "lucide-react";
+import type { ThemeSettings } from "@/lib/content/theme-utils";
 
 interface ContactSectionProps {
   content: PrismaJson.ContactContent;
+  theme: ThemeSettings;
 }
 
 /**
  * ContactSection displays contact information for the couple or wedding party.
  * Renders contact cards with clickable email and phone links.
+ * Styling matches the Theme Studio preview for consistency.
  */
-export function ContactSection({ content }: ContactSectionProps) {
+export function ContactSection({ content, theme }: ContactSectionProps) {
   // Don't render if no contacts
   if (content.contacts.length === 0) {
     return null;
   }
 
   return (
-    <div className="py-12 px-4 md:py-16 md:px-6 bg-wedding-background">
+    <div
+      className="py-16 md:py-20 px-4"
+      style={{ backgroundColor: theme.backgroundColor }}
+    >
       <div className="max-w-4xl mx-auto">
         {/* Title */}
         <h2
           id="contact-heading"
-          className="font-wedding-heading text-3xl md:text-4xl text-wedding-primary text-center mb-6"
+          className="text-3xl md:text-4xl font-bold text-center mb-6"
+          style={{
+            fontFamily: theme.headingFont,
+            color: theme.primaryColor,
+          }}
         >
           {content.title || "Contact Us"}
         </h2>
 
         {/* Optional message */}
         {content.message && (
-          <p className="font-wedding text-wedding-text/80 text-center mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p
+            className="text-center mb-10 max-w-2xl mx-auto leading-relaxed opacity-80"
+            style={{
+              fontFamily: theme.fontFamily,
+              color: theme.textColor,
+            }}
+          >
             {content.message}
           </p>
         )}
 
         {/* Contact cards grid */}
         <div
-          className={`grid gap-4 ${
+          className={`grid gap-6 ${
             content.contacts.length === 1
               ? "max-w-sm mx-auto"
               : content.contacts.length === 2
@@ -45,20 +61,36 @@ export function ContactSection({ content }: ContactSectionProps) {
           {content.contacts.map((contact, index) => (
             <div
               key={index}
-              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-wedding-primary/10 p-5 text-center"
+              className="bg-white rounded-2xl shadow-sm p-6 text-center"
+              style={{ border: `1px solid ${theme.primaryColor}20` }}
             >
               {/* Avatar placeholder */}
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-wedding-secondary/20 flex items-center justify-center">
-                <User className="h-8 w-8 text-wedding-secondary" />
+              <div
+                className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
+                style={{ backgroundColor: `${theme.secondaryColor}20` }}
+              >
+                <User className="h-8 w-8" style={{ color: theme.secondaryColor }} />
               </div>
 
               {/* Name */}
-              <h3 className="font-wedding font-medium text-lg text-wedding-text mb-1">
+              <h3
+                className="font-medium text-lg mb-1"
+                style={{
+                  fontFamily: theme.fontFamily,
+                  color: theme.textColor,
+                }}
+              >
                 {contact.name}
               </h3>
 
               {/* Role */}
-              <p className="font-wedding text-sm text-wedding-secondary mb-4">
+              <p
+                className="text-sm mb-4"
+                style={{
+                  fontFamily: theme.fontFamily,
+                  color: theme.secondaryColor,
+                }}
+              >
                 {contact.role}
               </p>
 
@@ -68,10 +100,11 @@ export function ContactSection({ content }: ContactSectionProps) {
                 {contact.email && (
                   <a
                     href={`mailto:${contact.email}`}
-                    className="flex items-center justify-center gap-2 text-sm text-wedding-accent hover:underline"
+                    className="flex items-center justify-center gap-2 text-sm hover:underline"
+                    style={{ color: theme.accentColor }}
                   >
                     <Mail className="h-4 w-4" />
-                    <span className="font-wedding">{contact.email}</span>
+                    <span style={{ fontFamily: theme.fontFamily }}>{contact.email}</span>
                   </a>
                 )}
 
@@ -79,10 +112,11 @@ export function ContactSection({ content }: ContactSectionProps) {
                 {contact.phone && (
                   <a
                     href={`tel:${contact.phone}`}
-                    className="flex items-center justify-center gap-2 text-sm text-wedding-accent hover:underline"
+                    className="flex items-center justify-center gap-2 text-sm hover:underline"
+                    style={{ color: theme.accentColor }}
                   >
                     <Phone className="h-4 w-4" />
-                    <span className="font-wedding">{contact.phone}</span>
+                    <span style={{ fontFamily: theme.fontFamily }}>{contact.phone}</span>
                   </a>
                 )}
               </div>

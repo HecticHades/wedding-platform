@@ -1,14 +1,17 @@
-import { Hotel, Phone, Globe, MapPin, Plane, Car } from "lucide-react";
+import { Hotel, Phone, Globe, MapPin, Plane, Car, ExternalLink } from "lucide-react";
+import type { ThemeSettings } from "@/lib/content/theme-utils";
 
 interface TravelSectionProps {
   content: PrismaJson.TravelContent;
+  theme: ThemeSettings;
 }
 
 /**
  * TravelSection displays accommodation recommendations, directions, and airport info.
  * Renders hotel cards with contact information and booking codes.
+ * Styling matches the Theme Studio preview for consistency.
  */
-export function TravelSection({ content }: TravelSectionProps) {
+export function TravelSection({ content, theme }: TravelSectionProps) {
   // Don't render if no content
   const hasHotels = content.hotels.length > 0;
   const hasDirections = content.directions?.trim();
@@ -19,129 +22,164 @@ export function TravelSection({ content }: TravelSectionProps) {
   }
 
   return (
-    <div className="py-12 px-4 md:py-16 md:px-6 bg-wedding-background">
+    <div
+      className="py-16 md:py-20 px-4"
+      style={{ backgroundColor: `${theme.secondaryColor}10` }}
+    >
       <div className="max-w-4xl mx-auto">
         <h2
           id="travel-heading"
-          className="font-wedding-heading text-3xl md:text-4xl text-wedding-primary text-center mb-10"
+          className="text-3xl md:text-4xl font-bold text-center mb-12"
+          style={{
+            fontFamily: theme.headingFont,
+            color: theme.primaryColor,
+          }}
         >
           Travel & Accommodations
         </h2>
 
-        {/* Hotels */}
-        {hasHotels && (
-          <div className="mb-10">
-            <h3 className="font-wedding-heading text-xl md:text-2xl text-wedding-secondary text-center mb-6">
-              Where to Stay
-            </h3>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {content.hotels.map((hotel, index) => (
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Hotels */}
+          {hasHotels && (
+            <div
+              className="bg-white rounded-2xl p-6 shadow-sm"
+              style={{ border: `1px solid ${theme.primaryColor}20` }}
+            >
+              <div className="flex items-center gap-3 mb-6">
                 <div
-                  key={index}
-                  className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-wedding-primary/10 p-5"
+                  className="p-2 rounded-lg"
+                  style={{ backgroundColor: `${theme.secondaryColor}20` }}
                 >
-                  {/* Hotel name */}
-                  <div className="flex items-start gap-3 mb-3">
-                    <Hotel className="h-5 w-5 text-wedding-primary flex-shrink-0 mt-0.5" />
-                    <h4 className="font-wedding font-medium text-wedding-text text-lg">
-                      {hotel.name}
-                    </h4>
-                  </div>
+                  <Hotel className="w-5 h-5" style={{ color: theme.secondaryColor }} />
+                </div>
+                <h3
+                  className="text-lg font-semibold"
+                  style={{ color: theme.textColor }}
+                >
+                  Recommended Hotels
+                </h3>
+              </div>
 
-                  <div className="space-y-2 pl-8">
-                    {/* Address */}
-                    <div className="flex items-start gap-2 text-sm text-wedding-text/80">
-                      <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                      <span className="font-wedding">{hotel.address}</span>
-                    </div>
-
-                    {/* Phone */}
-                    {hotel.phone && (
-                      <div className="flex items-start gap-2 text-sm">
-                        <Phone className="h-4 w-4 text-wedding-text/80 flex-shrink-0 mt-0.5" />
-                        <a
-                          href={`tel:${hotel.phone}`}
-                          className="font-wedding text-wedding-accent hover:underline"
+              <div className="space-y-4">
+                {content.hotels.map((hotel, index) => (
+                  <div
+                    key={index}
+                    className="p-3 rounded-lg"
+                    style={{ backgroundColor: `${theme.primaryColor}05` }}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="font-medium" style={{ color: theme.textColor }}>
+                          {hotel.name}
+                        </p>
+                        <p
+                          className="text-sm opacity-70"
+                          style={{ color: theme.textColor }}
                         >
-                          {hotel.phone}
-                        </a>
-                      </div>
-                    )}
-
-                    {/* Website */}
-                    {hotel.website && (
-                      <div className="flex items-start gap-2 text-sm">
-                        <Globe className="h-4 w-4 text-wedding-text/80 flex-shrink-0 mt-0.5" />
-                        <a
-                          href={hotel.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-wedding text-wedding-accent hover:underline truncate"
-                        >
-                          Visit Website
-                        </a>
-                      </div>
-                    )}
-
-                    {/* Booking code */}
-                    {hotel.bookingCode && (
-                      <div className="mt-3 bg-wedding-accent/10 rounded-lg px-3 py-2">
-                        <p className="font-wedding text-sm text-wedding-text">
-                          <span className="font-medium">Booking Code:</span>{" "}
-                          <span className="font-mono text-wedding-accent">
-                            {hotel.bookingCode}
-                          </span>
+                          {hotel.address}
                         </p>
                       </div>
-                    )}
-
-                    {/* Notes */}
+                      <div className="text-right">
+                        {hotel.bookingCode && (
+                          <p className="font-medium text-sm" style={{ color: theme.accentColor }}>
+                            Code: {hotel.bookingCode}
+                          </p>
+                        )}
+                        {hotel.website && (
+                          <a
+                            href={hotel.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm flex items-center gap-1 mt-1 justify-end"
+                            style={{ color: theme.secondaryColor }}
+                          >
+                            Book <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
                     {hotel.notes && (
-                      <p className="font-wedding text-sm text-wedding-text/70 italic mt-2">
+                      <p
+                        className="text-sm mt-2 italic opacity-70"
+                        style={{ color: theme.textColor }}
+                      >
                         {hotel.notes}
                       </p>
                     )}
                   </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Directions & Airport Info */}
+          <div
+            className="bg-white rounded-2xl p-6 shadow-sm"
+            style={{ border: `1px solid ${theme.primaryColor}20` }}
+          >
+            {/* Directions */}
+            {hasDirections && (
+              <div className={hasAirportInfo ? "mb-6" : ""}>
+                <div className="flex items-center gap-3 mb-4">
+                  <div
+                    className="p-2 rounded-lg"
+                    style={{ backgroundColor: `${theme.secondaryColor}20` }}
+                  >
+                    <Car className="w-5 h-5" style={{ color: theme.secondaryColor }} />
+                  </div>
+                  <h3
+                    className="text-lg font-semibold"
+                    style={{ color: theme.textColor }}
+                  >
+                    Getting There
+                  </h3>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
+                <div
+                  className="p-3 rounded-lg"
+                  style={{ backgroundColor: `${theme.primaryColor}05` }}
+                >
+                  <p
+                    className="leading-relaxed whitespace-pre-wrap"
+                    style={{ color: theme.textColor }}
+                  >
+                    {content.directions}
+                  </p>
+                </div>
+              </div>
+            )}
 
-        {/* Directions */}
-        {hasDirections && (
-          <div className="mb-8">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Car className="h-5 w-5 text-wedding-secondary" />
-              <h3 className="font-wedding-heading text-xl text-wedding-secondary">
-                Getting There
-              </h3>
-            </div>
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-wedding-primary/10 p-5">
-              <p className="font-wedding text-wedding-text leading-relaxed whitespace-pre-wrap">
-                {content.directions}
-              </p>
-            </div>
+            {/* Airport Info */}
+            {hasAirportInfo && (
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div
+                    className="p-2 rounded-lg"
+                    style={{ backgroundColor: `${theme.secondaryColor}20` }}
+                  >
+                    <Plane className="w-5 h-5" style={{ color: theme.secondaryColor }} />
+                  </div>
+                  <h3
+                    className="text-lg font-semibold"
+                    style={{ color: theme.textColor }}
+                  >
+                    Nearby Airports
+                  </h3>
+                </div>
+                <div
+                  className="p-3 rounded-lg"
+                  style={{ backgroundColor: `${theme.primaryColor}05` }}
+                >
+                  <p
+                    className="leading-relaxed whitespace-pre-wrap"
+                    style={{ color: theme.textColor }}
+                  >
+                    {content.airportInfo}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-
-        {/* Airport Info */}
-        {hasAirportInfo && (
-          <div>
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Plane className="h-5 w-5 text-wedding-secondary" />
-              <h3 className="font-wedding-heading text-xl text-wedding-secondary">
-                Flying In
-              </h3>
-            </div>
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-wedding-primary/10 p-5">
-              <p className="font-wedding text-wedding-text leading-relaxed whitespace-pre-wrap">
-                {content.airportInfo}
-              </p>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

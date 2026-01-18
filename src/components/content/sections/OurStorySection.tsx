@@ -1,14 +1,17 @@
 import Image from "next/image";
+import type { ThemeSettings } from "@/lib/content/theme-utils";
 
 interface OurStorySectionProps {
   content: PrismaJson.OurStoryContent;
+  theme: ThemeSettings;
 }
 
 /**
  * OurStorySection displays the couple's story with optional photos.
  * Renders the story text with proper paragraph formatting and a photo gallery.
+ * Styling matches the Theme Studio preview for consistency.
  */
-export function OurStorySection({ content }: OurStorySectionProps) {
+export function OurStorySection({ content, theme }: OurStorySectionProps) {
   // Don't render if no story content
   if (!content.story.trim()) {
     return null;
@@ -20,20 +23,36 @@ export function OurStorySection({ content }: OurStorySectionProps) {
     .filter((p) => p.trim().length > 0);
 
   return (
-    <div className="py-12 px-4 md:py-16 md:px-6 bg-wedding-primary/5">
-      <div className="max-w-3xl mx-auto">
+    <div
+      className="py-16 md:py-20 px-4"
+      style={{ backgroundColor: theme.backgroundColor }}
+    >
+      <div className="max-w-2xl mx-auto text-center">
         {/* Title */}
         <h2
           id="our-story-heading"
-          className="font-wedding-heading text-3xl md:text-4xl text-wedding-primary text-center mb-8"
+          className="text-3xl md:text-4xl font-bold mb-8"
+          style={{
+            fontFamily: theme.headingFont,
+            color: theme.primaryColor,
+          }}
         >
           {content.title || "Our Story"}
         </h2>
 
         {/* Story text */}
-        <div className="space-y-4 font-wedding text-wedding-text leading-relaxed text-center md:text-left">
+        <div className="space-y-6">
           {paragraphs.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
+            <p
+              key={index}
+              className="text-lg leading-relaxed"
+              style={{
+                fontFamily: theme.fontFamily,
+                color: theme.textColor,
+              }}
+            >
+              {paragraph}
+            </p>
           ))}
         </div>
 
@@ -67,6 +86,23 @@ export function OurStorySection({ content }: OurStorySectionProps) {
             </div>
           </div>
         )}
+
+        {/* Decorative element */}
+        <div className="mt-12 flex items-center justify-center">
+          <div
+            className="w-12 h-12 rounded-full flex items-center justify-center"
+            style={{ backgroundColor: `${theme.accentColor}20` }}
+          >
+            <svg
+              className="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              style={{ color: theme.accentColor }}
+            >
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
   );
