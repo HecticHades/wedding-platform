@@ -9,7 +9,17 @@
  * Strips protocol and trailing slashes if present.
  */
 export function getRootDomain(): string {
-  let domain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || "localhost:3000";
+  // Handle both server and client environments
+  let domain: string;
+
+  if (typeof window !== "undefined") {
+    // Client-side: use NEXT_PUBLIC_ env var
+    domain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || "localhost:3000";
+  } else {
+    // Server-side: use either env var
+    domain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || process.env.ROOT_DOMAIN || "localhost:3000";
+  }
+
   // Strip protocol if present
   domain = domain.replace(/^https?:\/\//, "");
   // Strip trailing slashes
