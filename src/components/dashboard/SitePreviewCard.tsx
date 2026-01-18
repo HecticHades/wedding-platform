@@ -2,6 +2,7 @@
 
 import { ExternalLink, RefreshCw } from "lucide-react";
 import { useState } from "react";
+import { getTenantUrl, getTenantUrlDisplay } from "@/lib/url-utils";
 
 interface SitePreviewCardProps {
   subdomain: string;
@@ -13,7 +14,8 @@ export function SitePreviewCard({
   weddingDate,
 }: SitePreviewCardProps) {
   const [refreshKey, setRefreshKey] = useState(0);
-  const siteUrl = `http://${subdomain}.localhost:3000`;
+  const siteUrl = getTenantUrl(subdomain);
+  const siteUrlDisplay = getTenantUrlDisplay(subdomain);
 
   const daysUntil = weddingDate
     ? Math.ceil(
@@ -28,7 +30,7 @@ export function SitePreviewCard({
       <div className="flex items-center justify-between px-5 py-4 border-b border-[#e8e4e0]">
         <div>
           <h3 className="font-semibold text-[#3d3936]">Your Wedding Website</h3>
-          <p className="text-sm text-[#3d3936]/60">{subdomain}.localhost:3000</p>
+          <p className="text-sm text-[#3d3936]/60">{siteUrlDisplay}</p>
         </div>
         <div className="flex items-center gap-2">
           <button

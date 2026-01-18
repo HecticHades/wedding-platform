@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { setRsvpCode } from "@/app/(platform)/dashboard/rsvp/actions";
 import type { RsvpStats, EventRsvpStats } from "@/lib/rsvp/rsvp-utils";
+import { getTenantUrl, getTenantUrlDisplay } from "@/lib/url-utils";
 
 interface RsvpDashboardProps {
   stats: RsvpStats;
@@ -47,7 +48,8 @@ export function RsvpDashboard({
     : 0;
 
   // RSVP link
-  const rsvpLink = `${subdomain}.localhost:3000/rsvp`;
+  const rsvpLink = getTenantUrlDisplay(subdomain, "/rsvp");
+  const rsvpFullUrl = getTenantUrl(subdomain, "/rsvp");
 
   function handleCopy() {
     navigator.clipboard.writeText(rsvpLink);
@@ -195,7 +197,7 @@ export function RsvpDashboard({
                 {copied ? <Check className="h-5 w-5 text-green-600" /> : <Copy className="h-5 w-5" />}
               </button>
               <a
-                href={`http://${rsvpLink}`}
+                href={rsvpFullUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded-lg transition-colors"

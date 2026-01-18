@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react"
 import Link from "next/link"
 import type { AdminWeddingRsvpSummary } from "@/app/(platform)/admin/rsvp/actions"
+import { getTenantUrl } from "@/lib/url-utils"
 
 interface AdminRsvpOverviewProps {
   weddings: AdminWeddingRsvpSummary[]
@@ -199,7 +200,7 @@ export function AdminRsvpOverview({ weddings }: AdminRsvpOverviewProps) {
                   <tr key={wedding.weddingId} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <a
-                        href={`https://${wedding.subdomain}.localhost:3000`}
+                        href={getTenantUrl(wedding.subdomain)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm font-medium text-blue-600 hover:text-blue-800"

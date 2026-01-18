@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useTransition, useMemo } from "react";
-import { Check, X, Users, Search } from "lucide-react";
+import { Check, X, Users, Search, Mail, MailCheck } from "lucide-react";
 import { updateEventInvitations } from "@/app/(platform)/dashboard/events/actions";
+import { SendInvitationButton } from "@/components/guests/SendInvitationButton";
+import { useRouter } from "next/navigation";
 
 interface Guest {
   id: string;
@@ -11,11 +13,17 @@ interface Guest {
   partySize: number;
 }
 
+interface InvitationStatus {
+  guestId: string;
+  sentAt: Date | null;
+}
+
 interface EventGuestManagerProps {
   eventId: string;
   eventName: string;
   allGuests: Guest[];
   invitedGuestIds: string[];
+  invitationStatus?: InvitationStatus[];
 }
 
 /**
@@ -27,6 +35,7 @@ export function EventGuestManager({
   eventName,
   allGuests,
   invitedGuestIds,
+  invitationStatus = [],
 }: EventGuestManagerProps) {
   const [selected, setSelected] = useState<Set<string>>(
     () => new Set(invitedGuestIds)
@@ -35,6 +44,16 @@ export function EventGuestManager({
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  // Create a map of invitation status by guest ID
+  const invitationStatusMap = useMemo(() => {
+    const map = new Map<string, Date | null>();
+    invitationStatus.forEach((status) => {
+      map.set(status.guestId, status.sentAt);
+    });
+    return map;
+  }, [invitationStatus]);
 
   // Filter guests by search query
   const filteredGuests = useMemo(() => {
@@ -55,6 +74,15 @@ export function EventGuestManager({
   const totalPartySize = allGuests
     .filter((g) => selected.has(g.id))
     .reduce((sum, g) => sum + g.partySize, 0);
+
+  // Calculate email stats for invitations
+  const selectedGuestIds = Array.from(selected);
+  const selectedGuestsWithEmail = allGuests.filter(
+    (g) => selected.has(g.id) && g.email
+  );
+  const alreadySentCount = selectedGuestsWithEmail.filter(
+    (g) => invitationStatusMap.get(g.id)
+  ).length;
 
   const handleToggle = (guestId: string) => {
     setSelected((prev) => {
@@ -197,7 +225,20 @@ export function EventGuestManager({
                     </span>
                   )}
                 </div>
-                <div className="flex-shrink-0">
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  {/* Invitation sent indicator */}
+                  {isInvited && invitationStatusMap.get(guest.id) && (
+                    <span className="flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
+                      <MailCheck className="h-3 w-3" />
+                      Sent
+                    </span>
+                  )}
+                  {isInvited && guest.email && !invitationStatusMap.get(guest.id) && (
+                    <span className="flex items-center gap-1 text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+                      <Mail className="h-3 w-3" />
+                      Pending
+                    </span>
+                  )}
                   {isInvited ? (
                     <Check className="h-5 w-5 text-green-600" />
                   ) : (
@@ -217,9 +258,22 @@ export function EventGuestManager({
         </div>
       )}
 
-      {/* Save button */}
-      {hasChanges && (
-        <div className="flex justify-end pt-4 border-t border-gray-200">
+      {/* Action buttons */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-4 border-t border-gray-200">
+        {/* Send invitations button */}
+        {selectedCount > 0 && !hasChanges && (
+          <SendInvitationButton
+            eventId={eventId}
+            guestIds={selectedGuestIds}
+            hasEmailCount={selectedGuestsWithEmail.length}
+            alreadySentCount={alreadySentCount}
+            onComplete={() => router.refresh()}
+          />
+        )}
+        {hasChanges && <div />}
+
+        {/* Save button */}
+        {hasChanges && (
           <button
             type="button"
             onClick={handleSave}
@@ -228,8 +282,8 @@ export function EventGuestManager({
           >
             {isPending ? "Saving..." : "Save Invitations"}
           </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

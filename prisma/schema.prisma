@@ -173,6 +173,7 @@ model Guest {
   name      String
   email     String?
   phone     String?
+  address   String?  // Mailing address for invitations
 
   // Household/party grouping
   partyName    String?           // e.g., "The Smith Family"
@@ -224,7 +225,8 @@ model EventGuest {
   guestId   String
   guest     Guest    @relation(fields: [guestId], references: [id], onDelete: Cascade)
 
-  invitedAt DateTime @default(now())
+  invitedAt        DateTime  @default(now())
+  invitationSentAt DateTime? // Track when invitation email was sent
 
   // RSVP fields (prepared for Phase 5, nullable for now)
   rsvpStatus   RsvpStatus?

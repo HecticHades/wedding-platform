@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth/auth";
 import { redirect } from "next/navigation";
 import { prisma, withTenantContext } from "@/lib/db/prisma";
 import { GuestList } from "@/components/guests/GuestList";
+import { GuestImport } from "@/components/guests/GuestImport";
 import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
 
@@ -58,6 +59,11 @@ export default async function GuestsPage() {
             </span>
           )}
         </p>
+      </div>
+
+      {/* Import section */}
+      <div className="mb-8">
+        <GuestImport />
       </div>
 
       {/* Guest list component */}

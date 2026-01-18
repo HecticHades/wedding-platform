@@ -48,16 +48,23 @@ export default async function EventGuestsPage({ params }: EventGuestsPageProps) 
       },
     });
 
-    // Fetch current invitations for this event
+    // Fetch current invitations for this event (including invitation sent status)
     const invitations = await prisma.eventGuest.findMany({
       where: { eventId: id },
-      select: { guestId: true },
+      select: {
+        guestId: true,
+        invitationSentAt: true,
+      },
     });
 
     return {
       event,
       guests,
       invitedGuestIds: invitations.map((inv) => inv.guestId),
+      invitationStatus: invitations.map((inv) => ({
+        guestId: inv.guestId,
+        sentAt: inv.invitationSentAt,
+      })),
     };
   });
 
@@ -65,7 +72,7 @@ export default async function EventGuestsPage({ params }: EventGuestsPageProps) 
     notFound();
   }
 
-  const { event, guests, invitedGuestIds } = data;
+  const { event, guests, invitedGuestIds, invitationStatus } = data;
 
   return (
     <div>
@@ -118,6 +125,7 @@ export default async function EventGuestsPage({ params }: EventGuestsPageProps) 
           eventName={event.name}
           allGuests={guests}
           invitedGuestIds={invitedGuestIds}
+          invitationStatus={invitationStatus}
         />
       </div>
     </div>
