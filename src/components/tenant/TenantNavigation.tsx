@@ -24,18 +24,18 @@ export function TenantNavigation({
   const pathname = usePathname();
 
   const navItems = [
-    { href: "/", label: "Home", icon: Home, show: true },
-    { href: "/rsvp", label: "RSVP", icon: Mail, show: showRsvp },
-    { href: "/photos", label: "Photos", icon: Camera, show: showPhotos },
-    { href: "/registry", label: "Registry", icon: Gift, show: showRegistry },
-    { href: "/seating", label: "Seating", icon: Users, show: showSeating },
+    { href: `/${domain}`, label: "Home", icon: Home, show: true },
+    { href: `/${domain}/rsvp`, label: "RSVP", icon: Mail, show: showRsvp },
+    { href: `/${domain}/photos`, label: "Photos", icon: Camera, show: showPhotos },
+    { href: `/${domain}/registry`, label: "Registry", icon: Gift, show: showRegistry },
+    { href: `/${domain}/seating`, label: "Seating", icon: Users, show: showSeating },
   ].filter(item => item.show);
 
   const isActive = (href: string) => {
-    if (href === "/") {
-      return pathname === "/" || pathname === `/${domain}`;
+    if (href === `/${domain}`) {
+      return pathname === `/${domain}`;
     }
-    return pathname?.startsWith(href) || pathname?.startsWith(`/${domain}${href}`);
+    return pathname?.startsWith(href);
   };
 
   return (
@@ -44,7 +44,7 @@ export function TenantNavigation({
         <div className="flex items-center justify-between h-14">
           {/* Wedding name */}
           <Link
-            href="/"
+            href={`/${domain}`}
             className="font-semibold text-gray-900 text-sm truncate max-w-[150px] sm:max-w-none"
           >
             {weddingName}

@@ -28,18 +28,18 @@ export function getRootDomain(): string {
 }
 
 /**
- * Generate a full URL for a tenant subdomain with optional path.
+ * Generate a full URL for a tenant using path-based routing.
  * Automatically uses http for localhost and https for production.
  *
  * @param subdomain - The tenant's subdomain (e.g., "john-and-jane")
  * @param path - Optional path to append (should start with "/" if provided)
- * @returns Full URL (e.g., "https://john-and-jane.wedding-platform-fawn.vercel.app/rsvp")
+ * @returns Full URL (e.g., "https://wedding-platform-fawn.vercel.app/john-and-jane/rsvp")
  */
 export function getTenantUrl(subdomain: string, path: string = ""): string {
   const rootDomain = getRootDomain();
   const isLocalhost = rootDomain.includes("localhost");
   const protocol = isLocalhost ? "http" : "https";
-  return `${protocol}://${subdomain}.${rootDomain}${path}`;
+  return `${protocol}://${rootDomain}/${subdomain}${path}`;
 }
 
 /**
@@ -48,8 +48,8 @@ export function getTenantUrl(subdomain: string, path: string = ""): string {
  *
  * @param subdomain - The tenant's subdomain
  * @param path - Optional path to append
- * @returns Display URL (e.g., "john-and-jane.wedding-platform-fawn.vercel.app/rsvp")
+ * @returns Display URL (e.g., "wedding-platform-fawn.vercel.app/john-and-jane/rsvp")
  */
 export function getTenantUrlDisplay(subdomain: string, path: string = ""): string {
-  return `${subdomain}.${getRootDomain()}${path}`;
+  return `${getRootDomain()}/${subdomain}${path}`;
 }

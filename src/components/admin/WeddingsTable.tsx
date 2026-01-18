@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { StatusBadge } from "./StatusBadge";
 import { deleteWedding } from "@/app/(platform)/admin/weddings/[id]/actions";
+import { getTenantUrl } from "@/lib/url-utils";
 
 interface Wedding {
   id: string;
@@ -217,7 +218,7 @@ export function WeddingsTable({
                         />
                         <div className="absolute right-0 mt-1 w-40 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
                           <a
-                            href={`${typeof window !== "undefined" ? window.location.protocol : "http:"}//${wedding.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN || "localhost:3000"}`}
+                            href={getTenantUrl(wedding.subdomain)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -280,7 +281,7 @@ export function WeddingsTable({
             </div>
             <div className="flex gap-2">
               <a
-                href={`${typeof window !== "undefined" ? window.location.protocol : "http:"}//${wedding.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN || "localhost:3000"}`}
+                href={getTenantUrl(wedding.subdomain)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-1.5 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"

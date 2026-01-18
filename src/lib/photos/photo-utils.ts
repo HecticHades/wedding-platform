@@ -23,16 +23,16 @@ export const photoStatusConfig: Record<
 export function getPhotoUploadUrl(subdomain: string, baseUrl: string): string {
   // Handle localhost development
   if (baseUrl.includes("localhost")) {
-    return `http://${subdomain}.localhost:3000/photos/upload`;
+    return `http://localhost:3000/${subdomain}/photos/upload`;
   }
 
-  // Production: extract domain from baseUrl and construct tenant URL
+  // Production: extract domain from baseUrl and construct path-based URL
   try {
     const url = new URL(baseUrl);
-    return `https://${subdomain}.${url.host}/photos/upload`;
+    return `${url.protocol}//${url.host}/${subdomain}/photos/upload`;
   } catch {
     // Fallback if URL parsing fails
-    return `https://${subdomain}.weddingplatform.com/photos/upload`;
+    return `/${subdomain}/photos/upload`;
   }
 }
 

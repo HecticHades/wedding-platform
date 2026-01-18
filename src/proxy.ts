@@ -42,38 +42,16 @@ export default auth(async (req) => {
     return NextResponse.redirect(new URL(redirectTo, nextUrl.origin))
   }
 
-  // Hostname-based routing (subdomain or custom domain)
+  // Custom domain handling
   const hostname = req.headers.get("host") || ""
   const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || "localhost:3000"
 
-  let subdomain: string | null = null
-
-  // Production: alice-bob.weddingplatform.com -> alice-bob
-  if (hostname.endsWith(`.${rootDomain}`) && !hostname.startsWith("www.")) {
-    subdomain = hostname.replace(`.${rootDomain}`, "")
-  }
-
-  // Development: alice-bob.localhost:3000 -> alice-bob
-  if (hostname.includes("localhost") && hostname !== "localhost:3000" && hostname !== "localhost") {
-    subdomain = hostname.split(".")[0]
-  }
-
-  // Subdomain detected - validate and rewrite to tenant route
-  if (subdomain) {
-    // Security: Validate subdomain format to prevent path traversal
-    if (!isValidSubdomain(subdomain)) {
-      console.warn(`Invalid subdomain format rejected: ${subdomain}`)
-      return NextResponse.redirect(new URL("/", nextUrl.origin))
-    }
-    return NextResponse.rewrite(new URL(`/${subdomain}${nextUrl.pathname}`, req.url))
-  }
-
-  // Check for custom domain (not subdomain, not root, not localhost dev)
+  // Check for custom domain (not root domain, not localhost)
   const isCustomDomain =
-    !hostname.endsWith(`.${rootDomain}`) &&
     hostname !== rootDomain &&
     !hostname.includes("localhost") &&
-    !hostname.startsWith("www.")
+    !hostname.startsWith("www.") &&
+    !hostname.endsWith(`.${rootDomain}`)
 
   if (isCustomDomain) {
     try {
