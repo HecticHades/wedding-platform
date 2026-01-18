@@ -17,11 +17,11 @@ interface ThemeStudioControlsProps {
 }
 
 const TABS = [
+  { id: "presets", label: "Presets", icon: Wand2 },
   { id: "colors", label: "Colors", icon: Palette },
   { id: "hero", label: "Hero Image", icon: Image },
   { id: "typography", label: "Typography", icon: Type },
   { id: "style", label: "Style", icon: Sparkles },
-  { id: "presets", label: "Presets", icon: Wand2 },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
@@ -32,7 +32,7 @@ export function ThemeStudioControls({
   onChange,
   onApplyPreset,
 }: ThemeStudioControlsProps) {
-  const [activeTab, setActiveTab] = useState<TabId>("colors");
+  const [activeTab, setActiveTab] = useState<TabId>("presets");
 
   return (
     <div className="flex flex-col h-full bg-white rounded-xl border border-gray-200 overflow-hidden">

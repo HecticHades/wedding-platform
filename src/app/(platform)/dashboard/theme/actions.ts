@@ -91,9 +91,20 @@ export async function updateTheme(
       });
     });
 
+    // Get tenant subdomain to revalidate public site
+    const tenant = await prisma.tenant.findUnique({
+      where: { id: session.user.tenantId },
+      select: { subdomain: true },
+    });
+
     // Revalidate dashboard pages
     revalidatePath("/dashboard");
     revalidatePath("/dashboard/theme");
+
+    // Revalidate tenant's public site
+    if (tenant?.subdomain) {
+      revalidatePath(`/${tenant.subdomain}`);
+    }
 
     return { success: true };
   } catch (error) {
