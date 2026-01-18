@@ -101,9 +101,10 @@ export async function updateTheme(
     revalidatePath("/dashboard");
     revalidatePath("/dashboard/theme");
 
-    // Revalidate tenant's public site
+    // Revalidate tenant's public site (theme is loaded in layout)
     if (tenant?.subdomain) {
-      revalidatePath(`/${tenant.subdomain}`);
+      // Revalidate layout to refresh theme data cached in layout.tsx
+      revalidatePath(`/${tenant.subdomain}`, "layout");
     }
 
     return { success: true };
