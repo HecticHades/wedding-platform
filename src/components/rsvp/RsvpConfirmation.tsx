@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { CheckCircle2, PartyPopper, Home } from "lucide-react";
+import { ThemedCard } from "@/components/theme/ThemedCard";
 
 interface RsvpConfirmationProps {
   guestName: string;
@@ -18,7 +19,7 @@ export function RsvpConfirmation({
 }: RsvpConfirmationProps) {
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-wedding-primary/10 p-8 text-center">
+      <ThemedCard variant="glass" className="p-8 text-center">
         {/* Success Icon */}
         <div className="flex justify-center mb-6">
           <div className="relative">
@@ -41,7 +42,10 @@ export function RsvpConfirmation({
         </p>
 
         {/* Summary */}
-        <div className="bg-wedding-primary/5 rounded-xl p-4 mb-6">
+        <div
+          className="bg-wedding-primary/5 p-4 mb-6"
+          style={{ borderRadius: "var(--wedding-radius-lg)" }}
+        >
           <p className="font-wedding text-sm text-wedding-text">
             You have responded to{" "}
             <span className="font-semibold text-wedding-primary">
@@ -63,7 +67,7 @@ export function RsvpConfirmation({
         <p className="mt-6 font-wedding text-xs text-wedding-text/50">
           You can update your response at any time by returning to this page.
         </p>
-      </div>
+      </ThemedCard>
     </div>
   );
 }

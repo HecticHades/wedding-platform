@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { searchGuests } from "@/app/[domain]/rsvp/actions";
 import { useRouter } from "next/navigation";
 import { Search, User, Users, Loader2 } from "lucide-react";
+import { ThemedCard } from "@/components/theme/ThemedCard";
 
 interface GuestLookupProps {
   weddingId: string;
@@ -51,7 +52,7 @@ export function GuestLookup({ weddingId, domain }: GuestLookupProps) {
 
   return (
     <div className="w-full max-w-lg mx-auto">
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-wedding-primary/10 p-8">
+      <ThemedCard variant="glass" className="p-8">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-wedding-primary/10 rounded-full mb-4">
@@ -80,7 +81,8 @@ export function GuestLookup({ weddingId, domain }: GuestLookupProps) {
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
               placeholder="e.g., John Smith"
-              className="w-full px-4 py-3 pr-12 font-wedding border border-wedding-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-primary/30 focus:border-wedding-primary/40 bg-white text-wedding-text placeholder:text-wedding-text/40"
+              className="w-full px-4 py-3 pr-12 font-wedding border border-wedding-primary/20 focus:outline-none focus:ring-2 focus:ring-wedding-primary/30 focus:border-wedding-primary/40 bg-white text-wedding-text placeholder:text-wedding-text/40"
+              style={{ borderRadius: "var(--wedding-radius)" }}
               autoComplete="off"
               autoFocus
             />
@@ -103,7 +105,8 @@ export function GuestLookup({ weddingId, domain }: GuestLookupProps) {
                 <button
                   key={guest.id}
                   onClick={() => handleSelectGuest(guest.id)}
-                  className="w-full text-left px-4 py-4 bg-wedding-background hover:bg-wedding-primary/5 border border-wedding-primary/10 hover:border-wedding-primary/30 rounded-xl transition-colors group"
+                  className="w-full text-left px-4 py-4 bg-wedding-background hover:bg-wedding-primary/5 border border-wedding-primary/10 hover:border-wedding-primary/30 transition-colors group"
+                  style={{ borderRadius: "var(--wedding-radius-lg)" }}
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex-shrink-0 w-10 h-10 bg-wedding-primary/10 rounded-full flex items-center justify-center group-hover:bg-wedding-primary/20 transition-colors">
@@ -146,7 +149,10 @@ export function GuestLookup({ weddingId, domain }: GuestLookupProps) {
 
           {/* No Results Message */}
           {hasSearched && !isSearching && results.length === 0 && searchName.trim().length >= 2 && (
-            <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-4">
+            <div
+              className="bg-amber-50 border border-amber-200 px-4 py-4"
+              style={{ borderRadius: "var(--wedding-radius)" }}
+            >
               <p className="font-wedding text-sm text-amber-800">
                 No guests found matching &quot;{searchName}&quot;
               </p>
@@ -168,7 +174,7 @@ export function GuestLookup({ weddingId, domain }: GuestLookupProps) {
         <p className="mt-8 text-center font-wedding text-xs text-wedding-text/50">
           Can&apos;t find your name? Contact the couple for assistance.
         </p>
-      </div>
+      </ThemedCard>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { upload } from "@vercel/blob/client";
 import { useState, useRef } from "react";
 import { Upload, CheckCircle, AlertCircle, Loader2, Camera } from "lucide-react";
 import { createGuestPhotoRecord } from "@/app/[domain]/photos/upload/actions";
+import { ThemedButton } from "@/components/theme/ThemedButton";
 
 interface GuestUploaderProps {
   weddingId: string;
@@ -13,6 +14,7 @@ interface GuestUploaderProps {
  * Client-side photo uploader for guests.
  * Uses Vercel Blob client upload to support large files (>4.5MB).
  * Mobile-optimized for QR code access.
+ * Fully themed to match tenant's wedding theme.
  */
 export function GuestUploader({ weddingId }: GuestUploaderProps) {
   const [guestName, setGuestName] = useState("");
@@ -81,7 +83,7 @@ export function GuestUploader({ weddingId }: GuestUploaderProps) {
       <div>
         <label
           htmlFor="guestName"
-          className="block text-sm font-medium text-gray-700 mb-2"
+          className="block text-sm font-wedding font-medium text-wedding-text mb-2"
         >
           Your Name (optional)
         </label>
@@ -92,7 +94,8 @@ export function GuestUploader({ weddingId }: GuestUploaderProps) {
           onChange={(e) => setGuestName(e.target.value)}
           placeholder="Enter your name"
           disabled={isUploading}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-base"
+          className="w-full px-4 py-3 font-wedding border border-wedding-primary/20 bg-white text-wedding-text placeholder:text-wedding-text/40 focus:outline-none focus:ring-2 focus:ring-wedding-primary/30 focus:border-wedding-primary/40 disabled:bg-wedding-background disabled:cursor-not-allowed text-base"
+          style={{ borderRadius: "var(--wedding-radius)" }}
         />
       </div>
 
@@ -100,33 +103,40 @@ export function GuestUploader({ weddingId }: GuestUploaderProps) {
       <div>
         <label
           htmlFor="photos"
-          className={`flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
+          className={`flex flex-col items-center justify-center w-full h-48 border-2 border-dashed cursor-pointer transition-colors ${
             isUploading
-              ? "border-gray-300 bg-gray-50 cursor-not-allowed"
-              : "border-gray-300 bg-gray-50 hover:bg-gray-100 hover:border-blue-400"
+              ? "border-wedding-primary/20 bg-wedding-background cursor-not-allowed"
+              : "border-wedding-primary/30 bg-wedding-background hover:bg-wedding-primary/5 hover:border-wedding-primary/50"
           }`}
+          style={{ borderRadius: "var(--wedding-radius-lg)" }}
         >
           <div className="flex flex-col items-center justify-center py-6 px-4 text-center">
             {isUploading ? (
               <>
-                <Loader2 className="w-10 h-10 text-blue-500 animate-spin mb-3" />
-                <p className="text-sm text-gray-600">
+                <Loader2 className="w-10 h-10 text-wedding-primary animate-spin mb-3" />
+                <p className="text-sm font-wedding text-wedding-text/70">
                   Uploading {uploadedCount} of {totalFiles}...
                 </p>
-                <div className="w-48 h-2 bg-gray-200 rounded-full mt-3">
+                <div
+                  className="w-48 h-2 bg-wedding-primary/20 mt-3"
+                  style={{ borderRadius: "var(--wedding-radius)" }}
+                >
                   <div
-                    className="h-full bg-blue-500 rounded-full transition-all duration-300"
-                    style={{ width: `${uploadProgress}%` }}
+                    className="h-full bg-wedding-primary transition-all duration-300"
+                    style={{
+                      width: `${uploadProgress}%`,
+                      borderRadius: "var(--wedding-radius)",
+                    }}
                   />
                 </div>
               </>
             ) : (
               <>
-                <Camera className="w-10 h-10 text-gray-400 mb-3" />
-                <p className="text-sm font-medium text-gray-600">
+                <Camera className="w-10 h-10 text-wedding-text/40 mb-3" />
+                <p className="text-sm font-wedding font-medium text-wedding-text/70">
                   Tap to select photos
                 </p>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs font-wedding text-wedding-text/50 mt-1">
                   JPG, PNG, WebP, or HEIC (up to 20MB each)
                 </p>
               </>
@@ -147,22 +157,28 @@ export function GuestUploader({ weddingId }: GuestUploaderProps) {
 
       {/* Error message */}
       {error && (
-        <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div
+          className="flex items-start gap-3 p-4 bg-red-50 border border-red-200"
+          style={{ borderRadius: "var(--wedding-radius)" }}
+        >
           <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-red-700">{error}</p>
+          <p className="text-sm font-wedding text-red-700">{error}</p>
         </div>
       )}
 
       {/* Success message */}
       {successCount > 0 && !isUploading && (
-        <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
+        <div
+          className="flex items-start gap-3 p-4 bg-green-50 border border-green-200"
+          style={{ borderRadius: "var(--wedding-radius)" }}
+        >
           <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-medium text-green-700">
+            <p className="text-sm font-wedding font-medium text-green-700">
               {successCount} photo{successCount !== 1 ? "s" : ""} uploaded
               successfully!
             </p>
-            <p className="text-xs text-green-600 mt-1">
+            <p className="text-xs font-wedding text-green-600 mt-1">
               The couple will review your photos before they appear in the
               gallery.
             </p>
@@ -172,13 +188,14 @@ export function GuestUploader({ weddingId }: GuestUploaderProps) {
 
       {/* Upload another button */}
       {successCount > 0 && !isUploading && (
-        <button
+        <ThemedButton
+          variant="primary"
+          fullWidth
           onClick={() => fileInputRef.current?.click()}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
         >
           <Upload className="w-5 h-5" />
           Upload More Photos
-        </button>
+        </ThemedButton>
       )}
     </div>
   );

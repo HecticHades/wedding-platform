@@ -4,6 +4,8 @@ import { useState, useTransition } from "react";
 import { validateRsvpCode } from "@/app/[domain]/rsvp/actions";
 import { useRouter } from "next/navigation";
 import { Lock, Loader2 } from "lucide-react";
+import { ThemedCard } from "@/components/theme/ThemedCard";
+import { ThemedButton } from "@/components/theme/ThemedButton";
 
 interface RsvpCodeEntryProps {
   weddingId: string;
@@ -40,7 +42,7 @@ export function RsvpCodeEntry({ weddingId, onSuccess }: RsvpCodeEntryProps) {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-wedding-primary/10 p-8">
+      <ThemedCard variant="glass" className="p-8">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-wedding-primary/10 rounded-full mb-4">
@@ -69,7 +71,8 @@ export function RsvpCodeEntry({ weddingId, onSuccess }: RsvpCodeEntryProps) {
               value={code}
               onChange={(e) => setCode(e.target.value)}
               placeholder="e.g., SMITH2026"
-              className="w-full px-4 py-3 font-wedding text-lg tracking-wider uppercase border border-wedding-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-primary/30 focus:border-wedding-primary/40 bg-white text-wedding-text placeholder:text-wedding-text/40"
+              className="w-full px-4 py-3 font-wedding text-lg tracking-wider uppercase border border-wedding-primary/20 focus:outline-none focus:ring-2 focus:ring-wedding-primary/30 focus:border-wedding-primary/40 bg-white text-wedding-text placeholder:text-wedding-text/40"
+              style={{ borderRadius: "var(--wedding-radius)" }}
               disabled={isPending}
               autoComplete="off"
               autoFocus
@@ -78,33 +81,30 @@ export function RsvpCodeEntry({ weddingId, onSuccess }: RsvpCodeEntryProps) {
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+            <div
+              className="bg-red-50 border border-red-200 px-4 py-3"
+              style={{ borderRadius: "var(--wedding-radius)" }}
+            >
               <p className="font-wedding text-sm text-red-700">{error}</p>
             </div>
           )}
 
           {/* Submit Button */}
-          <button
+          <ThemedButton
             type="submit"
             disabled={isPending}
-            className="w-full bg-wedding-primary hover:bg-wedding-primary/90 disabled:bg-wedding-primary/50 text-white font-wedding py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2"
+            fullWidth
+            isLoading={isPending}
           >
-            {isPending ? (
-              <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                <span>Verifying...</span>
-              </>
-            ) : (
-              <span>Continue</span>
-            )}
-          </button>
+            {isPending ? "Verifying..." : "Continue"}
+          </ThemedButton>
         </form>
 
         {/* Help Text */}
         <p className="mt-6 text-center font-wedding text-xs text-wedding-text/50">
           Can&apos;t find your code? Contact the couple for assistance.
         </p>
-      </div>
+      </ThemedCard>
     </div>
   );
 }

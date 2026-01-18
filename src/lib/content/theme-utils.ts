@@ -21,6 +21,26 @@ export const DEFAULT_THEME: ThemeSettings = {
 };
 
 /**
+ * Border radius mapping for theme styles
+ */
+const RADIUS_MAP: Record<string, string> = {
+  none: "0",
+  subtle: "0.375rem",
+  rounded: "0.75rem",
+  pill: "9999px",
+};
+
+/**
+ * Shadow mapping for theme styles
+ */
+const SHADOW_MAP: Record<string, string> = {
+  none: "none",
+  subtle: "0 1px 2px rgba(0,0,0,0.05)",
+  medium: "0 4px 6px -1px rgba(0,0,0,0.1)",
+  dramatic: "0 25px 50px -12px rgba(0,0,0,0.25)",
+};
+
+/**
  * Generate CSS variable declarations from theme settings
  * Returns a string that can be used in a style attribute or style tag
  * Uses next/font CSS variables for proper font loading
@@ -28,6 +48,12 @@ export const DEFAULT_THEME: ThemeSettings = {
 export function generateCSSVariables(theme: ThemeSettings): string {
   const bodyFont = FONT_CSS_VAR_MAP[theme.fontFamily] || `"${theme.fontFamily}"`;
   const headingFont = FONT_CSS_VAR_MAP[theme.headingFont] || `"${theme.headingFont}"`;
+
+  // Extended style options
+  const radius = RADIUS_MAP[theme.borderRadius || "subtle"];
+  const shadow = SHADOW_MAP[theme.shadowIntensity || "subtle"];
+  const buttonStyle = theme.buttonStyle || "solid";
+  const dividerStyle = theme.dividerStyle || "line";
 
   return `
     --wedding-primary: ${theme.primaryColor};
@@ -37,6 +63,12 @@ export function generateCSSVariables(theme: ThemeSettings): string {
     --wedding-accent: ${theme.accentColor};
     --wedding-font-body: ${bodyFont}, serif;
     --wedding-font-heading: ${headingFont}, cursive;
+    --wedding-radius: ${radius};
+    --wedding-radius-sm: calc(${radius} * 0.67);
+    --wedding-radius-lg: calc(${radius} * 1.33);
+    --wedding-shadow: ${shadow};
+    --wedding-button-style: ${buttonStyle};
+    --wedding-divider-style: ${dividerStyle};
   `.trim();
 }
 
@@ -51,6 +83,12 @@ export function generateCSSVariablesObject(
   const bodyFont = FONT_CSS_VAR_MAP[theme.fontFamily] || `"${theme.fontFamily}"`;
   const headingFont = FONT_CSS_VAR_MAP[theme.headingFont] || `"${theme.headingFont}"`;
 
+  // Extended style options
+  const radius = RADIUS_MAP[theme.borderRadius || "subtle"];
+  const shadow = SHADOW_MAP[theme.shadowIntensity || "subtle"];
+  const buttonStyle = theme.buttonStyle || "solid";
+  const dividerStyle = theme.dividerStyle || "line";
+
   return {
     "--wedding-primary": theme.primaryColor,
     "--wedding-secondary": theme.secondaryColor,
@@ -59,6 +97,12 @@ export function generateCSSVariablesObject(
     "--wedding-accent": theme.accentColor,
     "--wedding-font-body": `${bodyFont}, serif`,
     "--wedding-font-heading": `${headingFont}, cursive`,
+    "--wedding-radius": radius,
+    "--wedding-radius-sm": `calc(${radius} * 0.67)`,
+    "--wedding-radius-lg": `calc(${radius} * 1.33)`,
+    "--wedding-shadow": shadow,
+    "--wedding-button-style": buttonStyle,
+    "--wedding-divider-style": dividerStyle,
   } as Record<string, string>;
 }
 

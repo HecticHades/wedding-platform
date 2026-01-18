@@ -13,6 +13,8 @@ import {
   Utensils,
   AlertCircle,
 } from "lucide-react";
+import { ThemedCard } from "@/components/theme/ThemedCard";
+import { ThemedButton } from "@/components/theme/ThemedButton";
 
 interface MealOption {
   id: string;
@@ -122,7 +124,7 @@ export function EventRsvpForm({
   }
 
   return (
-    <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-wedding-primary/10 overflow-hidden">
+    <ThemedCard variant="glass" className="overflow-hidden">
       {/* Event Header */}
       <div className="bg-wedding-primary/5 px-6 py-4 border-b border-wedding-primary/10">
         <div className="flex items-center justify-between">
@@ -183,22 +185,24 @@ export function EventRsvpForm({
             <button
               type="button"
               onClick={() => setRsvpStatus("ATTENDING")}
-              className={`flex-1 py-3 px-4 rounded-lg border-2 font-wedding text-sm transition-all ${
+              className={`flex-1 py-3 px-4 border-2 font-wedding text-sm transition-all ${
                 rsvpStatus === "ATTENDING"
                   ? "border-green-500 bg-green-50 text-green-700"
                   : "border-wedding-primary/20 hover:border-wedding-primary/40 text-wedding-text/70"
               }`}
+              style={{ borderRadius: "var(--wedding-radius)" }}
             >
               Joyfully Accept
             </button>
             <button
               type="button"
               onClick={() => setRsvpStatus("DECLINED")}
-              className={`flex-1 py-3 px-4 rounded-lg border-2 font-wedding text-sm transition-all ${
+              className={`flex-1 py-3 px-4 border-2 font-wedding text-sm transition-all ${
                 rsvpStatus === "DECLINED"
                   ? "border-red-400 bg-red-50 text-red-700"
                   : "border-wedding-primary/20 hover:border-wedding-primary/40 text-wedding-text/70"
               }`}
+              style={{ borderRadius: "var(--wedding-radius)" }}
             >
               Regretfully Decline
             </button>
@@ -226,7 +230,8 @@ export function EventRsvpForm({
                   id={`plusOneCount-${event.id}`}
                   value={plusOneCount}
                   onChange={(e) => setPlusOneCount(Number(e.target.value))}
-                  className="w-full px-3 py-2 border border-wedding-primary/20 rounded-lg font-wedding text-wedding-text focus:outline-none focus:ring-2 focus:ring-wedding-primary/30"
+                  className="w-full px-3 py-2 border border-wedding-primary/20 font-wedding text-wedding-text focus:outline-none focus:ring-2 focus:ring-wedding-primary/30"
+                  style={{ borderRadius: "var(--wedding-radius)" }}
                 >
                   {[0, 1, 2, 3, 4, 5].map((n) => (
                     <option key={n} value={n}>
@@ -248,7 +253,8 @@ export function EventRsvpForm({
                   value={plusOneName}
                   onChange={(e) => setPlusOneName(e.target.value)}
                   placeholder="Guest names"
-                  className="w-full px-3 py-2 border border-wedding-primary/20 rounded-lg font-wedding text-wedding-text placeholder:text-wedding-text/40 focus:outline-none focus:ring-2 focus:ring-wedding-primary/30"
+                  className="w-full px-3 py-2 border border-wedding-primary/20 font-wedding text-wedding-text placeholder:text-wedding-text/40 focus:outline-none focus:ring-2 focus:ring-wedding-primary/30"
+                  style={{ borderRadius: "var(--wedding-radius)" }}
                 />
               </div>
             </div>
@@ -268,11 +274,12 @@ export function EventRsvpForm({
               {event.mealOptions.map((option) => (
                 <label
                   key={option.id}
-                  className={`flex items-start gap-3 p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                  className={`flex items-start gap-3 p-3 border-2 cursor-pointer transition-all ${
                     mealChoice === option.id
                       ? "border-wedding-primary bg-wedding-primary/5"
                       : "border-wedding-primary/10 hover:border-wedding-primary/30"
                   }`}
+                  style={{ borderRadius: "var(--wedding-radius)" }}
                 >
                   <input
                     type="radio"
@@ -314,37 +321,37 @@ export function EventRsvpForm({
               placeholder="Please let us know of any dietary restrictions or allergies..."
               rows={2}
               maxLength={500}
-              className="w-full px-3 py-2 border border-wedding-primary/20 rounded-lg font-wedding text-wedding-text placeholder:text-wedding-text/40 focus:outline-none focus:ring-2 focus:ring-wedding-primary/30 resize-none"
+              className="w-full px-3 py-2 border border-wedding-primary/20 font-wedding text-wedding-text placeholder:text-wedding-text/40 focus:outline-none focus:ring-2 focus:ring-wedding-primary/30 resize-none"
+              style={{ borderRadius: "var(--wedding-radius)" }}
             />
           </div>
         )}
 
         {/* Error Message */}
         {error && (
-          <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+          <div
+            className="flex items-center gap-2 bg-red-50 border border-red-200 px-4 py-3"
+            style={{ borderRadius: "var(--wedding-radius)" }}
+          >
             <AlertCircle className="w-4 h-4 text-red-600" />
             <p className="font-wedding text-sm text-red-700">{error}</p>
           </div>
         )}
 
         {/* Submit Button */}
-        <button
+        <ThemedButton
           type="submit"
           disabled={isPending || !rsvpStatus}
-          className="w-full bg-wedding-primary hover:bg-wedding-primary/90 disabled:bg-wedding-primary/50 text-white font-wedding py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2"
+          fullWidth
+          isLoading={isPending}
         >
-          {isPending ? (
-            <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Saving...</span>
-            </>
-          ) : hasResponded ? (
-            <span>Update Response</span>
-          ) : (
-            <span>Submit Response</span>
-          )}
-        </button>
+          {isPending
+            ? "Saving..."
+            : hasResponded
+              ? "Update Response"
+              : "Submit Response"}
+        </ThemedButton>
       </form>
-    </div>
+    </ThemedCard>
   );
 }

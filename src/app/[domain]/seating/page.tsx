@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/db/prisma";
 import { Heart, MapPin } from "lucide-react";
+import { ThemedCard } from "@/components/theme/ThemedCard";
+import { ThemedButton } from "@/components/theme/ThemedButton";
 
 interface PageProps {
   params: Promise<{ domain: string }>;
@@ -99,7 +101,7 @@ export default async function GuestSeatingPage({ params }: PageProps) {
             </p>
           )}
 
-          <div className="bg-white/80 backdrop-blur rounded-lg p-8 shadow-sm">
+          <ThemedCard variant="glass" className="p-8">
             <MapPin className="w-8 h-8 mx-auto text-wedding-secondary mb-4" />
             <h2 className="text-xl font-semibold text-wedding-primary mb-2">
               View Your Table Assignment
@@ -107,13 +109,10 @@ export default async function GuestSeatingPage({ params }: PageProps) {
             <p className="text-wedding-text/70 mb-6">
               Please RSVP first to see your table assignment.
             </p>
-            <Link
-              href={`/${domain}/rsvp`}
-              className="inline-block px-6 py-3 bg-wedding-primary text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
-            >
-              Go to RSVP
+            <Link href={`/${domain}/rsvp`}>
+              <ThemedButton>Go to RSVP</ThemedButton>
             </Link>
-          </div>
+          </ThemedCard>
         </div>
       </main>
     );
@@ -142,7 +141,7 @@ export default async function GuestSeatingPage({ params }: PageProps) {
             </p>
           )}
 
-          <div className="bg-white/80 backdrop-blur rounded-lg p-8 shadow-sm">
+          <ThemedCard variant="glass" className="p-8">
             <MapPin className="w-8 h-8 mx-auto text-wedding-secondary mb-4" />
             <h2 className="text-xl font-semibold text-wedding-primary mb-2">
               Table Assignment Pending
@@ -153,7 +152,7 @@ export default async function GuestSeatingPage({ params }: PageProps) {
             <p className="text-sm text-wedding-text/50 mt-4">
               Check back soon!
             </p>
-          </div>
+          </ThemedCard>
         </div>
       </main>
     );
@@ -178,7 +177,7 @@ export default async function GuestSeatingPage({ params }: PageProps) {
           </p>
         )}
 
-        <div className="bg-white/80 backdrop-blur rounded-lg p-8 shadow-sm">
+        <ThemedCard variant="glass" className="p-8">
           <p className="text-sm uppercase tracking-wider text-wedding-secondary mb-4">
             Your Table
           </p>
@@ -188,7 +187,7 @@ export default async function GuestSeatingPage({ params }: PageProps) {
           <p className="text-wedding-text/70 mt-4">
             We look forward to celebrating with you!
           </p>
-        </div>
+        </ThemedCard>
 
         <Link
           href={`/${domain}`}
