@@ -1,271 +1,163 @@
-"use client";
-
-import { useState, useTransition } from "react";
-import { Plus, Trash2, Check, AlertCircle } from "lucide-react";
-import { updateSectionContent } from "@/app/(platform)/dashboard/content/[section]/actions";
-
-interface Event {
-  name: string;
-  date: string;
-  time: string;
-  location: string;
-  address: string;
-  dressCode?: string;
-  description?: string;
-}
+import Link from "next/link";
+import { Calendar, MapPin, Clock, Shirt, ArrowRight, CalendarPlus } from "lucide-react";
+import type { Event } from "@prisma/client";
 
 interface EventDetailsEditorProps {
-  initialContent: PrismaJson.SectionContent;
+  events: Event[];
 }
 
-export function EventDetailsEditor({ initialContent }: EventDetailsEditorProps) {
-  // Type guard to ensure we have event-details content
-  const typedContent =
-    initialContent.type === "event-details"
-      ? initialContent
-      : { type: "event-details" as const, events: [] };
+/**
+ * Formats a date for display
+ */
+function formatEventDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 
-  const [events, setEvents] = useState<Event[]>(typedContent.events);
-  const [isPending, startTransition] = useTransition();
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+/**
+ * Formats a time for display
+ */
+function formatEventTime(date: Date): string {
+  return date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
 
-  const addEvent = () => {
-    setEvents([
-      ...events,
-      {
-        name: "",
-        date: "",
-        time: "",
-        location: "",
-        address: "",
-        dressCode: "",
-        description: "",
-      },
-    ]);
-  };
-
-  const removeEvent = (index: number) => {
-    setEvents(events.filter((_, i) => i !== index));
-  };
-
-  const updateEvent = (index: number, field: keyof Event, value: string) => {
-    const updated = [...events];
-    updated[index] = { ...updated[index], [field]: value };
-    setEvents(updated);
-  };
-
-  const handleSave = () => {
-    setStatus("idle");
-    setErrorMessage("");
-
-    // Basic validation
-    const hasEmptyRequired = events.some(
-      (e) => !e.name || !e.date || !e.time || !e.location || !e.address
-    );
-    if (hasEmptyRequired) {
-      setStatus("error");
-      setErrorMessage("Please fill in all required fields for each event.");
-      return;
-    }
-
-    startTransition(async () => {
-      const content: PrismaJson.EventDetailsContent = {
-        type: "event-details",
-        events: events.map((e) => ({
-          name: e.name,
-          date: e.date,
-          time: e.time,
-          location: e.location,
-          address: e.address,
-          ...(e.dressCode && { dressCode: e.dressCode }),
-          ...(e.description && { description: e.description }),
-        })),
-      };
-
-      const result = await updateSectionContent("event-details", content);
-
-      if (result.success) {
-        setStatus("success");
-        setTimeout(() => setStatus("idle"), 3000);
-      } else {
-        setStatus("error");
-        setErrorMessage(result.error || "Failed to save");
-      }
-    });
-  };
-
+/**
+ * EventDetailsEditor displays events from the Events tab (read-only)
+ * and provides a link to manage events in the Events tab.
+ *
+ * Events are now managed in a single place (Events tab) to avoid
+ * having duplicate/conflicting event data.
+ */
+export function EventDetailsEditor({ events }: EventDetailsEditorProps) {
   return (
     <div className="space-y-6">
-      {/* Status messages */}
-      {status === "success" && (
-        <div className="flex items-center gap-2 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
-          <Check className="h-5 w-5" />
-          Changes saved successfully!
-        </div>
-      )}
-      {status === "error" && (
-        <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-          <AlertCircle className="h-5 w-5" />
-          {errorMessage}
-        </div>
-      )}
-
-      {/* Events list */}
-      <div className="space-y-6">
-        {events.map((event, index) => (
-          <div
-            key={index}
-            className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-medium text-gray-900">
-                Event {index + 1}
-              </h3>
-              <button
-                type="button"
-                onClick={() => removeEvent(index)}
-                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                aria-label="Remove event"
-              >
-                <Trash2 className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Event Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Event Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={event.name}
-                  onChange={(e) => updateEvent(index, "name", e.target.value)}
-                  placeholder="e.g., Wedding Ceremony"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-
-              {/* Date */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Date <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="date"
-                  value={event.date}
-                  onChange={(e) => updateEvent(index, "date", e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-
-              {/* Time */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Time <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="time"
-                  value={event.time}
-                  onChange={(e) => updateEvent(index, "time", e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-
-              {/* Dress Code */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Dress Code
-                </label>
-                <input
-                  type="text"
-                  value={event.dressCode || ""}
-                  onChange={(e) => updateEvent(index, "dressCode", e.target.value)}
-                  placeholder="e.g., Black Tie, Cocktail Attire"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-
-              {/* Location */}
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Venue Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={event.location}
-                  onChange={(e) => updateEvent(index, "location", e.target.value)}
-                  placeholder="e.g., The Grand Ballroom"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-
-              {/* Address */}
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Address <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={event.address}
-                  onChange={(e) => updateEvent(index, "address", e.target.value)}
-                  placeholder="e.g., 123 Wedding Lane, City, State 12345"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-
-              {/* Description */}
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Description
-                </label>
-                <textarea
-                  value={event.description || ""}
-                  onChange={(e) =>
-                    updateEvent(index, "description", e.target.value)
-                  }
-                  placeholder="Additional details about this event..."
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-            </div>
+      {/* Info banner */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div className="flex items-start gap-3">
+          <Calendar className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <h3 className="font-medium text-blue-900">
+              Events are managed in the Events tab
+            </h3>
+            <p className="mt-1 text-sm text-blue-700">
+              To add, edit, or remove events, go to the Events tab. This section
+              will automatically display your events on your wedding website.
+            </p>
+            <Link
+              href="/dashboard/events"
+              className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+            >
+              <CalendarPlus className="h-4 w-4" />
+              Manage Events
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
-        ))}
+        </div>
       </div>
 
-      {/* Add event button */}
-      <button
-        type="button"
-        onClick={addEvent}
-        className="flex items-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-blue-500 hover:text-blue-600 transition-colors w-full justify-center"
-      >
-        <Plus className="h-5 w-5" />
-        Add Event
-      </button>
-
-      {/* Empty state */}
-      {events.length === 0 && (
-        <div className="text-center py-8 text-gray-500">
-          <p>No events added yet.</p>
-          <p className="text-sm mt-1">
-            Add events like your ceremony, reception, or rehearsal dinner.
+      {/* Events preview */}
+      {events.length > 0 ? (
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-gray-900">
+            Events Preview ({events.length})
+          </h3>
+          <p className="text-sm text-gray-500">
+            These events will be displayed on your wedding website.
           </p>
+
+          <div className="space-y-4">
+            {events.map((event) => (
+              <div
+                key={event.id}
+                className="bg-white border border-gray-200 rounded-lg p-5 shadow-sm"
+              >
+                {/* Event name */}
+                <h4 className="text-lg font-semibold text-gray-900 mb-3">
+                  {event.name}
+                </h4>
+
+                <div className="space-y-2 text-sm text-gray-600">
+                  {/* Date */}
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4 text-gray-400" />
+                    <span>{formatEventDate(event.dateTime)}</span>
+                  </div>
+
+                  {/* Time */}
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-gray-400" />
+                    <span>
+                      {formatEventTime(event.dateTime)}
+                      {event.endTime && ` - ${formatEventTime(event.endTime)}`}
+                    </span>
+                  </div>
+
+                  {/* Location */}
+                  {(event.location || event.address) && (
+                    <div className="flex items-start gap-2">
+                      <MapPin className="h-4 w-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        {event.location && <span className="font-medium">{event.location}</span>}
+                        {event.location && event.address && <span> · </span>}
+                        {event.address && <span>{event.address}</span>}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Dress code */}
+                  {event.dressCode && (
+                    <div className="flex items-center gap-2">
+                      <Shirt className="h-4 w-4 text-gray-400" />
+                      <span>Dress Code: {event.dressCode}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Description */}
+                {event.description && (
+                  <p className="mt-3 text-sm text-gray-500 border-t border-gray-100 pt-3">
+                    {event.description}
+                  </p>
+                )}
+
+                {/* Visibility indicator */}
+                {!event.isPublic && (
+                  <div className="mt-3 inline-flex items-center px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">
+                    Private Event (Invited Guests Only)
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        /* Empty state */
+        <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+          <Calendar className="h-12 w-12 mx-auto text-gray-300 mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            No Events Yet
+          </h3>
+          <p className="text-gray-500 mb-6 max-w-md mx-auto">
+            You haven&apos;t created any events yet. Add events like your ceremony,
+            reception, or rehearsal dinner to display them on your wedding website.
+          </p>
+          <Link
+            href="/dashboard/events/new"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            <CalendarPlus className="h-4 w-4" />
+            Create Your First Event
+          </Link>
         </div>
       )}
-
-      {/* Save button */}
-      <div className="flex justify-end pt-4 border-t border-gray-200">
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={isPending}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          {isPending ? "Saving..." : "Save Changes"}
-        </button>
-      </div>
     </div>
   );
 }

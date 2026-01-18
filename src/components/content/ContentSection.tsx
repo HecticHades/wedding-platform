@@ -22,7 +22,8 @@ export function ContentSection({ section }: ContentSectionProps) {
   const renderSection = () => {
     switch (content.type) {
       case "event-details":
-        return <EventDetailsSection content={content} />;
+        // Events are now rendered by EventsDisplay from database
+        return <EventDetailsSection />;
       case "our-story":
         return <OurStorySection content={content} />;
       case "travel":

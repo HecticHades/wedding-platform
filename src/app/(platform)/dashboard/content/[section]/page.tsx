@@ -8,6 +8,7 @@ import {
   getSectionLabel,
   type SectionTypeId,
 } from "@/lib/content/section-types";
+import type { Event } from "@prisma/client";
 
 // Import editors
 import { EventDetailsEditor } from "@/components/content-builder/editors/EventDetailsEditor";
@@ -17,12 +18,11 @@ import { GalleryEditor } from "@/components/content-builder/editors/GalleryEdito
 import { TimelineEditor } from "@/components/content-builder/editors/TimelineEditor";
 import { ContactEditor } from "@/components/content-builder/editors/ContactEditor";
 
-// Editor component mapping
+// Editor component mapping (excluding event-details which is handled specially)
 const editors: Record<
-  SectionTypeId,
+  Exclude<SectionTypeId, "event-details">,
   React.ComponentType<{ initialContent: PrismaJson.SectionContent }>
 > = {
-  "event-details": EventDetailsEditor,
   "our-story": OurStoryEditor,
   travel: TravelEditor,
   gallery: GalleryEditor,
@@ -55,7 +55,7 @@ export default async function SectionEditorPage({ params }: SectionPageProps) {
   const sectionType = parseResult.data;
   const sectionLabel = getSectionLabel(sectionType);
 
-  // Fetch wedding content sections
+  // Fetch wedding content sections and events (if event-details section)
   const data = await withTenantContext(session.user.tenantId, async () => {
     const wedding = await prisma.wedding.findFirst({
       select: {
@@ -63,7 +63,16 @@ export default async function SectionEditorPage({ params }: SectionPageProps) {
         contentSections: true,
       },
     });
-    return { wedding };
+
+    // Fetch events from database if this is the event-details section
+    let events: Event[] = [];
+    if (sectionType === "event-details") {
+      events = await prisma.event.findMany({
+        orderBy: { dateTime: "asc" },
+      });
+    }
+
+    return { wedding, events };
   });
 
   if (!data.wedding) {
@@ -78,9 +87,6 @@ export default async function SectionEditorPage({ params }: SectionPageProps) {
   // Find the section
   const sections = (data.wedding.contentSections ?? []) as PrismaJson.ContentSection[];
   const currentSection = sections.find((s) => s.type === sectionType);
-
-  // Get the appropriate editor component
-  const EditorComponent = editors[sectionType];
 
   return (
     <div>
@@ -100,8 +106,14 @@ export default async function SectionEditorPage({ params }: SectionPageProps) {
       </div>
 
       {/* Editor or message to add section first */}
-      {currentSection ? (
-        <EditorComponent initialContent={currentSection.content} />
+      {sectionType === "event-details" ? (
+        // Event details uses read-only display with events from database
+        <EventDetailsEditor events={data.events} />
+      ) : currentSection ? (
+        (() => {
+          const EditorComponent = editors[sectionType as Exclude<SectionTypeId, "event-details">];
+          return <EditorComponent initialContent={currentSection.content} />;
+        })()
       ) : (
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
           <h2 className="text-lg font-medium text-yellow-800">

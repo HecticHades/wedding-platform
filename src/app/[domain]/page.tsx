@@ -163,12 +163,12 @@ function EventsDisplay({ events }: { events: VisibleEvent[] }) {
 
 /**
  * Get anchor links from visible sections for navigation
+ * Note: event-details is excluded since events are rendered from database
  */
 function getSectionNavLinks(
   sections: PrismaJson.ContentSection[]
 ): Array<{ href: string; label: string }> {
   const labelMap: Record<string, string> = {
-    "event-details": "Events",
     "our-story": "Our Story",
     travel: "Travel",
     gallery: "Gallery",
@@ -176,10 +176,13 @@ function getSectionNavLinks(
     contact: "Contact",
   };
 
-  return sections.map((section) => ({
-    href: `#${section.type}`,
-    label: labelMap[section.type] || section.type,
-  }));
+  // Filter out event-details since events are now rendered from database via EventsDisplay
+  return sections
+    .filter((section) => section.type !== "event-details")
+    .map((section) => ({
+      href: `#${section.type}`,
+      label: labelMap[section.type] || section.type,
+    }));
 }
 
 export default async function TenantHomePage({ params }: PageProps) {
@@ -223,7 +226,7 @@ export default async function TenantHomePage({ params }: PageProps) {
     .filter((section) => section.isVisible)
     .sort((a, b) => a.order - b.order);
 
-  // Get navigation links for visible sections (add "Events" link for database events)
+  // Get navigation links for visible sections
   const navLinks = getSectionNavLinks(visibleSections);
 
   // Fetch visible events from the database
@@ -231,12 +234,9 @@ export default async function TenantHomePage({ params }: PageProps) {
   // Guest identification will be added in Phase 5 with RSVP code
   const events = await getVisibleEvents({ weddingId: tenant.wedding.id });
 
-  // Add Events to nav if we have database events and no event-details section
-  const hasEventDetailsSection = visibleSections.some(
-    (s) => s.type === "event-details"
-  );
+  // Add Events nav link if we have database events
   const allNavLinks =
-    events.length > 0 && !hasEventDetailsSection
+    events.length > 0
       ? [{ href: "#events", label: "Events" }, ...navLinks]
       : navLinks;
 

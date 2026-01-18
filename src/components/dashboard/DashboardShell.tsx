@@ -21,7 +21,7 @@ export function DashboardShell({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#faf8f5]">
+    <div className="min-h-screen bg-[#faf8f5] text-gray-900">
       {/* Sidebar */}
       <DashboardSidebar
         subdomain={subdomain}
