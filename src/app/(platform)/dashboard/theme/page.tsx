@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import { prisma, withTenantContext } from "@/lib/db/prisma";
 import { DEFAULT_THEME } from "@/lib/content/theme-utils";
 import type { ThemeSettings } from "@/lib/content/theme-utils";
-import { ThemeEditor } from "./ThemeEditor";
+import { ThemeStudio } from "@/components/theme/ThemeStudio";
+import { getTenantUrl } from "@/lib/url-utils";
 
 export default async function ThemePage() {
   const session = await auth();
@@ -22,12 +23,17 @@ export default async function ThemePage() {
       select: {
         id: true,
         themeSettings: true,
+        partner1Name: true,
+        partner2Name: true,
       },
     });
-    return { wedding };
+    const tenant = await prisma.tenant.findFirst({
+      select: { subdomain: true },
+    });
+    return { wedding, tenant };
   });
 
-  if (!data.wedding) {
+  if (!data.wedding || !data.tenant) {
     redirect("/dashboard");
   }
 
@@ -35,16 +41,14 @@ export default async function ThemePage() {
   const initialTheme: ThemeSettings =
     (data.wedding.themeSettings as ThemeSettings) || DEFAULT_THEME;
 
-  return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Theme Customization</h1>
-        <p className="mt-1 text-gray-600">
-          Customize the colors and fonts of your wedding website
-        </p>
-      </div>
+  const siteUrl = getTenantUrl(data.tenant.subdomain);
 
-      <ThemeEditor initialTheme={initialTheme} />
-    </div>
+  return (
+    <ThemeStudio
+      initialTheme={initialTheme}
+      siteUrl={siteUrl}
+      partner1Name={data.wedding.partner1Name || undefined}
+      partner2Name={data.wedding.partner2Name || undefined}
+    />
   );
 }

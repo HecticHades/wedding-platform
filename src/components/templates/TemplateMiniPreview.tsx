@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect, useState, useCallback } from "react";
 import type { ThemeSettings } from "@/lib/content/theme-utils";
 import { generateCSSVariablesObject } from "@/lib/content/theme-utils";
 
@@ -8,6 +9,7 @@ interface TemplateMiniPreviewProps {
   partner1Name?: string;
   partner2Name?: string;
   scale?: number;
+  fillContainer?: boolean;
 }
 
 export function TemplateMiniPreview({
@@ -15,23 +17,69 @@ export function TemplateMiniPreview({
   partner1Name = "Emma",
   partner2Name = "James",
   scale = 0.25,
+  fillContainer = false,
 }: TemplateMiniPreviewProps) {
   const cssVars = generateCSSVariablesObject(theme);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dynamicScale, setDynamicScale] = useState(scale);
+
+  // Base dimensions for the preview template
+  const baseWidth = 800;
+  const baseHeight = 600;
+
+  const calculateScale = useCallback(() => {
+    if (!fillContainer || !containerRef.current) {
+      setDynamicScale(scale);
+      return;
+    }
+
+    const container = containerRef.current;
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+
+    // Calculate scale to fit container while maintaining aspect ratio
+    const scaleX = containerWidth / baseWidth;
+    const scaleY = containerHeight / baseHeight;
+    const newScale = Math.min(scaleX, scaleY);
+
+    setDynamicScale(newScale);
+  }, [fillContainer, scale]);
+
+  useEffect(() => {
+    if (!fillContainer) return;
+
+    calculateScale();
+
+    const observer = new ResizeObserver(() => {
+      calculateScale();
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [fillContainer, calculateScale]);
+
+  const actualScale = fillContainer ? dynamicScale : scale;
 
   return (
     <div
-      className="relative overflow-hidden rounded-lg"
-      style={{ height: `${400 * scale}px` }}
+      ref={containerRef}
+      className="relative overflow-hidden rounded-lg w-full h-full"
+      style={fillContainer ? {} : { height: `${baseHeight * scale}px` }}
     >
       <div
-        className="origin-top-left"
-        style={{
-          width: "400px",
-          height: "600px",
-          transform: `scale(${scale})`,
-          transformOrigin: "top left",
-        }}
+        className={fillContainer ? "absolute inset-0 flex items-center justify-center" : ""}
       >
+        <div
+          style={{
+            width: `${baseWidth}px`,
+            height: `${baseHeight}px`,
+            transform: `scale(${actualScale})`,
+            transformOrigin: fillContainer ? "center center" : "top left",
+          }}
+        >
         <div
           className="w-full h-full"
           style={{
@@ -107,6 +155,7 @@ export function TemplateMiniPreview({
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>

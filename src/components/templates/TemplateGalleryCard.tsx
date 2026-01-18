@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, GitCompare, Check } from "lucide-react";
+import { Eye, GitCompare, Check, Maximize2 } from "lucide-react";
 import type { Template } from "@/lib/content/templates";
 import { TemplateMiniPreview } from "./TemplateMiniPreview";
 
@@ -52,9 +52,9 @@ export function TemplateGalleryCard({
         </div>
       )}
 
-      {/* Mini preview */}
-      <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden">
-        <TemplateMiniPreview theme={template.theme} scale={0.4} />
+      {/* Mini preview - landscape 16:10 aspect ratio */}
+      <div className="relative aspect-[16/10] bg-gray-50 overflow-hidden">
+        <TemplateMiniPreview theme={template.theme} scale={0.6} fillContainer />
 
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 z-10">
@@ -83,6 +83,16 @@ export function TemplateGalleryCard({
           >
             <GitCompare className="h-4 w-4" />
             {isComparing ? "Remove" : "Compare"}
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onPreview();
+            }}
+            className="flex items-center gap-1.5 px-3 py-2 bg-white/90 rounded-lg text-sm font-medium text-gray-900 hover:bg-white transition-colors shadow-lg"
+            title="Expand Preview"
+          >
+            <Maximize2 className="h-4 w-4" />
           </button>
         </div>
       </div>

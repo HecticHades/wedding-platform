@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" width="200" height="150">
+  <!-- Background -->
+  <rect width="200" height="150" fill="#FEFEFE"/>
+
+  <!-- Header section with navy -->
+  <rect x="0" y="0" width="200" height="35" fill="#1E3A5F"/>
+  <rect x="60" y="10" width="80" height="3" rx="1.5" fill="#FFFFFF" opacity="0.8"/>
+  <rect x="70" y="18" width="60" height="2" rx="1" fill="#FFFFFF" opacity="0.5"/>
+  <rect x="80" y="24" width="40" height="2" rx="1" fill="#2A9D8F"/>
+
+  <!-- Wave decoration -->
+  <path d="M0 32 Q25 28 50 32 T100 32 T150 32 T200 32 V35 H0 Z" fill="#2A9D8F" opacity="0.3"/>
+
+  <!-- Hero section -->
+  <rect x="20" y="45" width="160" height="40" fill="#F0F8FF"/>
+  <rect x="50" y="55" width="100" height="4" rx="2" fill="#1E3A5F" opacity="0.3"/>
+  <rect x="70" y="64" width="60" height="2" rx="1" fill="#1A2E40" opacity="0.4"/>
+  <rect x="60" y="72" width="80" height="2" rx="1" fill="#1A2E40" opacity="0.3"/>
+
+  <!-- Sun accent -->
+  <circle cx="170" cy="55" r="8" fill="#E9C46A" opacity="0.4"/>
+
+  <!-- Content blocks with coastal tones -->
+  <rect x="10" y="95" width="55" height="35" rx="2" fill="#E6F3F5"/>
+  <rect x="72" y="95" width="55" height="35" rx="2" fill="#FDF6E9"/>
+  <rect x="135" y="95" width="55" height="35" rx="2" fill="#E6F3F5"/>
+
+  <!-- Content block accents -->
+  <rect x="15" y="100" width="30" height="2" rx="1" fill="#1E3A5F"/>
+  <rect x="77" y="100" width="30" height="2" rx="1" fill="#2A9D8F"/>
+  <rect x="140" y="100" width="30" height="2" rx="1" fill="#1E3A5F"/>
+
+  <!-- Footer with wave pattern -->
+  <rect x="0" y="140" width="200" height="10" fill="#1E3A5F" opacity="0.1"/>
+</svg>

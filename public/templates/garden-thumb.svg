@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" width="200" height="150">
+  <!-- Background -->
+  <rect width="200" height="150" fill="#F8FAF5"/>
+
+  <!-- Header section with botanical green -->
+  <rect x="0" y="0" width="200" height="35" fill="#3D5A45"/>
+  <rect x="60" y="10" width="80" height="3" rx="1.5" fill="#FFFFFF" opacity="0.8"/>
+  <rect x="70" y="18" width="60" height="2" rx="1" fill="#FFFFFF" opacity="0.5"/>
+  <rect x="80" y="24" width="40" height="2" rx="1" fill="#D4A373"/>
+
+  <!-- Decorative leaves -->
+  <ellipse cx="15" cy="17" rx="8" ry="4" fill="#8FB174" opacity="0.6" transform="rotate(-30 15 17)"/>
+  <ellipse cx="185" cy="17" rx="8" ry="4" fill="#8FB174" opacity="0.6" transform="rotate(30 185 17)"/>
+
+  <!-- Hero section -->
+  <rect x="20" y="45" width="160" height="40" fill="#FFFFFF"/>
+  <rect x="50" y="55" width="100" height="4" rx="2" fill="#3D5A45" opacity="0.3"/>
+  <rect x="70" y="64" width="60" height="2" rx="1" fill="#2D3B30" opacity="0.4"/>
+  <rect x="60" y="72" width="80" height="2" rx="1" fill="#2D3B30" opacity="0.3"/>
+
+  <!-- Content blocks with garden tones -->
+  <rect x="10" y="95" width="55" height="35" rx="2" fill="#E8F0E4"/>
+  <rect x="72" y="95" width="55" height="35" rx="2" fill="#F5EDE4"/>
+  <rect x="135" y="95" width="55" height="35" rx="2" fill="#E8F0E4"/>
+
+  <!-- Content block accents -->
+  <rect x="15" y="100" width="30" height="2" rx="1" fill="#3D5A45"/>
+  <rect x="77" y="100" width="30" height="2" rx="1" fill="#D4A373"/>
+  <rect x="140" y="100" width="30" height="2" rx="1" fill="#3D5A45"/>
+
+  <!-- Footer -->
+  <rect x="0" y="140" width="200" height="10" fill="#3D5A45" opacity="0.1"/>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" width="200" height="150">
+  <!-- Background -->
+  <rect width="200" height="150" fill="#FAFCFE"/>
+
+  <!-- Header section with slate -->
+  <rect x="0" y="0" width="200" height="35" fill="#2C3E50"/>
+  <rect x="60" y="10" width="80" height="3" rx="1.5" fill="#FFFFFF" opacity="0.8"/>
+  <rect x="70" y="18" width="60" height="2" rx="1" fill="#FFFFFF" opacity="0.5"/>
+  <rect x="80" y="24" width="40" height="2" rx="1" fill="#85C1E9"/>
+
+  <!-- Snowflake decorations -->
+  <g opacity="0.4">
+    <line x1="15" y1="12" x2="15" y2="22" stroke="#85C1E9" stroke-width="1"/>
+    <line x1="10" y1="17" x2="20" y2="17" stroke="#85C1E9" stroke-width="1"/>
+    <line x1="11" y1="13" x2="19" y2="21" stroke="#85C1E9" stroke-width="1"/>
+    <line x1="19" y1="13" x2="11" y2="21" stroke="#85C1E9" stroke-width="1"/>
+  </g>
+  <g opacity="0.4">
+    <line x1="185" y1="12" x2="185" y2="22" stroke="#85C1E9" stroke-width="1"/>
+    <line x1="180" y1="17" x2="190" y2="17" stroke="#85C1E9" stroke-width="1"/>
+    <line x1="181" y1="13" x2="189" y2="21" stroke="#85C1E9" stroke-width="1"/>
+    <line x1="189" y1="13" x2="181" y2="21" stroke="#85C1E9" stroke-width="1"/>
+  </g>
+
+  <!-- Hero section -->
+  <rect x="20" y="45" width="160" height="40" fill="#FFFFFF"/>
+  <rect x="50" y="55" width="100" height="4" rx="2" fill="#2C3E50" opacity="0.3"/>
+  <rect x="70" y="64" width="60" height="2" rx="1" fill="#2C3E50" opacity="0.4"/>
+  <rect x="60" y="72" width="80" height="2" rx="1" fill="#2C3E50" opacity="0.3"/>
+
+  <!-- Content blocks with icy tones -->
+  <rect x="10" y="95" width="55" height="35" rx="2" fill="#EEF5FA"/>
+  <rect x="72" y="95" width="55" height="35" rx="2" fill="#F5F8FC"/>
+  <rect x="135" y="95" width="55" height="35" rx="2" fill="#EEF5FA"/>
+
+  <!-- Content block accents -->
+  <rect x="15" y="100" width="30" height="2" rx="1" fill="#2C3E50"/>
+  <rect x="77" y="100" width="30" height="2" rx="1" fill="#85C1E9"/>
+  <rect x="140" y="100" width="30" height="2" rx="1" fill="#C0C0C0"/>
+
+  <!-- Small snowflakes scattered -->
+  <circle cx="30" cy="50" r="1" fill="#85C1E9" opacity="0.3"/>
+  <circle cx="170" cy="52" r="1" fill="#85C1E9" opacity="0.3"/>
+  <circle cx="50" cy="90" r="1" fill="#85C1E9" opacity="0.3"/>
+  <circle cx="150" cy="88" r="1" fill="#85C1E9" opacity="0.3"/>
+
+  <!-- Footer -->
+  <rect x="0" y="140" width="200" height="10" fill="#2C3E50" opacity="0.1"/>
+</svg>

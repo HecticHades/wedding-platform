@@ -6,16 +6,42 @@ import { prisma, withTenantContext } from "@/lib/db/prisma";
 import { revalidatePath } from "next/cache";
 
 /**
+ * Schema for hero image settings
+ */
+const heroImageSchema = z.object({
+  url: z.string().url(),
+  alt: z.string().optional(),
+  overlay: z.enum(["none", "light", "dark", "gradient"]),
+  overlayOpacity: z.number().min(10).max(80),
+  position: z.enum(["top", "center", "bottom"]),
+}).optional();
+
+/**
  * Schema for validating theme settings
  */
 const themeSchema = z.object({
+  // Core colors
   primaryColor: z.string().regex(/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/, "Invalid hex color"),
   secondaryColor: z.string().regex(/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/, "Invalid hex color"),
   backgroundColor: z.string().regex(/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/, "Invalid hex color"),
   textColor: z.string().regex(/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/, "Invalid hex color"),
   accentColor: z.string().regex(/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/, "Invalid hex color"),
+
+  // Typography
   fontFamily: z.string().min(1, "Font family is required"),
   headingFont: z.string().min(1, "Heading font is required"),
+
+  // Extended style options (optional)
+  fontSize: z.enum(["small", "medium", "large"]).optional(),
+  lineHeight: z.enum(["compact", "normal", "relaxed"]).optional(),
+  borderRadius: z.enum(["none", "subtle", "rounded", "pill"]).optional(),
+  shadowIntensity: z.enum(["none", "subtle", "medium", "dramatic"]).optional(),
+  sectionStyle: z.enum(["solid", "gradient", "pattern"]).optional(),
+  buttonStyle: z.enum(["solid", "outline", "soft"]).optional(),
+  dividerStyle: z.enum(["none", "line", "ornament", "flourish"]).optional(),
+
+  // Hero image (optional)
+  heroImage: heroImageSchema,
 });
 
 export type ThemeSettingsInput = z.infer<typeof themeSchema>;

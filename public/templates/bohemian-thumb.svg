@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" width="200" height="150">
+  <!-- Background -->
+  <rect width="200" height="150" fill="#FDF8F3"/>
+
+  <!-- Header section with terracotta -->
+  <rect x="0" y="0" width="200" height="35" fill="#A67B5B"/>
+  <rect x="60" y="10" width="80" height="3" rx="1.5" fill="#FFFFFF" opacity="0.8"/>
+  <rect x="70" y="18" width="60" height="2" rx="1" fill="#FFFFFF" opacity="0.5"/>
+  <rect x="80" y="24" width="40" height="2" rx="1" fill="#C9A962"/>
+
+  <!-- Bohemian pattern decoration -->
+  <circle cx="20" cy="17" r="5" fill="none" stroke="#C9A962" stroke-width="1" opacity="0.5"/>
+  <circle cx="180" cy="17" r="5" fill="none" stroke="#C9A962" stroke-width="1" opacity="0.5"/>
+  <circle cx="20" cy="17" r="3" fill="#C9A962" opacity="0.3"/>
+  <circle cx="180" cy="17" r="3" fill="#C9A962" opacity="0.3"/>
+
+  <!-- Hero section -->
+  <rect x="20" y="45" width="160" height="40" fill="#FFFFFF"/>
+  <rect x="50" y="55" width="100" height="4" rx="2" fill="#A67B5B" opacity="0.3"/>
+  <rect x="70" y="64" width="60" height="2" rx="1" fill="#4A3728" opacity="0.4"/>
+  <rect x="60" y="72" width="80" height="2" rx="1" fill="#4A3728" opacity="0.3"/>
+
+  <!-- Content blocks with earthy tones -->
+  <rect x="10" y="95" width="55" height="35" rx="2" fill="#F5EDE4"/>
+  <rect x="72" y="95" width="55" height="35" rx="2" fill="#FBF4E9"/>
+  <rect x="135" y="95" width="55" height="35" rx="2" fill="#F5EDE4"/>
+
+  <!-- Content block accents -->
+  <rect x="15" y="100" width="30" height="2" rx="1" fill="#A67B5B"/>
+  <rect x="77" y="100" width="30" height="2" rx="1" fill="#C9A962"/>
+  <rect x="140" y="100" width="30" height="2" rx="1" fill="#D4A373"/>
+
+  <!-- Decorative triangles -->
+  <polygon points="25,120 30,115 35,120" fill="#A67B5B" opacity="0.3"/>
+  <polygon points="165,120 170,115 175,120" fill="#C9A962" opacity="0.3"/>
+
+  <!-- Footer -->
+  <rect x="0" y="140" width="200" height="10" fill="#A67B5B" opacity="0.1"/>
+</svg>

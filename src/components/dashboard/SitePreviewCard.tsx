@@ -1,7 +1,7 @@
 "use client";
 
-import { ExternalLink, RefreshCw } from "lucide-react";
-import { useState } from "react";
+import { ExternalLink, RefreshCw, Maximize2 } from "lucide-react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { getTenantUrl, getTenantUrlDisplay } from "@/lib/url-utils";
 
 interface SitePreviewCardProps {
@@ -14,8 +14,35 @@ export function SitePreviewCard({
   weddingDate,
 }: SitePreviewCardProps) {
   const [refreshKey, setRefreshKey] = useState(0);
+  const [scale, setScale] = useState(0.5);
+  const containerRef = useRef<HTMLDivElement>(null);
   const siteUrl = getTenantUrl(subdomain);
   const siteUrlDisplay = getTenantUrlDisplay(subdomain);
+
+  // Base iframe dimensions
+  const iframeWidth = 1280;
+  const iframeHeight = 800;
+
+  const calculateScale = useCallback(() => {
+    if (!containerRef.current) return;
+    const containerWidth = containerRef.current.clientWidth;
+    const newScale = containerWidth / iframeWidth;
+    setScale(newScale);
+  }, []);
+
+  useEffect(() => {
+    calculateScale();
+
+    const observer = new ResizeObserver(() => {
+      calculateScale();
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [calculateScale]);
 
   const daysUntil = weddingDate
     ? Math.ceil(
@@ -52,8 +79,12 @@ export function SitePreviewCard({
         </div>
       </div>
 
-      {/* Preview iframe container */}
-      <div className="relative bg-gray-100 aspect-[16/10]">
+      {/* Preview iframe container - dynamic width scaling */}
+      <div
+        ref={containerRef}
+        className="relative bg-gray-100"
+        style={{ height: `${iframeHeight * scale}px` }}
+      >
         {/* Countdown overlay */}
         {daysUntil !== null && daysUntil > 0 && (
           <div className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm rounded-lg px-4 py-2 shadow-lg border border-[#e8e4e0]">
@@ -66,14 +97,25 @@ export function SitePreviewCard({
           </div>
         )}
 
-        {/* Scaled iframe preview */}
+        {/* Full Screen Preview button */}
+        <a
+          href={siteUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute top-4 left-4 z-10 flex items-center gap-1.5 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-lg text-sm font-medium text-[#3d3936] hover:bg-white transition-colors shadow-lg border border-[#e8e4e0]"
+        >
+          <Maximize2 className="h-3.5 w-3.5" />
+          Full Screen
+        </a>
+
+        {/* Scaled iframe preview - uses full container width */}
         <div className="absolute inset-0 overflow-hidden">
           <div
             className="origin-top-left"
             style={{
-              width: "1280px",
-              height: "800px",
-              transform: "scale(0.5)",
+              width: `${iframeWidth}px`,
+              height: `${iframeHeight}px`,
+              transform: `scale(${scale})`,
               transformOrigin: "top left",
             }}
           >

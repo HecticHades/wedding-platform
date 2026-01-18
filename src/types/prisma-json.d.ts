@@ -14,16 +14,42 @@ declare global {
     }
 
     /**
+     * Hero image settings for wedding site
+     */
+    interface HeroImageSettings {
+      url: string;
+      alt?: string;
+      overlay: 'none' | 'light' | 'dark' | 'gradient';
+      overlayOpacity: number; // 10-80
+      position: 'top' | 'center' | 'bottom';
+    }
+
+    /**
      * Theme customization settings stored in Wedding.themeSettings
      */
     interface ThemeSettings {
+      // Core colors
       primaryColor: string;
       secondaryColor: string;
       backgroundColor: string;
       textColor: string;
       accentColor: string;
+
+      // Typography
       fontFamily: string;
       headingFont: string;
+
+      // Extended style options (optional)
+      fontSize?: 'small' | 'medium' | 'large';
+      lineHeight?: 'compact' | 'normal' | 'relaxed';
+      borderRadius?: 'none' | 'subtle' | 'rounded' | 'pill';
+      shadowIntensity?: 'none' | 'subtle' | 'medium' | 'dramatic';
+      sectionStyle?: 'solid' | 'gradient' | 'pattern';
+      buttonStyle?: 'solid' | 'outline' | 'soft';
+      dividerStyle?: 'none' | 'line' | 'ornament' | 'flourish';
+
+      // Hero image (optional)
+      heroImage?: HeroImageSettings;
     }
 
     /**

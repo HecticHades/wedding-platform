@@ -36,6 +36,20 @@ export interface PreviewContent {
   };
 }
 
+/**
+ * Get preview content with custom partner names
+ */
+export function getPreviewContent(partner1Name?: string, partner2Name?: string): PreviewContent {
+  return {
+    ...defaultPreviewContent,
+    couple: {
+      ...defaultPreviewContent.couple,
+      partner1: partner1Name || defaultPreviewContent.couple.partner1,
+      partner2: partner2Name || defaultPreviewContent.couple.partner2,
+    },
+  };
+}
+
 export const defaultPreviewContent: PreviewContent = {
   couple: {
     partner1: "Emma",

@@ -220,6 +220,256 @@ export function getColorPalette(id: string) {
 }
 
 /**
+ * Wedding preset with complete theme configuration
+ */
+export interface WeddingPreset {
+  id: string;
+  name: string;
+  category: "romantic" | "classic" | "modern" | "nature" | "seasonal";
+  colors: {
+    primaryColor: string;
+    secondaryColor: string;
+    backgroundColor: string;
+    textColor: string;
+    accentColor: string;
+  };
+  fonts?: {
+    body: string;
+    heading: string;
+  };
+  style?: {
+    borderRadius?: "none" | "subtle" | "rounded" | "pill";
+    shadowIntensity?: "none" | "subtle" | "medium" | "dramatic";
+    buttonStyle?: "solid" | "outline" | "soft";
+  };
+}
+
+/**
+ * Expanded wedding presets organized by category
+ */
+export const WEDDING_PRESETS: WeddingPreset[] = [
+  // Romantic
+  {
+    id: "blush-gold",
+    name: "Blush & Gold",
+    category: "romantic",
+    colors: {
+      primaryColor: "#D4A574",
+      secondaryColor: "#F5E1DA",
+      backgroundColor: "#FFFBF7",
+      textColor: "#4A3728",
+      accentColor: "#C9A962",
+    },
+    fonts: { body: "Cormorant Garamond", heading: "Great Vibes" },
+    style: { borderRadius: "rounded", shadowIntensity: "subtle" },
+  },
+  {
+    id: "dusty-rose",
+    name: "Dusty Rose",
+    category: "romantic",
+    colors: {
+      primaryColor: "#C48B9F",
+      secondaryColor: "#E5C1CD",
+      backgroundColor: "#FFF9FA",
+      textColor: "#4A3B40",
+      accentColor: "#9DB4AB",
+    },
+    fonts: { body: "Libre Baskerville", heading: "Parisienne" },
+    style: { borderRadius: "rounded", shadowIntensity: "subtle" },
+  },
+  {
+    id: "mauve-sage",
+    name: "Mauve & Sage",
+    category: "romantic",
+    colors: {
+      primaryColor: "#8B7B8B",
+      secondaryColor: "#A8B5A0",
+      backgroundColor: "#FAFAF8",
+      textColor: "#3D3D3D",
+      accentColor: "#D4A574",
+    },
+    fonts: { body: "Lora", heading: "Dancing Script" },
+    style: { borderRadius: "subtle", shadowIntensity: "subtle" },
+  },
+
+  // Classic
+  {
+    id: "navy-gold",
+    name: "Navy & Gold",
+    category: "classic",
+    colors: {
+      primaryColor: "#1E3A5F",
+      secondaryColor: "#C9A962",
+      backgroundColor: "#FFFFFF",
+      textColor: "#1A2E40",
+      accentColor: "#8B7355",
+    },
+    fonts: { body: "EB Garamond", heading: "Cinzel" },
+    style: { borderRadius: "subtle", shadowIntensity: "medium" },
+  },
+  {
+    id: "timeless-bw",
+    name: "Timeless Black & White",
+    category: "classic",
+    colors: {
+      primaryColor: "#1A1A1A",
+      secondaryColor: "#4A4A4A",
+      backgroundColor: "#FFFFFF",
+      textColor: "#1A1A1A",
+      accentColor: "#C9A962",
+    },
+    fonts: { body: "Playfair Display", heading: "Cinzel" },
+    style: { borderRadius: "none", shadowIntensity: "subtle" },
+  },
+  {
+    id: "burgundy-cream",
+    name: "Burgundy & Cream",
+    category: "classic",
+    colors: {
+      primaryColor: "#722F37",
+      secondaryColor: "#8E4585",
+      backgroundColor: "#FBF9F7",
+      textColor: "#3D2628",
+      accentColor: "#9B7E46",
+    },
+    fonts: { body: "Libre Baskerville", heading: "Allura" },
+    style: { borderRadius: "subtle", shadowIntensity: "medium" },
+  },
+
+  // Modern
+  {
+    id: "terracotta-chic",
+    name: "Terracotta Chic",
+    category: "modern",
+    colors: {
+      primaryColor: "#C67D5E",
+      secondaryColor: "#E8B87D",
+      backgroundColor: "#FAF8F5",
+      textColor: "#3D3D3D",
+      accentColor: "#7D9B76",
+    },
+    fonts: { body: "Raleway", heading: "Josefin Sans" },
+    style: { borderRadius: "rounded", shadowIntensity: "subtle" },
+  },
+  {
+    id: "clean-minimal",
+    name: "Clean Minimal",
+    category: "modern",
+    colors: {
+      primaryColor: "#000000",
+      secondaryColor: "#6B7280",
+      backgroundColor: "#FAFAFA",
+      textColor: "#111827",
+      accentColor: "#3B82F6",
+    },
+    fonts: { body: "Inter", heading: "Montserrat" },
+    style: { borderRadius: "subtle", shadowIntensity: "none" },
+  },
+  {
+    id: "moody-dark",
+    name: "Moody & Dark",
+    category: "modern",
+    colors: {
+      primaryColor: "#2D2D2D",
+      secondaryColor: "#4A4A4A",
+      backgroundColor: "#1A1A1A",
+      textColor: "#E5E5E5",
+      accentColor: "#C9A962",
+    },
+    fonts: { body: "Open Sans", heading: "Cinzel" },
+    style: { borderRadius: "none", shadowIntensity: "dramatic" },
+  },
+
+  // Nature
+  {
+    id: "garden-green",
+    name: "Garden Green",
+    category: "nature",
+    colors: {
+      primaryColor: "#3D5A45",
+      secondaryColor: "#D4A373",
+      backgroundColor: "#F8FAF5",
+      textColor: "#2D3B30",
+      accentColor: "#8FB174",
+    },
+    fonts: { body: "Cormorant Garamond", heading: "Dancing Script" },
+    style: { borderRadius: "rounded", shadowIntensity: "subtle" },
+  },
+  {
+    id: "coastal-blue",
+    name: "Coastal Blue",
+    category: "nature",
+    colors: {
+      primaryColor: "#1E3A5F",
+      secondaryColor: "#2A9D8F",
+      backgroundColor: "#FEFEFE",
+      textColor: "#1A2E40",
+      accentColor: "#E9C46A",
+    },
+    fonts: { body: "Raleway", heading: "Parisienne" },
+    style: { borderRadius: "rounded", shadowIntensity: "subtle" },
+  },
+  {
+    id: "golden-hour",
+    name: "Golden Hour",
+    category: "nature",
+    colors: {
+      primaryColor: "#D4A373",
+      secondaryColor: "#E9C46A",
+      backgroundColor: "#FFFBF5",
+      textColor: "#4A3728",
+      accentColor: "#7D9B76",
+    },
+    fonts: { body: "Merriweather", heading: "Sacramento" },
+    style: { borderRadius: "rounded", shadowIntensity: "medium" },
+  },
+
+  // Seasonal
+  {
+    id: "spring-pastels",
+    name: "Spring Pastels",
+    category: "seasonal",
+    colors: {
+      primaryColor: "#E8B4BC",
+      secondaryColor: "#A8D5BA",
+      backgroundColor: "#FEFEFE",
+      textColor: "#4A4A4A",
+      accentColor: "#F7E7CE",
+    },
+    fonts: { body: "Lora", heading: "Dancing Script" },
+    style: { borderRadius: "rounded", shadowIntensity: "subtle" },
+  },
+  {
+    id: "autumn-harvest",
+    name: "Autumn Harvest",
+    category: "seasonal",
+    colors: {
+      primaryColor: "#92400E",
+      secondaryColor: "#B45309",
+      backgroundColor: "#FFFBEB",
+      textColor: "#78350F",
+      accentColor: "#65A30D",
+    },
+    fonts: { body: "Merriweather", heading: "Sacramento" },
+    style: { borderRadius: "subtle", shadowIntensity: "medium" },
+  },
+  {
+    id: "winter-elegance",
+    name: "Winter Elegance",
+    category: "seasonal",
+    colors: {
+      primaryColor: "#2C3E50",
+      secondaryColor: "#85C1E9",
+      backgroundColor: "#FAFCFE",
+      textColor: "#2C3E50",
+      accentColor: "#C0C0C0",
+    },
+    fonts: { body: "Open Sans", heading: "Alex Brush" },
+    style: { borderRadius: "subtle", shadowIntensity: "subtle" },
+  },
+];
+
+/**
  * Merge partial theme settings with defaults
  */
 export function mergeWithDefaults(
