@@ -42,7 +42,7 @@ export default async function GuestRsvpPage({ params }: PageProps) {
             {guest.wedding.coupleNames}
           </h1>
           {weddingDateStr && (
-            <p className="font-wedding text-wedding-text/70">{weddingDateStr}</p>
+            <p className="font-wedding text-wedding-text">{weddingDateStr}</p>
           )}
         </div>
 

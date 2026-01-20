@@ -110,7 +110,7 @@ export function RsvpCodeEntry({ weddingId, onSuccess }: RsvpCodeEntryProps) {
         </form>
 
         {/* Help Text */}
-        <p className="mt-6 text-center font-wedding text-xs text-wedding-text/50">
+        <p className="mt-6 text-center font-wedding text-xs text-wedding-text/80">
           Can&apos;t find your code? Contact the couple for assistance.
         </p>
       </ThemedCard>

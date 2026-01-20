@@ -124,7 +124,16 @@ export async function submitRsvp(
     });
 
     if (!parsed.success) {
-      return { success: false, error: "Invalid RSVP data" };
+      // Provide more specific error messages
+      const firstError = parsed.error.issues[0];
+      const errorMessages: Record<string, string> = {
+        eventId: "Event information is missing",
+        rsvpStatus: "Please select whether you're attending or declining",
+        plusOneCount: "Invalid guest count",
+        dietaryNotes: "Dietary notes must be less than 500 characters",
+      };
+      const fieldError = errorMessages[firstError.path[0] as string];
+      return { success: false, error: fieldError || "Invalid RSVP data. Please try again." };
     }
 
     const data = parsed.data;

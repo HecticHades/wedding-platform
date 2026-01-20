@@ -98,6 +98,12 @@ export function EventRsvpForm({
       return;
     }
 
+    // Validate meal selection if required
+    if (isAttending && hasMealOptions && !mealChoice) {
+      setError("Please select a meal option");
+      return;
+    }
+
     startTransition(async () => {
       const formData = new FormData();
       formData.set("eventId", event.id);
@@ -139,7 +145,7 @@ export function EventRsvpForm({
           )}
         </div>
         {event.description && (
-          <p className="font-wedding text-sm text-wedding-text/70 mt-1">
+          <p className="font-wedding text-sm text-wedding-text mt-1">
             {event.description}
           </p>
         )}
@@ -147,25 +153,25 @@ export function EventRsvpForm({
 
       {/* Event Details */}
       <div className="px-6 py-4 space-y-2 border-b border-wedding-primary/10">
-        <div className="flex items-center gap-3 text-wedding-text/80">
+        <div className="flex items-center gap-3 text-wedding-text">
           <Calendar className="w-4 h-4 text-wedding-primary" />
           <span className="font-wedding text-sm">
             {formattedDate} at {formattedTime}
           </span>
         </div>
         {event.location && (
-          <div className="flex items-start gap-3 text-wedding-text/80">
+          <div className="flex items-start gap-3 text-wedding-text">
             <MapPin className="w-4 h-4 text-wedding-primary mt-0.5" />
             <div className="font-wedding text-sm">
               <p>{event.location}</p>
               {event.address && (
-                <p className="text-wedding-text/60">{event.address}</p>
+                <p className="text-wedding-text/80">{event.address}</p>
               )}
             </div>
           </div>
         )}
         {event.dressCode && (
-          <div className="flex items-center gap-3 text-wedding-text/80">
+          <div className="flex items-center gap-3 text-wedding-text">
             <Shirt className="w-4 h-4 text-wedding-primary" />
             <span className="font-wedding text-sm">
               Dress code: {event.dressCode}
@@ -188,7 +194,7 @@ export function EventRsvpForm({
               className={`flex-1 py-3 px-4 border-2 font-wedding text-sm transition-all ${
                 rsvpStatus === "ATTENDING"
                   ? "border-green-500 bg-green-50 text-green-700"
-                  : "border-wedding-primary/20 hover:border-wedding-primary/40 text-wedding-text/70"
+                  : "border-wedding-primary/20 hover:border-wedding-primary/40 text-wedding-text"
               }`}
               style={{ borderRadius: "var(--wedding-radius)" }}
             >
@@ -200,7 +206,7 @@ export function EventRsvpForm({
               className={`flex-1 py-3 px-4 border-2 font-wedding text-sm transition-all ${
                 rsvpStatus === "DECLINED"
                   ? "border-red-400 bg-red-50 text-red-700"
-                  : "border-wedding-primary/20 hover:border-wedding-primary/40 text-wedding-text/70"
+                  : "border-wedding-primary/20 hover:border-wedding-primary/40 text-wedding-text"
               }`}
               style={{ borderRadius: "var(--wedding-radius)" }}
             >
@@ -222,7 +228,7 @@ export function EventRsvpForm({
               <div>
                 <label
                   htmlFor={`plusOneCount-${event.id}`}
-                  className="block font-wedding text-sm text-wedding-text/70 mb-1"
+                  className="block font-wedding text-sm text-wedding-text mb-1"
                 >
                   Number of guests
                 </label>
@@ -243,7 +249,7 @@ export function EventRsvpForm({
               <div>
                 <label
                   htmlFor={`plusOneName-${event.id}`}
-                  className="block font-wedding text-sm text-wedding-text/70 mb-1"
+                  className="block font-wedding text-sm text-wedding-text mb-1"
                 >
                   Guest name(s)
                 </label>
@@ -294,7 +300,7 @@ export function EventRsvpForm({
                       {option.name}
                     </span>
                     {option.description && (
-                      <p className="font-wedding text-xs text-wedding-text/60 mt-0.5">
+                      <p className="font-wedding text-xs text-wedding-text/80 mt-0.5">
                         {option.description}
                       </p>
                     )}

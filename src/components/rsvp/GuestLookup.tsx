@@ -61,7 +61,7 @@ export function GuestLookup({ weddingId, domain }: GuestLookupProps) {
           <h2 className="font-wedding-heading text-2xl text-wedding-primary mb-2">
             Find Your RSVP
           </h2>
-          <p className="font-wedding text-wedding-text/70 text-sm">
+          <p className="font-wedding text-wedding-text text-sm">
             Enter your name as it appears on your invitation
           </p>
         </div>
@@ -98,7 +98,7 @@ export function GuestLookup({ weddingId, domain }: GuestLookupProps) {
         <div className="space-y-3">
           {results.length > 0 && (
             <>
-              <p className="font-wedding text-sm text-wedding-text/70 mb-2">
+              <p className="font-wedding text-sm text-wedding-text mb-2">
                 Select your name below:
               </p>
               {results.map((guest) => (
@@ -121,7 +121,7 @@ export function GuestLookup({ weddingId, domain }: GuestLookupProps) {
                         {guest.name}
                       </p>
                       {guest.partyName && (
-                        <p className="font-wedding text-sm text-wedding-text/60 truncate">
+                        <p className="font-wedding text-sm text-wedding-text/80 truncate">
                           {guest.partyName}
                         </p>
                       )}
@@ -175,14 +175,14 @@ export function GuestLookup({ weddingId, domain }: GuestLookupProps) {
 
           {/* Hint for short input */}
           {searchName.trim().length > 0 && searchName.trim().length < 2 && (
-            <p className="font-wedding text-sm text-wedding-text/50 text-center">
+            <p className="font-wedding text-sm text-wedding-text/80 text-center">
               Type at least 2 characters to search
             </p>
           )}
         </div>
 
         {/* Help Text */}
-        <p className="mt-8 text-center font-wedding text-xs text-wedding-text/50">
+        <p className="mt-8 text-center font-wedding text-xs text-wedding-text/80">
           Can&apos;t find your name? Contact the couple for assistance.
         </p>
       </ThemedCard>

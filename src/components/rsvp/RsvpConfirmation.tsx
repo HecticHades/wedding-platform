@@ -37,7 +37,7 @@ export function RsvpConfirmation({
           Thank You, {guestName}!
         </h2>
 
-        <p className="font-wedding text-wedding-text/70 mb-6">
+        <p className="font-wedding text-wedding-text mb-6">
           Your response has been recorded for {coupleNames}&apos;s wedding.
         </p>
 
@@ -64,7 +64,7 @@ export function RsvpConfirmation({
         </Link>
 
         {/* Note */}
-        <p className="mt-6 font-wedding text-xs text-wedding-text/50">
+        <p className="mt-6 font-wedding text-xs text-wedding-text/80">
           You can update your response at any time by returning to this page.
         </p>
       </ThemedCard>

@@ -114,7 +114,7 @@ export function RsvpFormPage({
       {/* Progress Indicator */}
       <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm border border-wedding-primary/10">
         <div className="flex items-center justify-between mb-2">
-          <span className="font-wedding text-sm text-wedding-text/70">
+          <span className="font-wedding text-sm text-wedding-text">
             Response Progress
           </span>
           <span className="font-wedding text-sm font-medium text-wedding-primary">
