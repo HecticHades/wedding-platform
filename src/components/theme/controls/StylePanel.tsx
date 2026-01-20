@@ -22,6 +22,12 @@ const BORDER_RADIUS_OPTIONS = [
   { value: "pill", label: "Pill", icon: Circle },
 ] as const;
 
+const FONT_SIZE_OPTIONS = [
+  { value: "small", label: "Small", description: "Compact, elegant text" },
+  { value: "medium", label: "Medium", description: "Balanced readability" },
+  { value: "large", label: "Large", description: "Bold, statement text" },
+] as const;
+
 const SHADOW_OPTIONS = [
   { value: "none", label: "None", preview: "shadow-none" },
   { value: "subtle", label: "Subtle", preview: "shadow-sm" },
@@ -81,6 +87,42 @@ export function StylePanel({ theme, onChange }: StylePanelProps) {
                   className={`w-8 h-8 mx-auto mb-2 bg-violet-200 ${radiusClass}`}
                 />
                 <p className="text-xs font-medium text-gray-700">{option.label}</p>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Font Size Scale */}
+      <div>
+        <h3 className="text-sm font-medium text-gray-900 mb-3">Font Size Scale</h3>
+        <div className="grid grid-cols-3 gap-2">
+          {FONT_SIZE_OPTIONS.map((option) => {
+            const isSelected = (theme.fontSize || "medium") === option.value;
+
+            return (
+              <button
+                key={option.value}
+                onClick={() => onChange({ fontSize: option.value })}
+                className={`p-3 rounded-lg border-2 text-left transition-all ${
+                  isSelected
+                    ? "border-violet-500 bg-violet-50"
+                    : "border-gray-200 hover:border-gray-300 bg-white"
+                }`}
+              >
+                {/* Size preview */}
+                <div className="mb-2 flex items-end gap-1">
+                  <span
+                    className="font-serif text-gray-700"
+                    style={{
+                      fontSize: option.value === "small" ? "14px" : option.value === "large" ? "20px" : "16px",
+                    }}
+                  >
+                    Aa
+                  </span>
+                </div>
+                <p className="text-sm font-medium text-gray-900">{option.label}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{option.description}</p>
               </button>
             );
           })}

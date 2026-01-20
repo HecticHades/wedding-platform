@@ -2,6 +2,7 @@
 
 import type { PreviewContent } from "./previewContent";
 import type { ThemeSettings } from "@/lib/content/theme-utils";
+import { getSectionBackgroundStyle, getButtonStyle, getCardStyle } from "@/lib/content/theme-utils";
 
 interface PreviewGallerySectionProps {
   content: PreviewContent;
@@ -9,17 +10,22 @@ interface PreviewGallerySectionProps {
 }
 
 export function PreviewGallerySection({ content, theme }: PreviewGallerySectionProps) {
+  const sectionBgStyle = getSectionBackgroundStyle(theme, "base");
+  const cardStyle = getCardStyle(theme);
+  const buttonStyle = getButtonStyle(theme, "primary");
+
   return (
     <section
       className="py-20 px-4"
-      style={{ backgroundColor: theme.backgroundColor }}
+      style={sectionBgStyle}
     >
       <div className="max-w-5xl mx-auto">
         <h2
-          className="text-3xl md:text-4xl font-bold text-center mb-12"
+          className="font-bold text-center mb-12"
           style={{
             fontFamily: theme.headingFont,
             color: theme.primaryColor,
+            fontSize: "var(--wedding-font-size-heading, 2rem)",
           }}
         >
           Our Moments
@@ -30,12 +36,13 @@ export function PreviewGallerySection({ content, theme }: PreviewGallerySectionP
             <div
               key={index}
               className={`
-                relative overflow-hidden rounded-lg
+                relative overflow-hidden
                 ${index === 0 ? "col-span-2 row-span-2" : ""}
               `}
               style={{
                 aspectRatio: index === 0 ? "1" : "1",
                 backgroundColor: `${theme.secondaryColor}30`,
+                borderRadius: cardStyle.borderRadius,
               }}
             >
               {/* Placeholder for images */}
@@ -65,11 +72,8 @@ export function PreviewGallerySection({ content, theme }: PreviewGallerySectionP
 
         <div className="text-center mt-8">
           <button
-            className="px-6 py-2 rounded-full font-medium transition-colors"
-            style={{
-              backgroundColor: theme.primaryColor,
-              color: "#ffffff",
-            }}
+            className="px-6 py-2 font-medium transition-colors"
+            style={buttonStyle}
           >
             View All Photos
           </button>

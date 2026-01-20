@@ -3,6 +3,7 @@
 import { MapPin, Clock, Calendar } from "lucide-react";
 import type { PreviewContent } from "./previewContent";
 import type { ThemeSettings } from "@/lib/content/theme-utils";
+import { getSectionBackgroundStyle, getButtonStyle, getCardStyle } from "@/lib/content/theme-utils";
 
 interface PreviewEventsSectionProps {
   content: PreviewContent;
@@ -10,17 +11,22 @@ interface PreviewEventsSectionProps {
 }
 
 export function PreviewEventsSection({ content, theme }: PreviewEventsSectionProps) {
+  const sectionBgStyle = getSectionBackgroundStyle(theme, "primary");
+  const cardStyle = getCardStyle(theme);
+  const buttonStyle = getButtonStyle(theme, "secondary");
+
   return (
     <section
       className="py-20 px-4"
-      style={{ backgroundColor: `${theme.primaryColor}08` }}
+      style={sectionBgStyle}
     >
       <div className="max-w-4xl mx-auto">
         <h2
-          className="text-3xl md:text-4xl font-bold text-center mb-12"
+          className="font-bold text-center mb-12"
           style={{
             fontFamily: theme.headingFont,
             color: theme.primaryColor,
+            fontSize: "var(--wedding-font-size-heading, 2rem)",
           }}
         >
           Wedding Events
@@ -30,8 +36,11 @@ export function PreviewEventsSection({ content, theme }: PreviewEventsSectionPro
           {content.events.map((event, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl p-8 shadow-lg"
-              style={{ borderTop: `4px solid ${theme.accentColor}` }}
+              className="bg-white p-8"
+              style={{
+                ...cardStyle,
+                borderTop: `4px solid ${theme.accentColor}`,
+              }}
             >
               <h3
                 className="text-xl font-semibold mb-4"
@@ -49,7 +58,14 @@ export function PreviewEventsSection({ content, theme }: PreviewEventsSectionPro
                     className="w-5 h-5"
                     style={{ color: theme.secondaryColor }}
                   />
-                  <span style={{ color: theme.textColor }}>{event.date}</span>
+                  <span
+                    style={{
+                      color: theme.textColor,
+                      fontSize: "var(--wedding-font-size-base, 1rem)",
+                    }}
+                  >
+                    {event.date}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -57,7 +73,14 @@ export function PreviewEventsSection({ content, theme }: PreviewEventsSectionPro
                     className="w-5 h-5"
                     style={{ color: theme.secondaryColor }}
                   />
-                  <span style={{ color: theme.textColor }}>{event.time}</span>
+                  <span
+                    style={{
+                      color: theme.textColor,
+                      fontSize: "var(--wedding-font-size-base, 1rem)",
+                    }}
+                  >
+                    {event.time}
+                  </span>
                 </div>
 
                 <div className="flex items-start gap-3">
@@ -68,7 +91,10 @@ export function PreviewEventsSection({ content, theme }: PreviewEventsSectionPro
                   <div>
                     <p
                       className="font-medium"
-                      style={{ color: theme.textColor }}
+                      style={{
+                        color: theme.textColor,
+                        fontSize: "var(--wedding-font-size-base, 1rem)",
+                      }}
                     >
                       {event.venue}
                     </p>
@@ -83,11 +109,8 @@ export function PreviewEventsSection({ content, theme }: PreviewEventsSectionPro
               </div>
 
               <button
-                className="mt-6 w-full py-2 rounded-lg font-medium transition-colors"
-                style={{
-                  backgroundColor: `${theme.secondaryColor}20`,
-                  color: theme.secondaryColor,
-                }}
+                className="mt-6 w-full py-2 font-medium transition-colors"
+                style={buttonStyle}
               >
                 Get Directions
               </button>

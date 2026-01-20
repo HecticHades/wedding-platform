@@ -11,6 +11,8 @@ import { PreviewGallerySection } from "@/components/templates/preview/PreviewGal
 import { PreviewTravelSection } from "@/components/templates/preview/PreviewTravelSection";
 import { PreviewFooter } from "@/components/templates/preview/PreviewFooter";
 import { getPreviewContent } from "@/components/templates/preview/previewContent";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { ThemeDivider } from "@/components/theme/ThemeDivider";
 
 interface EnhancedLivePreviewProps {
   theme: ThemeSettings;
@@ -158,41 +160,55 @@ export function EnhancedLivePreview({
             minHeight: scale < 1 ? `${600 / scale}px` : "auto",
           }}
         >
-          <div
-            ref={previewRef}
-            style={{ ...cssVars }}
-            className="w-full"
-          >
-            {/* Hero Section */}
-            <div data-section="hero">
-              <PreviewHeroSection content={content} theme={theme} />
-            </div>
+          <ThemeProvider theme={theme}>
+            <div
+              ref={previewRef}
+              style={{ ...cssVars }}
+              className="w-full"
+            >
+              {/* Hero Section */}
+              <div data-section="hero">
+                <PreviewHeroSection content={content} theme={theme} />
+              </div>
 
-            {/* Story Section */}
-            <div data-section="story">
-              <PreviewStorySection content={content} theme={theme} />
-            </div>
+              {/* Divider */}
+              <ThemeDivider />
 
-            {/* Events Section */}
-            <div data-section="events">
-              <PreviewEventsSection content={content} theme={theme} />
-            </div>
+              {/* Story Section */}
+              <div data-section="story">
+                <PreviewStorySection content={content} theme={theme} />
+              </div>
 
-            {/* Gallery Section */}
-            <div data-section="gallery">
-              <PreviewGallerySection content={content} theme={theme} />
-            </div>
+              {/* Divider */}
+              <ThemeDivider />
 
-            {/* Travel Section */}
-            <div data-section="travel">
-              <PreviewTravelSection content={content} theme={theme} />
-            </div>
+              {/* Events Section */}
+              <div data-section="events">
+                <PreviewEventsSection content={content} theme={theme} />
+              </div>
 
-            {/* Footer */}
-            <div data-section="footer">
-              <PreviewFooter content={content} theme={theme} />
+              {/* Divider */}
+              <ThemeDivider />
+
+              {/* Gallery Section */}
+              <div data-section="gallery">
+                <PreviewGallerySection content={content} theme={theme} />
+              </div>
+
+              {/* Divider */}
+              <ThemeDivider />
+
+              {/* Travel Section */}
+              <div data-section="travel">
+                <PreviewTravelSection content={content} theme={theme} />
+              </div>
+
+              {/* Footer */}
+              <div data-section="footer">
+                <PreviewFooter content={content} theme={theme} />
+              </div>
             </div>
-          </div>
+          </ThemeProvider>
         </div>
       </div>
 

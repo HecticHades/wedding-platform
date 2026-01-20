@@ -3,6 +3,7 @@
 import { Hotel, Plane, ExternalLink } from "lucide-react";
 import type { PreviewContent } from "./previewContent";
 import type { ThemeSettings } from "@/lib/content/theme-utils";
+import { getSectionBackgroundStyle, getCardStyle } from "@/lib/content/theme-utils";
 
 interface PreviewTravelSectionProps {
   content: PreviewContent;
@@ -10,17 +11,21 @@ interface PreviewTravelSectionProps {
 }
 
 export function PreviewTravelSection({ content, theme }: PreviewTravelSectionProps) {
+  const sectionBgStyle = getSectionBackgroundStyle(theme, "secondary");
+  const cardStyle = getCardStyle(theme);
+
   return (
     <section
       className="py-20 px-4"
-      style={{ backgroundColor: `${theme.secondaryColor}10` }}
+      style={sectionBgStyle}
     >
       <div className="max-w-4xl mx-auto">
         <h2
-          className="text-3xl md:text-4xl font-bold text-center mb-12"
+          className="font-bold text-center mb-12"
           style={{
             fontFamily: theme.headingFont,
             color: theme.primaryColor,
+            fontSize: "var(--wedding-font-size-heading, 2rem)",
           }}
         >
           Travel & Accommodations
@@ -29,8 +34,11 @@ export function PreviewTravelSection({ content, theme }: PreviewTravelSectionPro
         <div className="grid md:grid-cols-2 gap-8">
           {/* Hotels */}
           <div
-            className="bg-white rounded-2xl p-6 shadow-sm"
-            style={{ border: `1px solid ${theme.primaryColor}20` }}
+            className="bg-white p-6"
+            style={{
+              ...cardStyle,
+              border: `1px solid ${theme.primaryColor}20`,
+            }}
           >
             <div className="flex items-center gap-3 mb-6">
               <div
@@ -55,7 +63,13 @@ export function PreviewTravelSection({ content, theme }: PreviewTravelSectionPro
                   style={{ backgroundColor: `${theme.primaryColor}05` }}
                 >
                   <div>
-                    <p className="font-medium" style={{ color: theme.textColor }}>
+                    <p
+                      className="font-medium"
+                      style={{
+                        color: theme.textColor,
+                        fontSize: "var(--wedding-font-size-base, 1rem)",
+                      }}
+                    >
                       {hotel.name}
                     </p>
                     <p
@@ -83,8 +97,11 @@ export function PreviewTravelSection({ content, theme }: PreviewTravelSectionPro
 
           {/* Airports */}
           <div
-            className="bg-white rounded-2xl p-6 shadow-sm"
-            style={{ border: `1px solid ${theme.primaryColor}20` }}
+            className="bg-white p-6"
+            style={{
+              ...cardStyle,
+              border: `1px solid ${theme.primaryColor}20`,
+            }}
           >
             <div className="flex items-center gap-3 mb-6">
               <div
@@ -108,7 +125,14 @@ export function PreviewTravelSection({ content, theme }: PreviewTravelSectionPro
                   className="p-3 rounded-lg"
                   style={{ backgroundColor: `${theme.primaryColor}05` }}
                 >
-                  <p style={{ color: theme.textColor }}>{airport}</p>
+                  <p
+                    style={{
+                      color: theme.textColor,
+                      fontSize: "var(--wedding-font-size-base, 1rem)",
+                    }}
+                  >
+                    {airport}
+                  </p>
                 </div>
               ))}
             </div>

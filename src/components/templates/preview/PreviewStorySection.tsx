@@ -2,6 +2,7 @@
 
 import type { PreviewContent } from "./previewContent";
 import type { ThemeSettings } from "@/lib/content/theme-utils";
+import { getSectionBackgroundStyle } from "@/lib/content/theme-utils";
 
 interface PreviewStorySectionProps {
   content: PreviewContent;
@@ -9,17 +10,20 @@ interface PreviewStorySectionProps {
 }
 
 export function PreviewStorySection({ content, theme }: PreviewStorySectionProps) {
+  const sectionBgStyle = getSectionBackgroundStyle(theme, "base");
+
   return (
     <section
       className="py-20 px-4"
-      style={{ backgroundColor: theme.backgroundColor }}
+      style={sectionBgStyle}
     >
       <div className="max-w-2xl mx-auto text-center">
         <h2
-          className="text-3xl md:text-4xl font-bold mb-8"
+          className="font-bold mb-8"
           style={{
             fontFamily: theme.headingFont,
             color: theme.primaryColor,
+            fontSize: "var(--wedding-font-size-heading, 2rem)",
           }}
         >
           {content.story.title}
@@ -29,10 +33,11 @@ export function PreviewStorySection({ content, theme }: PreviewStorySectionProps
           {content.story.paragraphs.map((paragraph, index) => (
             <p
               key={index}
-              className="text-lg leading-relaxed"
+              className="leading-relaxed"
               style={{
                 fontFamily: theme.fontFamily,
                 color: theme.textColor,
+                fontSize: "var(--wedding-font-size-base, 1rem)",
               }}
             >
               {paragraph}

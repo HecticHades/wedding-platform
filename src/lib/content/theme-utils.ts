@@ -41,6 +41,15 @@ const SHADOW_MAP: Record<string, string> = {
 };
 
 /**
+ * Font size scale mapping for responsive typography
+ */
+const FONT_SIZE_MAP: Record<string, { base: string; heading: string; display: string }> = {
+  small: { base: "0.875rem", heading: "1.5rem", display: "2.5rem" },
+  medium: { base: "1rem", heading: "2rem", display: "3.5rem" },
+  large: { base: "1.125rem", heading: "2.5rem", display: "4.5rem" },
+};
+
+/**
  * Generate CSS variable declarations from theme settings
  * Returns a string that can be used in a style attribute or style tag
  * Uses next/font CSS variables for proper font loading
@@ -54,6 +63,8 @@ export function generateCSSVariables(theme: ThemeSettings): string {
   const shadow = SHADOW_MAP[theme.shadowIntensity || "subtle"];
   const buttonStyle = theme.buttonStyle || "solid";
   const dividerStyle = theme.dividerStyle || "line";
+  const sectionStyle = theme.sectionStyle || "solid";
+  const fontSizes = FONT_SIZE_MAP[theme.fontSize || "medium"];
 
   return `
     --wedding-primary: ${theme.primaryColor};
@@ -69,6 +80,10 @@ export function generateCSSVariables(theme: ThemeSettings): string {
     --wedding-shadow: ${shadow};
     --wedding-button-style: ${buttonStyle};
     --wedding-divider-style: ${dividerStyle};
+    --wedding-section-style: ${sectionStyle};
+    --wedding-font-size-base: ${fontSizes.base};
+    --wedding-font-size-heading: ${fontSizes.heading};
+    --wedding-font-size-display: ${fontSizes.display};
   `.trim();
 }
 
@@ -88,6 +103,8 @@ export function generateCSSVariablesObject(
   const shadow = SHADOW_MAP[theme.shadowIntensity || "subtle"];
   const buttonStyle = theme.buttonStyle || "solid";
   const dividerStyle = theme.dividerStyle || "line";
+  const sectionStyle = theme.sectionStyle || "solid";
+  const fontSizes = FONT_SIZE_MAP[theme.fontSize || "medium"];
 
   return {
     "--wedding-primary": theme.primaryColor,
@@ -103,6 +120,10 @@ export function generateCSSVariablesObject(
     "--wedding-shadow": shadow,
     "--wedding-button-style": buttonStyle,
     "--wedding-divider-style": dividerStyle,
+    "--wedding-section-style": sectionStyle,
+    "--wedding-font-size-base": fontSizes.base,
+    "--wedding-font-size-heading": fontSizes.heading,
+    "--wedding-font-size-display": fontSizes.display,
   } as Record<string, string>;
 }
 
@@ -574,6 +595,111 @@ export function hasGoodContrast(textColor: string, backgroundColor: string): boo
 
   const contrastRatio = (lighter + 0.05) / (darker + 0.05);
   return contrastRatio >= 4.5;
+}
+
+/**
+ * Get section background style based on theme settings
+ * Supports solid, gradient, and pattern styles
+ */
+export function getSectionBackgroundStyle(
+  theme: ThemeSettings,
+  variant: "primary" | "secondary" | "accent" | "base" = "base"
+): React.CSSProperties {
+  const sectionStyle = theme.sectionStyle || "solid";
+
+  // Base colors for each variant
+  const baseColors: Record<string, { bg: string; opacity: string }> = {
+    base: { bg: theme.backgroundColor, opacity: "08" },
+    primary: { bg: theme.primaryColor, opacity: "08" },
+    secondary: { bg: theme.secondaryColor, opacity: "10" },
+    accent: { bg: theme.accentColor, opacity: "08" },
+  };
+
+  const { bg, opacity } = baseColors[variant];
+
+  switch (sectionStyle) {
+    case "gradient":
+      if (variant === "base") {
+        return { backgroundColor: theme.backgroundColor };
+      }
+      return {
+        background: `linear-gradient(135deg, ${bg}${opacity} 0%, ${theme.backgroundColor} 100%)`,
+      };
+    case "pattern":
+      if (variant === "base") {
+        return { backgroundColor: theme.backgroundColor };
+      }
+      // Subtle dot pattern using CSS
+      return {
+        backgroundColor: variant === "base" ? theme.backgroundColor : `${bg}${opacity}`,
+        backgroundImage: `radial-gradient(${bg}15 1px, transparent 1px)`,
+        backgroundSize: "20px 20px",
+      };
+    case "solid":
+    default:
+      return {
+        backgroundColor: variant === "base" ? theme.backgroundColor : `${bg}${opacity}`,
+      };
+  }
+}
+
+/**
+ * Get button style based on theme buttonStyle setting
+ */
+export function getButtonStyle(
+  theme: ThemeSettings,
+  variant: "primary" | "secondary" | "accent" = "primary"
+): React.CSSProperties {
+  const buttonStyle = theme.buttonStyle || "solid";
+  const radius = RADIUS_MAP[theme.borderRadius || "subtle"];
+  const shadow = SHADOW_MAP[theme.shadowIntensity || "subtle"];
+
+  const colors: Record<string, string> = {
+    primary: theme.primaryColor,
+    secondary: theme.secondaryColor,
+    accent: theme.accentColor,
+  };
+
+  const color = colors[variant];
+
+  switch (buttonStyle) {
+    case "outline":
+      return {
+        backgroundColor: "transparent",
+        color: color,
+        border: `2px solid ${color}`,
+        borderRadius: radius,
+      };
+    case "soft":
+      return {
+        backgroundColor: `${color}20`,
+        color: color,
+        border: "none",
+        borderRadius: radius,
+      };
+    case "solid":
+    default:
+      return {
+        backgroundColor: color,
+        color: "#ffffff",
+        border: "none",
+        borderRadius: radius,
+        boxShadow: shadow,
+      };
+  }
+}
+
+/**
+ * Get card style with shadow from theme
+ */
+export function getCardStyle(theme: ThemeSettings): React.CSSProperties {
+  const radius = RADIUS_MAP[theme.borderRadius || "subtle"];
+  const shadow = SHADOW_MAP[theme.shadowIntensity || "subtle"];
+
+  return {
+    borderRadius: radius,
+    boxShadow: shadow,
+  };
 }
 
 /**
