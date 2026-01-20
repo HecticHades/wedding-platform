@@ -2,10 +2,7 @@
 
 import {
   Square,
-  Circle,
   RectangleHorizontal,
-  Sparkles,
-  Minus,
   Layers,
 } from "lucide-react";
 import type { ThemeSettings } from "@/lib/content/theme-utils";
@@ -19,7 +16,6 @@ const BORDER_RADIUS_OPTIONS = [
   { value: "none", label: "None", icon: Square },
   { value: "subtle", label: "Subtle", icon: RectangleHorizontal },
   { value: "rounded", label: "Rounded", icon: RectangleHorizontal },
-  { value: "pill", label: "Pill", icon: Circle },
 ] as const;
 
 const FONT_SIZE_OPTIONS = [
@@ -60,7 +56,7 @@ export function StylePanel({ theme, onChange }: StylePanelProps) {
       {/* Border Radius */}
       <div>
         <h3 className="text-sm font-medium text-gray-900 mb-3">Corner Radius</h3>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-3 gap-2">
           {BORDER_RADIUS_OPTIONS.map((option) => {
             const Icon = option.icon;
             const isSelected = (theme.borderRadius || "subtle") === option.value;
@@ -69,9 +65,7 @@ export function StylePanel({ theme, onChange }: StylePanelProps) {
                 ? "rounded-none"
                 : option.value === "subtle"
                 ? "rounded"
-                : option.value === "rounded"
-                ? "rounded-xl"
-                : "rounded-full";
+                : "rounded-xl";
 
             return (
               <button
@@ -292,8 +286,6 @@ export function StylePanel({ theme, onChange }: StylePanelProps) {
                 ? "0"
                 : theme.borderRadius === "subtle"
                 ? "0.375rem"
-                : theme.borderRadius === "pill"
-                ? "9999px"
                 : "0.75rem",
             boxShadow:
               theme.shadowIntensity === "none"
@@ -328,8 +320,6 @@ export function StylePanel({ theme, onChange }: StylePanelProps) {
               borderRadius:
                 theme.borderRadius === "none"
                   ? "0"
-                  : theme.borderRadius === "pill"
-                  ? "9999px"
                   : "0.5rem",
             }}
           >

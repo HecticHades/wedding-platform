@@ -7,7 +7,7 @@ import type { ThemeSettings } from "@/lib/content/theme-utils";
 interface ThemeContextValue {
   buttonStyle: "solid" | "outline" | "soft";
   dividerStyle: "none" | "line" | "ornament" | "flourish";
-  borderRadius: "none" | "subtle" | "rounded" | "pill";
+  borderRadius: "none" | "subtle" | "rounded";
   shadowIntensity: "none" | "subtle" | "medium" | "dramatic";
 }
 

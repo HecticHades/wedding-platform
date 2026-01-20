@@ -34,7 +34,7 @@ const themeSchema = z.object({
   // Extended style options (optional)
   fontSize: z.enum(["small", "medium", "large"]).optional(),
   lineHeight: z.enum(["compact", "normal", "relaxed"]).optional(),
-  borderRadius: z.enum(["none", "subtle", "rounded", "pill"]).optional(),
+  borderRadius: z.enum(["none", "subtle", "rounded"]).optional(),
   shadowIntensity: z.enum(["none", "subtle", "medium", "dramatic"]).optional(),
   sectionStyle: z.enum(["solid", "gradient", "pattern"]).optional(),
   buttonStyle: z.enum(["solid", "outline", "soft"]).optional(),

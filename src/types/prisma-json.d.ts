@@ -42,7 +42,7 @@ declare global {
       // Extended style options (optional)
       fontSize?: 'small' | 'medium' | 'large';
       lineHeight?: 'compact' | 'normal' | 'relaxed';
-      borderRadius?: 'none' | 'subtle' | 'rounded' | 'pill';
+      borderRadius?: 'none' | 'subtle' | 'rounded';
       shadowIntensity?: 'none' | 'subtle' | 'medium' | 'dramatic';
       sectionStyle?: 'solid' | 'gradient' | 'pattern';
       buttonStyle?: 'solid' | 'outline' | 'soft';
