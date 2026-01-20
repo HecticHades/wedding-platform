@@ -96,11 +96,11 @@ function EventsDisplay({ events, theme }: { events: VisibleEvent[]; theme: Theme
           Wedding Events
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 justify-items-center">
           {events.map((event) => (
             <div
               key={event.id}
-              className="bg-white rounded-2xl p-8 shadow-lg"
+              className="bg-white rounded-2xl p-8 shadow-lg w-full max-w-md"
               style={{ borderTop: `4px solid ${theme.accentColor}` }}
             >
               {/* Event name */}

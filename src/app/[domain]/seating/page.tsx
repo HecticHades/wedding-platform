@@ -102,7 +102,7 @@ export default async function GuestSeatingPage({ params }: PageProps) {
             <h2 className="text-xl font-semibold font-wedding-heading text-wedding-primary mb-2">
               View Your Table Assignment
             </h2>
-            <p className="text-wedding-text mb-6">
+            <p className="text-wedding-text font-wedding mb-6">
               Please RSVP first to see your table assignment.
             </p>
             <Link href={`/${domain}/rsvp`}>

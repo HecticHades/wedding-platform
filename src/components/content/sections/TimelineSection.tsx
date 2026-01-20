@@ -51,21 +51,26 @@ export function TimelineSection({ content, theme }: TimelineSectionProps) {
               >
                 {/* Time - stacked on mobile, side by side on desktop */}
                 <div className="md:w-[120px] flex-shrink-0 md:pr-6 md:text-right">
+                  {/* Mobile time - pill style */}
                   <span
-                    className="inline-block font-medium px-3 py-1 rounded-full text-sm md:bg-transparent md:px-0 md:py-0 md:rounded-none"
+                    className="md:hidden inline-block font-medium px-3 py-1 rounded-full text-sm"
                     style={{
                       backgroundColor: theme.primaryColor,
                       color: "#ffffff",
                       fontFamily: theme.fontFamily,
                     }}
                   >
-                    <span
-                      className="hidden md:inline"
-                      style={{ backgroundColor: "transparent", color: theme.primaryColor }}
-                    >
-                      {event.time}
-                    </span>
-                    <span className="md:hidden">{event.time}</span>
+                    {event.time}
+                  </span>
+                  {/* Desktop time - plain text */}
+                  <span
+                    className="hidden md:inline-block font-medium text-sm"
+                    style={{
+                      color: theme.primaryColor,
+                      fontFamily: theme.fontFamily,
+                    }}
+                  >
+                    {event.time}
                   </span>
                 </div>
 
