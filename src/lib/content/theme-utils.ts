@@ -631,7 +631,7 @@ export function getSectionBackgroundStyle(
       }
       // Subtle dot pattern using CSS
       return {
-        backgroundColor: variant === "base" ? theme.backgroundColor : `${bg}${opacity}`,
+        backgroundColor: `${bg}${opacity}`,
         backgroundImage: `radial-gradient(${bg}15 1px, transparent 1px)`,
         backgroundSize: "20px 20px",
       };
