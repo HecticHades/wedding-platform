@@ -1,21 +1,46 @@
 "use client";
 
-import { useState } from "react";
-import { Menu, Search, Bell, LogOut, User } from "lucide-react";
+import { useState, KeyboardEvent } from "react";
+import { useRouter } from "next/navigation";
+import { Menu, Search, LogOut, User } from "lucide-react";
+import { NotificationsDropdown } from "./NotificationsDropdown";
+
+interface Notification {
+  id: string;
+  type: "wedding_created" | "rsvp_received" | "user_registered";
+  title: string;
+  description: string;
+  timestamp: Date;
+  read: boolean;
+}
 
 interface AdminTopBarProps {
   userEmail: string;
   onMenuClick: () => void;
   signOutAction: () => Promise<void>;
+  notifications?: Notification[];
 }
 
 export function AdminTopBar({
   userEmail,
   onMenuClick,
   signOutAction,
+  notifications = [],
 }: AdminTopBarProps) {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const handleSearchKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      router.push(`/admin/weddings?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
+  const handleMarkAllRead = () => {
+    // In a real implementation, this would call a server action to mark notifications as read
+    console.log("Mark all notifications as read");
+  };
 
   return (
     <header className="sticky top-0 z-30 bg-white border-b border-gray-200">
@@ -39,6 +64,7 @@ export function AdminTopBar({
                 placeholder="Search weddings, users..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearchKeyDown}
                 className="w-64 lg:w-80 pl-10 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
               />
             </div>
@@ -48,10 +74,10 @@ export function AdminTopBar({
         {/* Right side */}
         <div className="flex items-center gap-2">
           {/* Notifications */}
-          <button className="relative p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors">
-            <Bell className="h-5 w-5" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
-          </button>
+          <NotificationsDropdown
+            notifications={notifications}
+            onMarkAllRead={handleMarkAllRead}
+          />
 
           {/* User menu */}
           <div className="relative">

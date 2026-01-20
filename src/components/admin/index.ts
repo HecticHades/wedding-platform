@@ -6,3 +6,5 @@ export { StatusBadge } from "./StatusBadge";
 export { WeddingsTable } from "./WeddingsTable";
 export { ActivityFeed } from "./ActivityFeed";
 export { QuickActionsPanel } from "./QuickActionsPanel";
+export { NotificationsDropdown } from "./NotificationsDropdown";
+export { UsersTable } from "./UsersTable";

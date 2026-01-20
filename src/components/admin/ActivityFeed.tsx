@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Heart, UserPlus, Mail, Edit, Settings } from "lucide-react";
 
 interface ActivityItem {
@@ -77,9 +78,12 @@ export function ActivityFeed({ activities, className = "" }: ActivityFeedProps) 
 
       {activities.length > 0 && (
         <div className="px-4 py-3 border-t border-gray-200">
-          <button className="text-sm font-medium text-blue-600 hover:text-blue-700">
+          <Link
+            href="/admin/analytics#activity"
+            className="text-sm font-medium text-blue-600 hover:text-blue-700"
+          >
             View all activity
-          </button>
+          </Link>
         </div>
       )}
     </div>
