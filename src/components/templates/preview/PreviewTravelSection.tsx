@@ -31,10 +31,10 @@ export function PreviewTravelSection({ content, theme }: PreviewTravelSectionPro
           Travel & Accommodations
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="flex flex-wrap justify-center gap-8">
           {/* Hotels */}
           <div
-            className="bg-white p-6"
+            className="bg-white p-6 w-full md:w-[calc(50%-1rem)] max-w-md"
             style={{
               ...cardStyle,
               border: `1px solid ${theme.primaryColor}20`,
@@ -97,7 +97,7 @@ export function PreviewTravelSection({ content, theme }: PreviewTravelSectionPro
 
           {/* Airports */}
           <div
-            className="bg-white p-6"
+            className="bg-white p-6 w-full md:w-[calc(50%-1rem)] max-w-md"
             style={{
               ...cardStyle,
               border: `1px solid ${theme.primaryColor}20`,

@@ -22,12 +22,24 @@ export const DEFAULT_THEME: ThemeSettings = {
 
 /**
  * Border radius mapping for theme styles
+ * Used for buttons - pill creates true pill shape
  */
 const RADIUS_MAP: Record<string, string> = {
   none: "0",
   subtle: "0.375rem",
   rounded: "0.75rem",
   pill: "9999px",
+};
+
+/**
+ * Border radius mapping for cards/containers
+ * Pill is capped to avoid weird oval shapes on rectangular elements
+ */
+const CARD_RADIUS_MAP: Record<string, string> = {
+  none: "0",
+  subtle: "0.5rem",
+  rounded: "1rem",
+  pill: "1.5rem", // Capped for cards to avoid excessive rounding
 };
 
 /**
@@ -60,11 +72,13 @@ export function generateCSSVariables(theme: ThemeSettings): string {
 
   // Extended style options
   const radius = RADIUS_MAP[theme.borderRadius || "subtle"];
+  const cardRadius = CARD_RADIUS_MAP[theme.borderRadius || "subtle"];
   const shadow = SHADOW_MAP[theme.shadowIntensity || "subtle"];
   const buttonStyle = theme.buttonStyle || "solid";
   const dividerStyle = theme.dividerStyle || "line";
   const sectionStyle = theme.sectionStyle || "solid";
   const fontSizes = FONT_SIZE_MAP[theme.fontSize || "medium"];
+  const isPill = (theme.borderRadius || "subtle") === "pill";
 
   return `
     --wedding-primary: ${theme.primaryColor};
@@ -77,8 +91,10 @@ export function generateCSSVariables(theme: ThemeSettings): string {
     --wedding-radius: ${radius};
     --wedding-radius-sm: calc(${radius} * 0.67);
     --wedding-radius-lg: calc(${radius} * 1.33);
+    --wedding-radius-card: ${cardRadius};
     --wedding-shadow: ${shadow};
     --wedding-button-style: ${buttonStyle};
+    --wedding-button-padding: ${isPill ? "0.75rem 2rem" : "0.75rem 1.5rem"};
     --wedding-divider-style: ${dividerStyle};
     --wedding-section-style: ${sectionStyle};
     --wedding-font-size-base: ${fontSizes.base};
@@ -100,11 +116,13 @@ export function generateCSSVariablesObject(
 
   // Extended style options
   const radius = RADIUS_MAP[theme.borderRadius || "subtle"];
+  const cardRadius = CARD_RADIUS_MAP[theme.borderRadius || "subtle"];
   const shadow = SHADOW_MAP[theme.shadowIntensity || "subtle"];
   const buttonStyle = theme.buttonStyle || "solid";
   const dividerStyle = theme.dividerStyle || "line";
   const sectionStyle = theme.sectionStyle || "solid";
   const fontSizes = FONT_SIZE_MAP[theme.fontSize || "medium"];
+  const isPill = (theme.borderRadius || "subtle") === "pill";
 
   return {
     "--wedding-primary": theme.primaryColor,
@@ -117,8 +135,10 @@ export function generateCSSVariablesObject(
     "--wedding-radius": radius,
     "--wedding-radius-sm": `calc(${radius} * 0.67)`,
     "--wedding-radius-lg": `calc(${radius} * 1.33)`,
+    "--wedding-radius-card": cardRadius,
     "--wedding-shadow": shadow,
     "--wedding-button-style": buttonStyle,
+    "--wedding-button-padding": isPill ? "0.75rem 2rem" : "0.75rem 1.5rem", // Extra padding for pill
     "--wedding-divider-style": dividerStyle,
     "--wedding-section-style": sectionStyle,
     "--wedding-font-size-base": fontSizes.base,
@@ -653,6 +673,8 @@ export function getButtonStyle(
   const buttonStyle = theme.buttonStyle || "solid";
   const radius = RADIUS_MAP[theme.borderRadius || "subtle"];
   const shadow = SHADOW_MAP[theme.shadowIntensity || "subtle"];
+  const isPill = (theme.borderRadius || "subtle") === "pill";
+  const padding = isPill ? "0.75rem 2rem" : "0.75rem 1.5rem";
 
   const colors: Record<string, string> = {
     primary: theme.primaryColor,
@@ -669,6 +691,8 @@ export function getButtonStyle(
         color: color,
         border: `2px solid ${color}`,
         borderRadius: radius,
+        padding: padding,
+        whiteSpace: "nowrap",
       };
     case "soft":
       return {
@@ -676,6 +700,8 @@ export function getButtonStyle(
         color: color,
         border: "none",
         borderRadius: radius,
+        padding: padding,
+        whiteSpace: "nowrap",
       };
     case "solid":
     default:
@@ -685,15 +711,18 @@ export function getButtonStyle(
         border: "none",
         borderRadius: radius,
         boxShadow: shadow,
+        padding: padding,
+        whiteSpace: "nowrap",
       };
   }
 }
 
 /**
  * Get card style with shadow from theme
+ * Uses capped radius values for cards to avoid excessive rounding
  */
 export function getCardStyle(theme: ThemeSettings): React.CSSProperties {
-  const radius = RADIUS_MAP[theme.borderRadius || "subtle"];
+  const radius = CARD_RADIUS_MAP[theme.borderRadius || "subtle"];
   const shadow = SHADOW_MAP[theme.shadowIntensity || "subtle"];
 
   return {

@@ -31,7 +31,7 @@ export function PreviewGallerySection({ content, theme }: PreviewGallerySectionP
           Our Moments
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 justify-items-center">
           {content.gallery.map((image, index) => (
             <div
               key={index}

@@ -4,7 +4,7 @@ import { ContentSection } from "@/components/content/ContentSection";
 import { getVisibleEvents, type VisibleEvent } from "@/lib/events/event-utils";
 import { Calendar, MapPin, Clock, Shirt } from "lucide-react";
 import type { ThemeSettings } from "@/lib/content/theme-utils";
-import { mergeWithDefaults } from "@/lib/content/theme-utils";
+import { mergeWithDefaults, getCardStyle, getButtonStyle } from "@/lib/content/theme-utils";
 import { TenantHero } from "@/components/tenant/TenantHero";
 import { TenantFooter } from "@/components/tenant/TenantFooter";
 import { TenantStickyNav } from "@/components/tenant/TenantStickyNav";
@@ -56,6 +56,9 @@ function EventsDisplay({
   theme: ThemeSettings;
   isAlternate: boolean;
 }) {
+  const cardStyle = getCardStyle(theme);
+  const buttonStyle = getButtonStyle(theme, "secondary");
+
   if (events.length === 0) {
     return (
       <div
@@ -108,12 +111,15 @@ function EventsDisplay({
           Wedding Events
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-8 justify-items-center">
+        <div className="flex flex-wrap justify-center gap-8">
           {events.map((event) => (
             <div
               key={event.id}
-              className="bg-white rounded-2xl p-8 shadow-lg w-full max-w-md"
-              style={{ borderTop: `4px solid ${theme.accentColor}` }}
+              className="bg-white p-8 w-full md:w-[calc(50%-1rem)] max-w-md"
+              style={{
+                ...cardStyle,
+                borderTop: `4px solid ${theme.accentColor}`,
+              }}
             >
               {/* Event name */}
               <h3
@@ -215,11 +221,8 @@ function EventsDisplay({
                   href={getGoogleMapsUrl(event.address)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-6 w-full py-2 rounded-lg font-medium transition-colors text-center block"
-                  style={{
-                    backgroundColor: `${theme.secondaryColor}20`,
-                    color: theme.secondaryColor,
-                  }}
+                  className="mt-6 w-full font-medium transition-colors text-center block"
+                  style={buttonStyle}
                 >
                   Get Directions
                 </a>

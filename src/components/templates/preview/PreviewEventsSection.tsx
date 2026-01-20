@@ -32,11 +32,11 @@ export function PreviewEventsSection({ content, theme }: PreviewEventsSectionPro
           Wedding Events
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="flex flex-wrap justify-center gap-8">
           {content.events.map((event, index) => (
             <div
               key={index}
-              className="bg-white p-8"
+              className="bg-white p-8 w-full md:w-[calc(50%-1rem)] max-w-md"
               style={{
                 ...cardStyle,
                 borderTop: `4px solid ${theme.accentColor}`,

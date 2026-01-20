@@ -46,7 +46,7 @@ export const ThemedButton = forwardRef<HTMLButtonElement, ThemedButtonProps>(
     const buttonStyle = buttonStyleOverride || contextButtonStyle;
 
     const baseStyles =
-      "inline-flex items-center justify-center gap-2 font-wedding py-3 px-6 transition-all";
+      "inline-flex items-center justify-center gap-2 font-wedding transition-all whitespace-nowrap";
 
     const widthStyles = fullWidth ? "w-full" : "";
 
@@ -86,6 +86,7 @@ export const ThemedButton = forwardRef<HTMLButtonElement, ThemedButtonProps>(
         className={`${baseStyles} ${widthStyles} ${getVariantStyles()} ${className}`}
         style={{
           borderRadius: "var(--wedding-radius-sm)",
+          padding: "var(--wedding-button-padding, 0.75rem 1.5rem)",
           boxShadow: variant !== "ghost" && buttonStyle === "solid" ? "var(--wedding-shadow)" : "none",
           ...style,
         }}
