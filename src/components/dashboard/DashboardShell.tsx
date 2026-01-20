@@ -22,6 +22,14 @@ export function DashboardShell({
 
   return (
     <div className="min-h-screen bg-[#faf8f5] text-gray-900">
+      {/* Skip link for keyboard navigation */}
+      <a
+        href="#main-content"
+        className="skip-link"
+      >
+        Skip to main content
+      </a>
+
       {/* Sidebar */}
       <DashboardSidebar
         subdomain={subdomain}
@@ -37,9 +45,12 @@ export function DashboardShell({
             {/* Mobile menu button */}
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-[#e8e4e0] text-[#3d3936]"
+              aria-label="Open navigation menu"
+              aria-expanded={sidebarOpen}
+              aria-controls="dashboard-sidebar"
+              className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-[#e8e4e0] text-[#3d3936] focus:outline-none focus:ring-2 focus:ring-[#c4a4a4]"
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5" aria-hidden="true" />
             </button>
 
             {/* Spacer for desktop */}
@@ -55,9 +66,10 @@ export function DashboardShell({
                 <form action={signOutAction}>
                   <button
                     type="submit"
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-[#3d3936]/70 hover:text-[#3d3936] hover:bg-[#e8e4e0] transition-colors"
+                    aria-label="Sign out"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-[#3d3936]/70 hover:text-[#3d3936] hover:bg-[#e8e4e0] transition-colors focus:outline-none focus:ring-2 focus:ring-[#c4a4a4]"
                   >
-                    <LogOut className="h-4 w-4" />
+                    <LogOut className="h-4 w-4" aria-hidden="true" />
                     <span className="hidden sm:inline">Sign Out</span>
                   </button>
                 </form>
@@ -67,7 +79,7 @@ export function DashboardShell({
         </header>
 
         {/* Page content */}
-        <main className="p-4 lg:p-6 pb-24 lg:pb-6">
+        <main id="main-content" className="p-4 lg:p-6 pb-24 lg:pb-6">
           <div className="mx-auto max-w-7xl">{children}</div>
         </main>
       </div>

@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 import { ContentSection } from "@/components/content/ContentSection";
 import { getVisibleEvents, type VisibleEvent } from "@/lib/events/event-utils";
 import { Calendar, MapPin, Clock, Shirt } from "lucide-react";
-import Link from "next/link";
 import type { ThemeSettings } from "@/lib/content/theme-utils";
 import { mergeWithDefaults } from "@/lib/content/theme-utils";
 import { TenantHero } from "@/components/tenant/TenantHero";
 import { TenantFooter } from "@/components/tenant/TenantFooter";
+import { TenantStickyNav } from "@/components/tenant/TenantStickyNav";
 
 interface PageProps {
   params: Promise<{ domain: string }>;
@@ -47,12 +47,22 @@ function getGoogleMapsUrl(address: string): string {
  * Display events from the database (with visibility filtering)
  * Styled to match Theme Studio preview for consistency
  */
-function EventsDisplay({ events, theme }: { events: VisibleEvent[]; theme: ThemeSettings }) {
+function EventsDisplay({
+  events,
+  theme,
+  isAlternate,
+}: {
+  events: VisibleEvent[];
+  theme: ThemeSettings;
+  isAlternate: boolean;
+}) {
   if (events.length === 0) {
     return (
       <div
         className="py-16 md:py-20 px-4"
-        style={{ backgroundColor: `${theme.primaryColor}08` }}
+        style={{
+          backgroundColor: isAlternate ? `${theme.primaryColor}08` : "white",
+        }}
       >
         <div className="max-w-4xl mx-auto text-center">
           <h2
@@ -82,7 +92,9 @@ function EventsDisplay({ events, theme }: { events: VisibleEvent[]; theme: Theme
   return (
     <div
       className="py-16 md:py-20 px-4"
-      style={{ backgroundColor: `${theme.primaryColor}08` }}
+      style={{
+        backgroundColor: isAlternate ? `${theme.primaryColor}08` : "white",
+      }}
     >
       <div className="max-w-4xl mx-auto">
         <h2
@@ -120,6 +132,7 @@ function EventsDisplay({ events, theme }: { events: VisibleEvent[]; theme: Theme
                   <Calendar
                     className="w-5 h-5"
                     style={{ color: theme.secondaryColor }}
+                    aria-hidden="true"
                   />
                   <span style={{ color: theme.textColor }}>
                     {formatEventDate(event.dateTime)}
@@ -131,6 +144,7 @@ function EventsDisplay({ events, theme }: { events: VisibleEvent[]; theme: Theme
                   <Clock
                     className="w-5 h-5"
                     style={{ color: theme.secondaryColor }}
+                    aria-hidden="true"
                   />
                   <span style={{ color: theme.textColor }}>
                     {formatEventTime(event.dateTime)}
@@ -144,6 +158,7 @@ function EventsDisplay({ events, theme }: { events: VisibleEvent[]; theme: Theme
                     <MapPin
                       className="w-5 h-5 mt-0.5"
                       style={{ color: theme.secondaryColor }}
+                      aria-hidden="true"
                     />
                     <div>
                       {event.location && (
@@ -172,6 +187,7 @@ function EventsDisplay({ events, theme }: { events: VisibleEvent[]; theme: Theme
                     <Shirt
                       className="w-5 h-5"
                       style={{ color: theme.secondaryColor }}
+                      aria-hidden="true"
                     />
                     <span style={{ color: theme.textColor }}>
                       <span className="font-medium">Dress Code:</span> {event.dressCode}
@@ -302,7 +318,16 @@ export default async function TenantHomePage({ params }: PageProps) {
 
   // Use tenant context for any further tenant-scoped operations
   return withTenantContext(tenant.id, () => (
-    <main className="min-h-screen bg-wedding-background">
+    <main className="min-h-screen bg-wedding-background wedding-page">
+      {/* Sticky Navigation - appears after scrolling */}
+      <TenantStickyNav
+        partner1Name={tenant.wedding!.partner1Name}
+        partner2Name={tenant.wedding!.partner2Name}
+        primaryColor={theme.primaryColor}
+        domain={domain}
+        navLinks={allNavLinks}
+      />
+
       {/* Hero Section */}
       <TenantHero
         theme={theme}
@@ -318,16 +343,32 @@ export default async function TenantHomePage({ params }: PageProps) {
       {/* Events Section (from database with visibility filtering) */}
       {events.length > 0 && (
         <section id="events" className="scroll-mt-20">
-          <EventsDisplay events={events} theme={theme} />
+          <EventsDisplay events={events} theme={theme} isAlternate={true} />
         </section>
       )}
 
-      {/* Content Sections */}
+      {/* Content Sections with alternating backgrounds (no harsh dividers) */}
       {visibleSections.length > 0 && (
-        <div className="divide-y divide-wedding-primary/10">
-          {visibleSections.map((section) => (
-            <ContentSection key={section.id} section={section} theme={theme} />
-          ))}
+        <div>
+          {visibleSections.map((section, index) => {
+            // Alternate backgrounds: white / tinted
+            // Events section is always tinted, so start sections alternating from white
+            const eventsOffset = events.length > 0 ? 1 : 0;
+            const isAlternate = (index + eventsOffset) % 2 === 1;
+
+            return (
+              <section
+                key={section.id}
+                style={{
+                  backgroundColor: isAlternate
+                    ? `${theme.primaryColor}05`
+                    : "white",
+                }}
+              >
+                <ContentSection section={section} theme={theme} />
+              </section>
+            );
+          })}
         </div>
       )}
 

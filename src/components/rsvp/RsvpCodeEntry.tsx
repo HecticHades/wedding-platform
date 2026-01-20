@@ -79,13 +79,22 @@ export function RsvpCodeEntry({ weddingId, onSuccess }: RsvpCodeEntryProps) {
             />
           </div>
 
-          {/* Error Message */}
+          {/* Error Message with recovery guidance */}
           {error && (
             <div
               className="bg-red-50 border border-red-200 px-4 py-3"
               style={{ borderRadius: "var(--wedding-radius)" }}
+              role="alert"
             >
-              <p className="font-wedding text-sm text-red-700">{error}</p>
+              <p className="font-wedding text-sm text-red-700 font-medium">{error}</p>
+              <div className="mt-2 font-wedding text-xs text-red-600 space-y-1">
+                <p>Try the following:</p>
+                <ul className="list-disc list-inside space-y-0.5 ml-1">
+                  <li>Check for typos in your code</li>
+                  <li>Make sure you&apos;re using the code from your invitation</li>
+                  <li>Codes are not case-sensitive</li>
+                </ul>
+              </div>
             </div>
           )}
 

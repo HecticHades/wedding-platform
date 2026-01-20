@@ -17,14 +17,23 @@
   --dashboard-text: #3d3936;
   --dashboard-border: #e8e4e0;
 
+  /* Dashboard focus ring color */
+  --dashboard-focus: rgba(196, 164, 164, 0.5);
+
   /* Landing Page Palette */
   --landing-violet: #7C3AED;
   --landing-pink: #EC4899;
+
+  /* Landing focus ring color */
+  --landing-focus: rgba(124, 58, 237, 0.5);
 
   /* Admin Dashboard Palette */
   --admin-sidebar: #0f172a;
   --admin-sidebar-hover: #1e293b;
   --admin-primary: #2563eb;
+
+  /* Tenant/Wedding focus ring color (uses theme) */
+  --wedding-focus: var(--wedding-primary, #c4a4a4);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -40,6 +49,18 @@ body {
   font-family: 'Inter', Arial, Helvetica, sans-serif;
 }
 
+/* Reduced motion support - respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Utility classes for dashboard backgrounds */
 .dashboard-bg {
   background-color: var(--dashboard-bg);
@@ -49,7 +70,7 @@ body {
   background-color: var(--admin-sidebar);
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling (respects reduced motion via media query above) */
 html {
   scroll-behavior: smooth;
 }
@@ -74,9 +95,42 @@ html {
   background: #a1a1a1;
 }
 
-/* Focus visible styles for accessibility */
+/* Default focus visible styles */
 :focus-visible {
   outline: 2px solid var(--landing-violet);
+  outline-offset: 2px;
+}
+
+/* Contextual focus styles for dashboard */
+.dashboard-bg :focus-visible,
+[class*="dashboard"] :focus-visible {
+  outline-color: var(--dashboard-primary);
+}
+
+/* Contextual focus styles for tenant/wedding pages */
+.wedding-page :focus-visible,
+[class*="wedding"] :focus-visible {
+  outline-color: var(--wedding-focus);
+}
+
+/* Skip link styles - visually hidden until focused */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--dashboard-primary, #c4a4a4);
+  color: white;
+  padding: 8px 16px;
+  z-index: 100;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 0 0 4px 0;
+  transition: top 0.2s ease-in-out;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid var(--dashboard-gold, #c9a962);
   outline-offset: 2px;
 }
 
@@ -90,5 +144,114 @@ html {
   }
   .animation-delay-500 {
     animation-delay: 500ms;
+  }
+}
+
+/* Scroll-triggered animation base states */
+@layer utilities {
+  .animate-on-scroll {
+    opacity: 0;
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+  }
+
+  .animate-on-scroll.fade-up {
+    transform: translateY(20px);
+  }
+
+  .animate-on-scroll.fade-up.is-visible {
+    transform: translateY(0);
+  }
+
+  .animate-on-scroll.fade-in {
+    transform: scale(0.98);
+  }
+
+  .animate-on-scroll.fade-in.is-visible {
+    transform: scale(1);
+  }
+
+  .animate-on-scroll.scale-in {
+    transform: scale(0.95);
+  }
+
+  .animate-on-scroll.scale-in.is-visible {
+    transform: scale(1);
+  }
+}
+
+/* Section spacing utilities */
+@layer utilities {
+  .section-padding {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+  }
+}
+
+/* Mobile bottom nav safe area */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .h-safe-area-inset-bottom {
+    height: env(safe-area-inset-bottom);
+  }
+}
+
+/* Gradient text utility */
+@layer utilities {
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* Decorative underline for headings */
+@layer utilities {
+  .decorative-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .decorative-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--landing-violet), var(--landing-pink));
+    border-radius: 9999px;
+    transform: scaleX(0.7);
+    transform-origin: center;
+  }
+}
+
+/* Glass card effect */
+@layer utilities {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Frosted glass container (for countdown etc.) */
+@layer utilities {
+  .frosted-glass {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
   }
 }

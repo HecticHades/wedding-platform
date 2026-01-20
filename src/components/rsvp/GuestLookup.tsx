@@ -147,18 +147,29 @@ export function GuestLookup({ weddingId, domain }: GuestLookupProps) {
             </>
           )}
 
-          {/* No Results Message */}
+          {/* No Results Message with suggestions */}
           {hasSearched && !isSearching && results.length === 0 && searchName.trim().length >= 2 && (
             <div
               className="bg-amber-50 border border-amber-200 px-4 py-4"
               style={{ borderRadius: "var(--wedding-radius)" }}
+              role="status"
             >
-              <p className="font-wedding text-sm text-amber-800">
+              <p className="font-wedding text-sm text-amber-800 font-medium">
                 No guests found matching &quot;{searchName}&quot;
               </p>
-              <p className="font-wedding text-xs text-amber-700 mt-1">
-                Please check the spelling or try a different name. If you believe this is an error, contact the couple.
-              </p>
+              <div className="mt-3 font-wedding text-xs text-amber-700 space-y-2">
+                <p className="font-medium">Try these suggestions:</p>
+                <ul className="list-disc list-inside space-y-1 ml-1">
+                  <li>Check the spelling of your name</li>
+                  <li>Try your first name only</li>
+                  <li>Try your last name only</li>
+                  <li>Use the name exactly as it appears on your invitation</li>
+                </ul>
+                <p className="mt-2 pt-2 border-t border-amber-200">
+                  Still can&apos;t find your name? The couple may have registered you differently.
+                  Contact them directly for assistance.
+                </p>
+              </div>
             </div>
           )}
 

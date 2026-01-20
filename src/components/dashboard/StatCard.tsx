@@ -7,6 +7,7 @@ interface StatCardProps {
   icon?: LucideIcon;
   accent?: "primary" | "secondary" | "gold";
   className?: string;
+  variant?: "default" | "compact";
 }
 
 const accentColors = {
@@ -34,8 +35,32 @@ export function StatCard({
   icon: Icon,
   accent = "primary",
   className = "",
+  variant = "default",
 }: StatCardProps) {
   const colors = accentColors[accent];
+
+  if (variant === "compact") {
+    return (
+      <div
+        className={`
+          flex items-center gap-3 px-4 py-3
+          ${className}
+        `}
+      >
+        {Icon && (
+          <div className={`p-2 rounded-lg ${colors.icon} flex-shrink-0`}>
+            <Icon className={`h-4 w-4 ${colors.text}`} aria-hidden="true" />
+          </div>
+        )}
+        <div className="min-w-0">
+          <p className="text-xs font-medium text-[#3d3936]/60 truncate">{title}</p>
+          <p className={`text-xl font-semibold font-cormorant ${colors.text}`}>
+            {value}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -59,10 +84,34 @@ export function StatCard({
         </div>
         {Icon && (
           <div className={`p-2.5 rounded-lg ${colors.icon}`}>
-            <Icon className={`h-5 w-5 ${colors.text}`} />
+            <Icon className={`h-5 w-5 ${colors.text}`} aria-hidden="true" />
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+/**
+ * Grouped stats display for compact horizontal/mobile view
+ */
+interface StatGroupProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function StatGroup({ children, className = "" }: StatGroupProps) {
+  return (
+    <div
+      className={`
+        bg-white rounded-xl border border-[#e8e4e0] overflow-hidden
+        shadow-bento
+        flex flex-row overflow-x-auto
+        divide-x divide-[#e8e4e0]
+        ${className}
+      `}
+    >
+      {children}
     </div>
   );
 }

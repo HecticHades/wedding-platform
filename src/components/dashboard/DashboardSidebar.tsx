@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -64,6 +65,9 @@ export function DashboardSidebar({
   onClose,
 }: DashboardSidebarProps) {
   const pathname = usePathname();
+  const sidebarRef = useRef<HTMLElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   const isActive = (href: string) => {
     if (href === "/dashboard") {
@@ -72,18 +76,93 @@ export function DashboardSidebar({
     return pathname.startsWith(href);
   };
 
+  // Handle escape key to close sidebar
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen && onClose) {
+        onClose();
+      }
+    },
+    [isOpen, onClose]
+  );
+
+  // Focus trap for mobile sidebar
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Store the previously focused element
+    previousFocusRef.current = document.activeElement as HTMLElement;
+
+    // Focus the close button when sidebar opens
+    if (closeButtonRef.current) {
+      closeButtonRef.current.focus();
+    }
+
+    // Add escape key listener
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Focus trap: keep focus within sidebar
+    const sidebar = sidebarRef.current;
+    if (!sidebar) return;
+
+    const focusableElements = sidebar.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    );
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+
+    const handleTabKey = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusable) {
+          e.preventDefault();
+          lastFocusable?.focus();
+        }
+      } else {
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault();
+          firstFocusable?.focus();
+        }
+      }
+    };
+
+    // Only apply focus trap on mobile (when sidebar can be toggled)
+    const isMobile = window.matchMedia("(max-width: 1023px)").matches;
+    if (isMobile) {
+      document.addEventListener("keydown", handleTabKey);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleTabKey);
+
+      // Restore focus when sidebar closes
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus();
+      }
+    };
+  }, [isOpen, handleKeyDown]);
+
   return (
     <>
-      {/* Mobile overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={onClose}
-        />
-      )}
+      {/* Mobile overlay with fade animation */}
+      <div
+        className={`
+          fixed inset-0 bg-black/50 z-40 lg:hidden
+          transition-opacity duration-200
+          ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
+        `}
+        onClick={onClose}
+        aria-hidden="true"
+      />
 
       {/* Sidebar */}
       <aside
+        ref={sidebarRef}
+        id="dashboard-sidebar"
+        role="navigation"
+        aria-label="Main navigation"
         className={`
           fixed inset-y-0 left-0 z-50 w-60 bg-[#faf8f5] border-r border-[#e8e4e0]
           transform transition-transform duration-200 ease-in-out
@@ -100,10 +179,12 @@ export function DashboardSidebar({
             Wedding Hub
           </Link>
           <button
+            ref={closeButtonRef}
             onClick={onClose}
-            className="lg:hidden p-1 rounded-md hover:bg-[#e8e4e0] text-[#3d3936]"
+            aria-label="Close navigation menu"
+            className="lg:hidden p-1 rounded-md hover:bg-[#e8e4e0] text-[#3d3936] focus:outline-none focus:ring-2 focus:ring-[#c4a4a4]"
           >
-            <X className="h-5 w-5" />
+            <X className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
 
@@ -115,7 +196,7 @@ export function DashboardSidebar({
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#c4a4a4]/10 text-[#3d3936] hover:bg-[#c4a4a4]/20 transition-colors text-sm font-medium"
           >
-            <ExternalLink className="h-4 w-4" />
+            <ExternalLink className="h-4 w-4" aria-hidden="true" />
             View Your Website
           </a>
         </div>
@@ -127,7 +208,7 @@ export function DashboardSidebar({
               <h3 className="px-3 mb-2 text-xs font-semibold text-[#3d3936]/60 uppercase tracking-wider">
                 {group.title}
               </h3>
-              <ul className="space-y-1">
+              <ul className="space-y-1" role="list">
                 {group.items.map((item) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
@@ -135,6 +216,7 @@ export function DashboardSidebar({
                     <li key={item.href}>
                       <Link
                         href={item.href}
+                        aria-current={active ? "page" : undefined}
                         className={`
                           flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium
                           transition-colors
@@ -147,6 +229,7 @@ export function DashboardSidebar({
                       >
                         <Icon
                           className={`h-4 w-4 ${active ? "text-[#c4a4a4]" : ""}`}
+                          aria-hidden="true"
                         />
                         {item.label}
                       </Link>
