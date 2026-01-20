@@ -1,9 +1,14 @@
 import { prisma } from "@/lib/db/prisma";
 import { notFound } from "next/navigation";
-import { Camera, Upload } from "lucide-react";
+import { Camera } from "lucide-react";
 import Link from "next/link";
 import { PhotoGallery } from "@/components/photos/PhotoGallery";
 import type { Photo } from "@/components/photos/PhotoLightbox";
+import { TenantHero } from "@/components/tenant/TenantHero";
+import { TenantPageLayout } from "@/components/tenant/TenantPageLayout";
+import { TenantFooter } from "@/components/tenant/TenantFooter";
+import type { ThemeSettings } from "@/lib/content/theme-utils";
+import { mergeWithDefaults } from "@/lib/content/theme-utils";
 
 interface PageProps {
   params: Promise<{ domain: string }>;
@@ -25,8 +30,10 @@ export default async function PublicPhotosPage({ params }: PageProps) {
           id: true,
           partner1Name: true,
           partner2Name: true,
+          weddingDate: true,
           photoSharingEnabled: true,
           contentSections: true,
+          themeSettings: true,
         },
       },
     },
@@ -37,6 +44,15 @@ export default async function PublicPhotosPage({ params }: PageProps) {
   }
 
   const { wedding } = tenant;
+
+  // Get theme settings
+  const theme: ThemeSettings = mergeWithDefaults(
+    (wedding.themeSettings as Partial<ThemeSettings>) || {}
+  );
+
+  const weddingDate = wedding.weddingDate
+    ? new Date(wedding.weddingDate)
+    : null;
 
   // Extract gallery photos from contentSections
   const contentSections =
@@ -80,36 +96,28 @@ export default async function PublicPhotosPage({ params }: PageProps) {
   const hasPhotos = allPhotos.length > 0;
 
   return (
-    <div className="min-h-screen bg-wedding-background">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-wedding-primary/10 px-4 py-6 sm:py-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold font-wedding-heading text-wedding-primary">
-                Photos
-              </h1>
-              <p className="text-wedding-text/70 mt-1 font-wedding">
-                {wedding.partner1Name} & {wedding.partner2Name}
-              </p>
-            </div>
-
-            {/* Upload link if sharing enabled */}
-            {wedding.photoSharingEnabled && (
-              <Link
-                href={`/${domain}/photos/upload`}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-wedding-primary text-white rounded-lg hover:bg-wedding-primary/90 transition-colors text-sm font-medium"
-              >
-                <Upload className="w-4 h-4" />
-                Upload Your Photos
-              </Link>
-            )}
-          </div>
-        </div>
-      </header>
+    <main className="min-h-screen bg-wedding-background">
+      {/* Hero Section */}
+      <TenantHero
+        theme={theme}
+        partner1Name={wedding.partner1Name}
+        partner2Name={wedding.partner2Name}
+        weddingDate={weddingDate}
+        domain={domain}
+        variant="subpage"
+        pageTitle="Photos"
+        ctaButton={
+          wedding.photoSharingEnabled
+            ? {
+                label: "Upload Your Photos",
+                href: `/${domain}/photos/upload`,
+              }
+            : undefined
+        }
+      />
 
       {/* Gallery */}
-      <main className="px-4 py-8 max-w-6xl mx-auto">
+      <TenantPageLayout maxWidth="6xl">
         {hasPhotos ? (
           <>
             {/* Stats */}
@@ -147,23 +155,20 @@ export default async function PublicPhotosPage({ params }: PageProps) {
                 href={`/${domain}/photos/upload`}
                 className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-wedding-primary text-white rounded-lg hover:bg-wedding-primary/90 transition-colors text-sm font-medium"
               >
-                <Upload className="w-4 h-4" />
                 Be the first to upload!
               </Link>
             )}
           </div>
         )}
-      </main>
+      </TenantPageLayout>
 
-      {/* Back link */}
-      <footer className="px-4 py-8 text-center">
-        <Link
-          href={`/${domain}`}
-          className="text-wedding-text/60 hover:text-wedding-primary text-sm font-wedding"
-        >
-          &larr; Back to wedding site
-        </Link>
-      </footer>
-    </div>
+      {/* Footer */}
+      <TenantFooter
+        theme={theme}
+        partner1Name={wedding.partner1Name}
+        partner2Name={wedding.partner2Name}
+        weddingDate={weddingDate}
+      />
+    </main>
   );
 }

@@ -2,9 +2,14 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/db/prisma";
-import { Heart, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { ThemedCard } from "@/components/theme/ThemedCard";
 import { ThemedButton } from "@/components/theme/ThemedButton";
+import { TenantHero } from "@/components/tenant/TenantHero";
+import { TenantPageLayout } from "@/components/tenant/TenantPageLayout";
+import { TenantFooter } from "@/components/tenant/TenantFooter";
+import type { ThemeSettings } from "@/lib/content/theme-utils";
+import { mergeWithDefaults } from "@/lib/content/theme-utils";
 
 interface PageProps {
   params: Promise<{ domain: string }>;
@@ -24,6 +29,7 @@ async function getWeddingByDomain(domain: string) {
           partner1Name: true,
           partner2Name: true,
           weddingDate: true,
+          themeSettings: true,
         },
       },
     },
@@ -50,18 +56,6 @@ async function getGuestTableAssignment(guestId: string) {
   return assignment;
 }
 
-/**
- * Format wedding date for display
- */
-function formatWeddingDate(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-
 export default async function GuestSeatingPage({ params }: PageProps) {
   const { domain } = await params;
 
@@ -72,36 +66,38 @@ export default async function GuestSeatingPage({ params }: PageProps) {
     notFound();
   }
 
+  // Get theme settings
+  const theme: ThemeSettings = mergeWithDefaults(
+    (wedding.themeSettings as Partial<ThemeSettings>) || {}
+  );
+
+  const weddingDate = wedding.weddingDate
+    ? new Date(wedding.weddingDate)
+    : null;
+
   // Check RSVP cookie for guest authentication
   const cookieStore = await cookies();
   const guestCookie = cookieStore.get(`rsvp_guest_${wedding.id}`);
   const guestId = guestCookie?.value;
 
-  const weddingDateStr = wedding.weddingDate
-    ? formatWeddingDate(new Date(wedding.weddingDate))
-    : null;
-
   // If no guest cookie, prompt to RSVP first
   if (!guestId) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-wedding-background to-wedding-primary/5 py-12 px-4">
-        <div className="max-w-md mx-auto text-center">
-          {/* Header */}
-          <div className="mb-8">
-            <Heart className="w-10 h-10 mx-auto text-wedding-secondary fill-wedding-secondary/30" />
-          </div>
+      <main className="min-h-screen bg-wedding-background">
+        {/* Hero Section */}
+        <TenantHero
+          theme={theme}
+          partner1Name={wedding.partner1Name}
+          partner2Name={wedding.partner2Name}
+          weddingDate={weddingDate}
+          domain={domain}
+          variant="subpage"
+          pageTitle="Your Table Assignment"
+        />
 
-          <h1 className="font-wedding-heading text-3xl text-wedding-primary mb-2">
-            {wedding.partner1Name} & {wedding.partner2Name}
-          </h1>
-
-          {weddingDateStr && (
-            <p className="font-wedding text-wedding-text/70 mb-8">
-              {weddingDateStr}
-            </p>
-          )}
-
-          <ThemedCard variant="glass" className="p-8">
+        {/* RSVP prompt */}
+        <TenantPageLayout maxWidth="md">
+          <ThemedCard variant="glass" className="p-8 text-center">
             <MapPin className="w-8 h-8 mx-auto text-wedding-secondary mb-4" />
             <h2 className="text-xl font-semibold text-wedding-primary mb-2">
               View Your Table Assignment
@@ -113,7 +109,15 @@ export default async function GuestSeatingPage({ params }: PageProps) {
               <ThemedButton>Go to RSVP</ThemedButton>
             </Link>
           </ThemedCard>
-        </div>
+        </TenantPageLayout>
+
+        {/* Footer */}
+        <TenantFooter
+          theme={theme}
+          partner1Name={wedding.partner1Name}
+          partner2Name={wedding.partner2Name}
+          weddingDate={weddingDate}
+        />
       </main>
     );
   }
@@ -124,24 +128,21 @@ export default async function GuestSeatingPage({ params }: PageProps) {
   // If no assignment yet, show pending message
   if (!assignment) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-wedding-background to-wedding-primary/5 py-12 px-4">
-        <div className="max-w-md mx-auto text-center">
-          {/* Header */}
-          <div className="mb-8">
-            <Heart className="w-10 h-10 mx-auto text-wedding-secondary fill-wedding-secondary/30" />
-          </div>
+      <main className="min-h-screen bg-wedding-background">
+        {/* Hero Section */}
+        <TenantHero
+          theme={theme}
+          partner1Name={wedding.partner1Name}
+          partner2Name={wedding.partner2Name}
+          weddingDate={weddingDate}
+          domain={domain}
+          variant="subpage"
+          pageTitle="Your Table Assignment"
+        />
 
-          <h1 className="font-wedding-heading text-3xl text-wedding-primary mb-2">
-            {wedding.partner1Name} & {wedding.partner2Name}
-          </h1>
-
-          {weddingDateStr && (
-            <p className="font-wedding text-wedding-text/70 mb-8">
-              {weddingDateStr}
-            </p>
-          )}
-
-          <ThemedCard variant="glass" className="p-8">
+        {/* Pending message */}
+        <TenantPageLayout maxWidth="md">
+          <ThemedCard variant="glass" className="p-8 text-center">
             <MapPin className="w-8 h-8 mx-auto text-wedding-secondary mb-4" />
             <h2 className="text-xl font-semibold text-wedding-primary mb-2">
               Table Assignment Pending
@@ -153,31 +154,45 @@ export default async function GuestSeatingPage({ params }: PageProps) {
               Check back soon!
             </p>
           </ThemedCard>
-        </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              href={`/${domain}`}
+              className="text-wedding-secondary hover:underline"
+            >
+              Back to Wedding Site
+            </Link>
+          </div>
+        </TenantPageLayout>
+
+        {/* Footer */}
+        <TenantFooter
+          theme={theme}
+          partner1Name={wedding.partner1Name}
+          partner2Name={wedding.partner2Name}
+          weddingDate={weddingDate}
+        />
       </main>
     );
   }
 
   // Show table assignment
   return (
-    <main className="min-h-screen bg-gradient-to-b from-wedding-background to-wedding-primary/5 py-12 px-4">
-      <div className="max-w-md mx-auto text-center">
-        {/* Header */}
-        <div className="mb-8">
-          <Heart className="w-10 h-10 mx-auto text-wedding-secondary fill-wedding-secondary/30" />
-        </div>
+    <main className="min-h-screen bg-wedding-background">
+      {/* Hero Section */}
+      <TenantHero
+        theme={theme}
+        partner1Name={wedding.partner1Name}
+        partner2Name={wedding.partner2Name}
+        weddingDate={weddingDate}
+        domain={domain}
+        variant="subpage"
+        pageTitle="Your Table Assignment"
+      />
 
-        <h1 className="font-wedding-heading text-3xl text-wedding-primary mb-2">
-          {wedding.partner1Name} & {wedding.partner2Name}
-        </h1>
-
-        {weddingDateStr && (
-          <p className="font-wedding text-wedding-text/70 mb-8">
-            {weddingDateStr}
-          </p>
-        )}
-
-        <ThemedCard variant="glass" className="p-8">
+      {/* Table assignment */}
+      <TenantPageLayout maxWidth="md">
+        <ThemedCard variant="glass" className="p-8 text-center">
           <p className="text-sm uppercase tracking-wider text-wedding-secondary mb-4">
             Your Table
           </p>
@@ -189,13 +204,23 @@ export default async function GuestSeatingPage({ params }: PageProps) {
           </p>
         </ThemedCard>
 
-        <Link
-          href={`/${domain}`}
-          className="inline-block mt-8 text-wedding-secondary hover:underline"
-        >
-          Back to Wedding Site
-        </Link>
-      </div>
+        <div className="mt-8 text-center">
+          <Link
+            href={`/${domain}`}
+            className="text-wedding-secondary hover:underline"
+          >
+            Back to Wedding Site
+          </Link>
+        </div>
+      </TenantPageLayout>
+
+      {/* Footer */}
+      <TenantFooter
+        theme={theme}
+        partner1Name={wedding.partner1Name}
+        partner2Name={wedding.partner2Name}
+        weddingDate={weddingDate}
+      />
     </main>
   );
 }

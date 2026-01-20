@@ -2,22 +2,14 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { getWeddingByDomain } from "./actions";
 import { RsvpPageClient } from "./RsvpPageClient";
-import { Heart } from "lucide-react";
+import { TenantHero } from "@/components/tenant/TenantHero";
+import { TenantPageLayout } from "@/components/tenant/TenantPageLayout";
+import { TenantFooter } from "@/components/tenant/TenantFooter";
+import type { ThemeSettings } from "@/lib/content/theme-utils";
+import { mergeWithDefaults } from "@/lib/content/theme-utils";
 
 interface PageProps {
   params: Promise<{ domain: string }>;
-}
-
-/**
- * Format wedding date for display
- */
-function formatWeddingDate(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
 }
 
 export default async function RsvpPage({ params }: PageProps) {
@@ -28,6 +20,11 @@ export default async function RsvpPage({ params }: PageProps) {
   if (!wedding) {
     notFound();
   }
+
+  // Get theme settings
+  const theme: ThemeSettings = mergeWithDefaults(
+    (wedding.themeSettings as Partial<ThemeSettings>) || {}
+  );
 
   // Check for existing RSVP auth cookie
   let isAuthenticated = false;
@@ -40,52 +37,40 @@ export default async function RsvpPage({ params }: PageProps) {
     isAuthenticated = true;
   }
 
-  const weddingDateStr = wedding.weddingDate
-    ? formatWeddingDate(new Date(wedding.weddingDate))
+  const weddingDate = wedding.weddingDate
+    ? new Date(wedding.weddingDate)
     : null;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-wedding-background to-wedding-primary/5 py-12 px-4">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <header className="text-center mb-12">
-          {/* Heart decoration */}
-          <div className="mb-6">
-            <Heart className="w-10 h-10 mx-auto text-wedding-secondary fill-wedding-secondary/30" />
-          </div>
+    <main className="min-h-screen bg-wedding-background">
+      {/* Hero Section */}
+      <TenantHero
+        theme={theme}
+        partner1Name={wedding.partner1Name}
+        partner2Name={wedding.partner2Name}
+        weddingDate={weddingDate}
+        domain={domain}
+        variant="subpage"
+        pageTitle="RSVP"
+      />
 
-          {/* Couple names */}
-          <h1 className="font-wedding-heading text-3xl sm:text-4xl md:text-5xl text-wedding-primary mb-3">
-            {wedding.partner1Name}
-            <span className="block text-lg sm:text-xl md:text-2xl my-2 text-wedding-secondary font-wedding">
-              &
-            </span>
-            {wedding.partner2Name}
-          </h1>
-
-          {/* Wedding date */}
-          {weddingDateStr && (
-            <p className="font-wedding text-wedding-text/70 mt-4">
-              {weddingDateStr}
-            </p>
-          )}
-
-          {/* RSVP title */}
-          <div className="mt-8">
-            <p className="font-wedding text-sm uppercase tracking-widest text-wedding-secondary/80">
-              RSVP
-            </p>
-          </div>
-        </header>
-
-        {/* RSVP Flow */}
+      {/* RSVP Flow */}
+      <TenantPageLayout maxWidth="2xl">
         <RsvpPageClient
           weddingId={wedding.id}
           hasRsvpCode={!!wedding.rsvpCode}
           initialAuthenticated={isAuthenticated}
           domain={domain}
         />
-      </div>
+      </TenantPageLayout>
+
+      {/* Footer */}
+      <TenantFooter
+        theme={theme}
+        partner1Name={wedding.partner1Name}
+        partner2Name={wedding.partner2Name}
+        weddingDate={weddingDate}
+      />
     </main>
   );
 }

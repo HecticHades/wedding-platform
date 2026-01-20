@@ -575,3 +575,48 @@ export function hasGoodContrast(textColor: string, backgroundColor: string): boo
   const contrastRatio = (lighter + 0.05) / (darker + 0.05);
   return contrastRatio >= 4.5;
 }
+
+/**
+ * Get hero overlay style based on theme settings
+ */
+export function getOverlayStyle(theme: ThemeSettings): React.CSSProperties | null {
+  const heroImage = theme.heroImage;
+  if (!heroImage || heroImage.overlay === "none") return null;
+
+  const opacity = heroImage.overlayOpacity / 100;
+
+  switch (heroImage.overlay) {
+    case "light":
+      return { backgroundColor: `rgba(255, 255, 255, ${opacity})` };
+    case "dark":
+      return { backgroundColor: `rgba(0, 0, 0, ${opacity})` };
+    case "gradient":
+      return {
+        background: `linear-gradient(to bottom, rgba(0,0,0,${opacity * 0.3}) 0%, rgba(0,0,0,${opacity}) 100%)`,
+      };
+    default:
+      return null;
+  }
+}
+
+/**
+ * Calculate days until wedding
+ */
+export function getDaysUntilWedding(weddingDate: Date): number {
+  const now = new Date();
+  const diffTime = weddingDate.getTime() - now.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return Math.max(0, diffDays);
+}
+
+/**
+ * Format wedding date for display
+ */
+export function formatWeddingDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}

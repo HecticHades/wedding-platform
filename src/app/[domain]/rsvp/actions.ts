@@ -93,6 +93,7 @@ export async function getWeddingByDomain(
   partner1Name: string;
   partner2Name: string;
   weddingDate: Date | null;
+  themeSettings: unknown;
 } | null> {
   try {
     const tenant = await prisma.tenant.findUnique({
@@ -105,6 +106,7 @@ export async function getWeddingByDomain(
             partner1Name: true,
             partner2Name: true,
             weddingDate: true,
+            themeSettings: true,
           },
         },
       },
