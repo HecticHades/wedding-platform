@@ -147,7 +147,7 @@ export default async function PublicPhotosPage({ params }: PageProps) {
             <h2 className="mt-6 text-xl font-semibold font-wedding-heading text-wedding-primary">
               No Photos Yet
             </h2>
-            <p className="mt-2 text-wedding-text/70 font-wedding">
+            <p className="mt-2 text-wedding-text font-wedding">
               Check back soon for photos from the celebration.
             </p>
             {wedding.photoSharingEnabled && (

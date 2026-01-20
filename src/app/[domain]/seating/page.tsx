@@ -99,10 +99,10 @@ export default async function GuestSeatingPage({ params }: PageProps) {
         <TenantPageLayout maxWidth="md">
           <ThemedCard variant="glass" className="p-8 text-center">
             <MapPin className="w-8 h-8 mx-auto text-wedding-secondary mb-4" />
-            <h2 className="text-xl font-semibold text-wedding-primary mb-2">
+            <h2 className="text-xl font-semibold font-wedding-heading text-wedding-primary mb-2">
               View Your Table Assignment
             </h2>
-            <p className="text-wedding-text/70 mb-6">
+            <p className="text-wedding-text mb-6">
               Please RSVP first to see your table assignment.
             </p>
             <Link href={`/${domain}/rsvp`}>
@@ -144,10 +144,10 @@ export default async function GuestSeatingPage({ params }: PageProps) {
         <TenantPageLayout maxWidth="md">
           <ThemedCard variant="glass" className="p-8 text-center">
             <MapPin className="w-8 h-8 mx-auto text-wedding-secondary mb-4" />
-            <h2 className="text-xl font-semibold text-wedding-primary mb-2">
+            <h2 className="text-xl font-semibold font-wedding-heading text-wedding-primary mb-2">
               Table Assignment Pending
             </h2>
-            <p className="text-wedding-text/70">
+            <p className="text-wedding-text">
               Your table assignment will be available closer to the wedding date.
             </p>
             <p className="text-sm text-wedding-text/50 mt-4">
@@ -199,7 +199,7 @@ export default async function GuestSeatingPage({ params }: PageProps) {
           <h2 className="text-4xl md:text-5xl font-wedding-heading text-wedding-primary">
             {assignment.table.name}
           </h2>
-          <p className="text-wedding-text/70 mt-4">
+          <p className="text-wedding-text mt-4">
             We look forward to celebrating with you!
           </p>
         </ThemedCard>

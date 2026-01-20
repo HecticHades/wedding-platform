@@ -51,7 +51,7 @@ export function RsvpCodeEntry({ weddingId, onSuccess }: RsvpCodeEntryProps) {
           <h2 className="font-wedding-heading text-2xl text-wedding-primary mb-2">
             Enter RSVP Code
           </h2>
-          <p className="font-wedding text-wedding-text/70 text-sm">
+          <p className="font-wedding text-wedding-text text-sm">
             Please enter the RSVP code from your invitation
           </p>
         </div>
