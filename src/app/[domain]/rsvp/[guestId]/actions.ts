@@ -90,20 +90,22 @@ export async function getGuestWithEvents(guestId: string) {
 const rsvpSchema = z.object({
   eventId: z.string().min(1, "Event ID is required"),
   rsvpStatus: z.enum(["ATTENDING", "DECLINED"]),
-  plusOneCount: z.coerce.number().int().min(0).max(10).optional(),
-  plusOneName: z
-    .string()
-    .optional()
-    .transform((v) => (v === "" ? null : v)),
-  mealChoice: z
-    .string()
-    .optional()
-    .transform((v) => (v === "" ? null : v)),
-  dietaryNotes: z
-    .string()
-    .max(500)
-    .optional()
-    .transform((v) => (v === "" ? null : v)),
+  plusOneCount: z.preprocess(
+    (val) => (val === null || val === "" ? undefined : val),
+    z.coerce.number().int().min(0).max(10).optional()
+  ),
+  plusOneName: z.preprocess(
+    (val) => (val === null || val === "" ? null : val),
+    z.string().nullable().optional()
+  ),
+  mealChoice: z.preprocess(
+    (val) => (val === null || val === "" ? null : val),
+    z.string().nullable().optional()
+  ),
+  dietaryNotes: z.preprocess(
+    (val) => (val === null || val === "" ? null : val),
+    z.string().max(500).nullable().optional()
+  ),
 });
 
 /**
@@ -124,16 +126,22 @@ export async function submitRsvp(
     });
 
     if (!parsed.success) {
+      // Log validation errors for debugging
+      console.error("RSVP validation failed:", parsed.error.issues);
+
       // Provide more specific error messages
       const firstError = parsed.error.issues[0];
       const errorMessages: Record<string, string> = {
         eventId: "Event information is missing",
         rsvpStatus: "Please select whether you're attending or declining",
-        plusOneCount: "Invalid guest count",
+        plusOneCount: "Invalid guest count (must be 0-10)",
         dietaryNotes: "Dietary notes must be less than 500 characters",
       };
       const fieldError = errorMessages[firstError.path[0] as string];
-      return { success: false, error: fieldError || "Invalid RSVP data. Please try again." };
+      return {
+        success: false,
+        error: fieldError || `Validation error: ${firstError.message}`
+      };
     }
 
     const data = parsed.data;
