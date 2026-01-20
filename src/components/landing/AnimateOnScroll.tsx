@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, ReactNode } from "react";
+import { useEffect, useRef, useState, ReactNode, ElementType } from "react";
 
 type AnimationType = "fade-up" | "fade-in" | "scale-in";
 
@@ -10,7 +10,7 @@ interface AnimateOnScrollProps {
   delay?: number;
   threshold?: number;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: ElementType;
 }
 
 /**
@@ -26,7 +26,7 @@ export function AnimateOnScroll({
   className = "",
   as: Component = "div",
 }: AnimateOnScrollProps) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -72,17 +72,13 @@ export function AnimateOnScroll({
 
   const animationClass = `animate-on-scroll ${animation} ${isVisible ? "is-visible" : ""}`;
 
-  // Use createElement to support dynamic 'as' prop
-  const ElementComponent = Component as keyof JSX.IntrinsicElements;
-
   return (
-    <ElementComponent
-      // @ts-expect-error - ref type is correct for the element
+    <Component
       ref={ref}
       className={`${animationClass} ${className}`.trim()}
     >
       {children}
-    </ElementComponent>
+    </Component>
   );
 }
 
